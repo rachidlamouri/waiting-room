@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "src/index.js",
   "author": "Rachid Lamouri",
+  "dataFolderName": "Unnamed-Data",
   "build": {
     "appId": "unnamed",
     "artifactName": "Unnamed v${version}.${ext}",
@@ -16,6 +17,7 @@
     "release": "build"
   },
   "dependencies": {
+    "dateformat": "^3.0.2",
     "jquery": "^3.2.1"
   },
   "devDependencies": {

@@ -1,34 +1,8 @@
 var remote = require('electron').remote
-var menu = new remote.Menu()
+var ContextMenu = window.ContextMenu
 
-// Call this module once and save it in the window object
-var Debug = {
-    ATTR_OPEN_TOOLS: 'open-tools',
-    
-    KEY_REFRESH: 'F5',
-    KEY_TOGGLE_DEV_TOOLS: 'F12',
-    
-    init(){
-        // Inspect element menu
-        let contextPosition
-        let menuItem = new remote.MenuItem({
-            label: 'Inspect Element',
-            click: function(){
-                remote.getCurrentWindow().inspectElement(contextPosition.x, contextPosition.y)
-            }
-        })
-        menu.append(menuItem)
-        
-        // Inspect element listener
-        $(document).contextmenu(function(mouseEvent){
-            mouseEvent.preventDefault()
-            contextPosition = {
-                x: mouseEvent.clientX,
-                y: mouseEvent.clientY
-            }
-            menu.popup(remote.getCurrentWindow())
-        })
-        
+var Debug = $.extend(
+    /* Constructor */ function(){
         // Refresh + dev tools listener
         $(document).keydown(function(keyEvent){
             if(keyEvent.key == Debug.KEY_REFRESH){
@@ -44,11 +18,11 @@ var Debug = {
             remote.getCurrentWindow().webContents.openDevTools()
         }
     },
-}
-Debug.init()
-
+    /* Global */{
+        ATTR_OPEN_TOOLS: 'open-tools',
+    
+        KEY_REFRESH: 'F5',
+        KEY_TOGGLE_DEV_TOOLS: 'F12',
+    },
+)
 module.exports = Debug
-
-
-
-
