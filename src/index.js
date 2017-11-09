@@ -7,9 +7,9 @@ let win
 
 app.on('ready', function(){
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
         backgroundColor: '#FFF',
+        //frame: false,
+        //fullscreen: true,
     });
 
     win.loadURL(url.format({

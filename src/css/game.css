@@ -1,3 +1,16 @@
-i{
-    color: green;
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #222;
+}
+
+canvas{
+    display: flex;
+    background-color: white;
 }
