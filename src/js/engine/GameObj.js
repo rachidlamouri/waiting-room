@@ -24,5 +24,8 @@ class GameObj{
     getTop(){
         return this.pos.y - this.dim.height/2
     }
+    setControlled(controlled){
+        this.controlled = controlled
+    }
 }
 module.exports = GameObj

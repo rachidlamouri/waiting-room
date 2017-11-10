@@ -1,12 +1,34 @@
 class Engine{
-    constructor(canvas){
+    constructor(canvas, inputList){
         $.extend(this, {
             canvas: canvas,
             ctx: canvas.getContext('2d'),
             frameCount: -1,
             fps: 60,
+            inputs: [],
             objs: [],
             timestep: 10,
+        })
+        
+        let engine = this
+        $.each(inputList, function(inputIndex, input){
+            engine.inputs[input.name] = false
+            
+            $(document).keydown(function(keyEvent){
+                if(keyEvent.key == input.key){
+                    engine.inputs[input.name] = true
+                    
+                    $.each(input.overrideList, function(overrideIndex, overrideName){
+                        engine.inputs[overrideName] = false
+                    })
+                }
+            })
+            
+            $(document).keyup(function(keyEvent){
+                if(keyEvent.key == input.key){
+                    engine.inputs[input.name] = false
+                }
+            })
         })
     }
     
@@ -41,9 +63,10 @@ class Engine{
         })
     }
     update(){
+        let engine = this
         $.each(this.objs, function(index, obj){
             if(obj.update){
-                obj.update()
+                obj.update(engine)
             }
         })
     }

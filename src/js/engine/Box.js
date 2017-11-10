@@ -20,6 +20,7 @@ class Box{
         return !(above || below || left || right)
     }
     draw(ctx){
+        ctx.beginPath()
         ctx.rect(this.x, this.y, this.width, this.height)
         ctx.stroke()
     }
