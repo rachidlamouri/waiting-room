@@ -1,5 +1,5 @@
-let Vect = $.extend(
-    /* Constructor */function(x, y, z){
+class Vect{
+    constructor(x, y, z){
         $.extend(this, {
             x: x,
             y: y,
@@ -9,11 +9,10 @@ let Vect = $.extend(
             width: x,
             height: x,
         })
-    },
-    /* Instance */{prototype:{
-        draw(ctx){
-            this.box.draw(ctx)
-        }
-    }}
-)
+    }
+    
+    draw(ctx){
+        this.box.draw(ctx)
+    }
+}
 module.exports = Vect

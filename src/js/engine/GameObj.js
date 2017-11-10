@@ -1,8 +1,5 @@
-var Vect = require(Paths.engFile('Vect'))
-var Box = require(Paths.engFile('Box'))
-
-let GameObj = $.extend(
-    /* Constructor */function(update, draw, x=0, y=0, width=0, height=0){
+class GameObj{
+    constructor(update, draw, x=0, y=0, width=0, height=0){
         if(draw !== true){
             this.draw = draw
         }
@@ -14,26 +11,18 @@ let GameObj = $.extend(
             vy: new Vect(0,0),
             update: update,
         })
-    },
-    /* Instance */{prototype:{
-        draw(ctx){
-            this.getBox().draw(ctx)
-        },
-        getBox(){
-            return new Box(this.getX() - this.getWidth()/2, this.getY() - this.getHeight()/2, this.getWidth(), this.getHeight())
-        },
-        getHeight(){
-            return this.dim.height
-        },
-        getWidth(){
-            return this.dim.width
-        },
-        getX(){
-            return this.pos.x
-        },
-        getY(){
-            return this.pos.y
-        },
-    }}
-)
+    }
+    draw(ctx, frameCount){
+        this.getBox().draw(ctx)
+    }
+    getBox(){
+        return new Box(this.getLeft(), this.getTop(), this.dim.width, this.dim.height)
+    }
+    getLeft(){
+        return this.pos.x - this.dim.width/2
+    }
+    getTop(){
+        return this.pos.y - this.dim.height/2
+    }
+}
 module.exports = GameObj
