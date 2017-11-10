@@ -1,8 +1,10 @@
 // Saves the absolute path to major folders
 
+var remote = require('electron').remote
+var app = remote.app
+
 var fs = require('fs')
 var path = require('path')
-var Util = window.Util
 
 var Paths = $.extend(
     /* Folder notes
@@ -17,21 +19,27 @@ var Paths = $.extend(
         this.src = `${this.app}${Paths.SRC_NAME}${Paths.DELIMITER}`
         
         let appName = path.basename(this.app)
-        let asarExists = appName == Paths.ASAR_NAME
+        this.asarExists = appName == Paths.ASAR_NAME
         
-        let appPackage = JSON.parse(Util.readFile(this.appFile('package.json')))
-        let dataName = appPackage.dataFolderName
+        let appPackage = JSON.parse(fs.readFileSync(this.appFile('package.json')))
+        let dataName = this.asarExists? appPackage.name: appPackage.name+Paths.DATA_SUFFIX
         
-        this.res = asarExists? this.app.split(appName)[0]: this.app
-        this.data = asarExists? `${this.res}..${Paths.DELIMITER}..${Paths.DELIMITER}${dataName}${Paths.DELIMITER}`: `${this.appFile(dataName)}${Paths.DELIMITER}`
-        this.extra = asarExists? this.resFile(Paths.EXTRA_NAME): `${this.appFile(Paths.EXTRA_NAME)}${Paths.DELIMITER}`
+        this.res = this.asarExists? this.app.split(appName)[0]: this.app
+        this.data = this.asarExists? `${app.getPath('appData')}${Paths.DELIMITER}${dataName}${Paths.DELIMITER}`: `${this.appFile(dataName)}${Paths.DELIMITER}`
+        this.extra = `${this.resFile(Paths.EXTRA_NAME)}${Paths.DELIMITER}`
         
-        Util.mkDir(this.extra)
-        Util.mkDir(this.data)
+        if(!fs.existsSync(this.extra)){
+            fs.mkdirSync(this.extra)
+        }
+        
+        if(!fs.existsSync(this.data)){
+            fs.mkdirSync(this.data)
+        }
     },
     /* Global */{
         APP_NAME: 'app',
         ASAR_NAME: 'app.asar',
+        DATA_SUFFIX: '-Data',
         DELIMITER: path.sep,
         EXTRA_NAME: 'extra',
         SRC_NAME: 'src',
@@ -46,6 +54,9 @@ var Paths = $.extend(
         },
         extraFile(filePath){
             return this.extra+filePath
+        },
+        getAsarExists(){
+            return this.asarExists
         },
         resFile(filePath){
             return this.res+filePath

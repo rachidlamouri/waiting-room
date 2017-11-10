@@ -1,6 +1,16 @@
-var remote = require('electron')
-var exec = remote.exec
+var remote = require('electron').remote
+var dialog = remote.dialog
+var os = require('os')
 
+window.onerror = function(message, source, lineNum, colNum, error){
+    let win = remote.getCurrentWindow()
+    if(!win.isDevToolsOpened()){
+        let output = error.message+os.EOL+error.stack
+        dialog.showErrorBox('Error', output)
+    }
+}
+
+var exec = remote.exec
 var fs = require('fs')
 var path = require('path')
 var DateFormat = require('dateformat')
@@ -9,16 +19,6 @@ var DateFormat = require('dateformat')
 window.Util = {
     FORMAT_COMMAS: ',',
     FORMAT_PERCENT: '%',
-    
-    PATH_UTIL: 'js/util/util/',
-    UTF8: 'utf-8',
-    
-    FileNotFoundException: function(path, showStackTrace = true){
-        this.file = path
-        if(showStackTrace){
-            console.trace()
-        }
-    },
     
     format(value, format, details = {}){
         /* DateFormat
@@ -54,54 +54,6 @@ window.Util = {
         
         return value == undefined? undefinedVal: definedVal
     },
-    mkDir(path){
-        // Makes folder if it does not exist
-        if(!fs.existsSync(path)){
-            fs.mkdirSync(path)
-        }
-    },
-    readAppFile(path){
-        return Util.readFile(Paths.appFile(path))
-    },
-    readDataFile(path){
-        return Util.readFile(Paths.dataFile(path))
-    },
-    readExtraFile(path){
-        return Util.readFile(Paths.extraFile(path))
-    },
-    readFile(path, showStackTrace = true){
-        let file
-        try{
-            file = fs.readFileSync(path, Util.UTF8)
-        }catch(exception){
-            throw new Util.FileNotFoundException(path, showStackTrace)
-        }
-        
-        return file
-    },
-    readResFile(path){
-        return Util.readFile(Paths.resFile(path))
-    },
-    readSrcFile(path){
-        return Util.readFile(Paths.srcFile(path))
-    },
-    readToArray(path, delimiter, pop = false){
-        let data = Util.readFile(path).split(delimiter)
-        if(pop){
-            data.pop()
-        }
-        return data
-    },
-    rmDir(path){
-        if(fs.existsSync(path)){
-            fs.rmdirSync(path)
-        }
-    },
-    rmFile(path){
-        if(fs.existsSync(path)){
-            fs.unlinkSync(path)
-        }
-    },
     run(command, done = function(output){}){
         let output = ''
         exec(command, function(error, stdout, stderror){
@@ -119,22 +71,6 @@ window.Util = {
 
             done(output)
         })
-    },
-    writeFile(path, string, mode = 'o'){
-        /* mode
-            a: append
-            p: prepend
-            o | undefined | anything else : overwrite
-        */
-        if(mode == 'a' && fs.existsSync(path)){
-            let data = Util.readFile(path)
-            string = data + string
-        }else if(mode == 'p' && fs.existsSync(path)){
-            let data = Util.readFile(path)
-            string = string + data
-        }
-        
-        fs.writeFileSync(path, string)
     },
 }
 
@@ -177,6 +113,9 @@ $.extend(String.prototype, {
 
 // Paths
 window.Paths = new (require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}paths.js`))()
+
+// File
+var {File, AppFile, DataFile, ExtraFile, ResFile, DataFile, SrcFile} = require(Paths.srcFile('js/util/file'))
 
 // ContextMenu
 window.ContextMenu = require(Paths.srcFile('js/util/context_menu'))

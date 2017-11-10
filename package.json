@@ -9,7 +9,19 @@
     "artifactName": "Unnamed v${version}.${ext}",
     "files": [
       "src"
-    ]
+    ],
+    "win": {
+      "target": {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    },
+    "nsis": {
+      "perMachine": false
+    }
   },
   "scripts": {
     "pack": "electron-builder --dir",
@@ -22,6 +34,7 @@
     "jquery": "^3.2.1"
   },
   "devDependencies": {
+    "electron": "^1.7.9",
     "electron-builder": "^19.45.0"
   }
 }
