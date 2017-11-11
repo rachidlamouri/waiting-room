@@ -112,17 +112,17 @@ $.extend(String.prototype, {
 })
 
 // Paths
-window.Paths = new (require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}paths.js`))()
+window.Paths = new (require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}Paths`))()
 
 // File
-var {File, AppFile, DataFile, ExtraFile, ResFile, DataFile, SrcFile} = require(Paths.srcFile('js/util/file'))
+var {File, AppFile, DataFile, ExtraFile, ResFile, DataFile, SrcFile} = require(Paths.srcFile('js/util/File'))
 
 // ContextMenu
-window.ContextMenu = require(Paths.srcFile('js/util/context_menu'))
+window.ContextMenu = require(Paths.srcFile('js/util/ContextMenu'))
 window.DefaultMenu = new ContextMenu($(document))
 
 // Debug
-window.Debug = new (require(Paths.srcFile('js/util/debug.js')))()
+window.Debug = new (require(Paths.srcFile('js/util/Debug')))()
 
 // TestSuite
-window.TestSuite = require(Paths.srcFile('js/util/test_suite.js'))
+window.TestSuite = require(Paths.srcFile('js/util/TestSuite'))

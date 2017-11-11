@@ -10,7 +10,9 @@ app.on('ready', function(){
         backgroundColor: '#FFF',
         //frame: false,
         //fullscreen: true,
-    });
+    })
+    
+    win.setMenu(null)
 
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'html/index.html'),

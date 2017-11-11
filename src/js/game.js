@@ -1,6 +1,4 @@
 var remote = require('electron').remote
-remote.getCurrentWindow().setMenu(null)
-
 var ImageSize = require('image-size')
 var Paths = window.Paths
 

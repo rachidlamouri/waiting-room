@@ -1,8 +1,8 @@
 var remote = require('electron').remote
 var ContextMenu = window.ContextMenu
 
-var Debug = $.extend(
-    /* Constructor */ function(){
+let Debug = $.extend(class{
+    constructor(){
         // Refresh + dev tools listener
         $(document).keydown(function(keyEvent){
             if(keyEvent.key == Debug.KEY_REFRESH){
@@ -17,12 +17,12 @@ var Debug = $.extend(
         if(openDevToolsMeta.length > 0 && openDevToolsMeta.attr(Debug.ATTR_OPEN_TOOLS).toBool()){
             remote.getCurrentWindow().webContents.openDevTools()
         }
-    },
-    /* Global */{
-        ATTR_OPEN_TOOLS: 'open-tools',
-    
-        KEY_REFRESH: 'F5',
-        KEY_TOGGLE_DEV_TOOLS: 'F12',
-    },
-)
+    }
+},
+/* Global */{
+    ATTR_OPEN_TOOLS: 'open-tools',
+
+    KEY_REFRESH: 'F5',
+    KEY_TOGGLE_DEV_TOOLS: 'F12',
+})
 module.exports = Debug
