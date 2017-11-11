@@ -12,17 +12,24 @@ class Box{
         })
     }
     checkCollision(box){
-        let above = box.bottom < this.top
-        let below = box.top > this.bottom
-        let left = box.right < this.left
-        let right = box.left > this.right
-        
-        return !(above || below || left || right)
+        return !(this.isAbove(box) || this.isBelow(box) || this.isLeftOf(box) || this.isRightOf(box))
     }
     draw(ctx){
         ctx.beginPath()
         ctx.rect(this.x, this.y, this.width, this.height)
         ctx.stroke()
+    }
+    isAbove(box){
+        return this.bottom < box.top
+    }
+    isBelow(box){
+        return this.top > box.bottom
+    }
+    isLeftOf(box){
+        return this.right < box.left
+    }
+    isRightOf(box){
+        return this.left > box.right
     }
 }
 module.exports = Box

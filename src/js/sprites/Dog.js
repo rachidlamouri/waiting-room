@@ -1,10 +1,16 @@
 class Dog extends Sprite{
-    constructor(x, y, spriteSheet){
-        super(undefined, true, x, y, spriteSheet)
+    constructor(x, y, spriteSheet, options = {}){
+        super(x, y, spriteSheet, $.extend({
+            physics: true,
+            collisionList: [Floor, Wall]
+        }, options))
         
         $.extend(this, {
-            speed: .1,
             facingRight: true,
+            jumpSpeed: .026,
+            jumpUpdateCount: 0,
+            jumping: false,
+            speed: .1,
         })
         this.setAnimation('idleRight')
     }
@@ -22,25 +28,35 @@ class Dog extends Sprite{
             }else{
                 this.setAnimation('sitLeft')
             }
-            this.vx = new Vect(0, 0)
+            this.vx = 0
         }else if(inputs.left){
             this.facingRight = false
             this.setAnimation('walkLeft')
-            this.vx = new Vect(this.speed, -1)
+            this.vx = -this.speed
         }else if(inputs.right){
             this.facingRight = true
             this.setAnimation('walkRight')
-            this.vx = new Vect(this.speed, 1)
+            this.vx = this.speed
         }else{
             if(this.facingRight){
                 this.setAnimation('idleRight')
             }else{
                 this.setAnimation('idleLeft')
             }
-            this.vx = new Vect(0, 0)
+            this.vx = 0
         }
-        
-        this.pos.x += this.vx.dir*this.vx.mag*engine.timestep
+
+        if(!this.jumping && engine.inputs.jump && this.vy == 0){
+            this.jumping = true
+        }else if(this.jumpUpdateCount == Dog.JUMP_UPDATES && !engine.inputs.jump){
+            this.jumpUpdateCount = 0
+            this.jumping = false
+        }
+
+        if(this.jumping && this.jumpUpdateCount < Dog.JUMP_UPDATES){
+            this.jumpUpdateCount++
+            this.vy -= this.jumpSpeed
+        }
     }
 }
 $.extend(Dog, {
@@ -53,5 +69,6 @@ $.extend(Dog, {
         'sitLeft',
     ],
     COLUMNS: 6,
+    JUMP_UPDATES: 10,
 })
 module.exports = Dog

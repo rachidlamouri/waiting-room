@@ -10,23 +10,22 @@ class Engine{
             timestep: 10,
         })
         
-        let engine = this
-        $.each(inputList, function(inputIndex, input){
-            engine.inputs[input.name] = false
+        $.each(inputList, (inputIndex, input)=>{
+            this.inputs[input.name] = false
             
-            $(document).keydown(function(keyEvent){
+            $(document).keydown((keyEvent)=>{
                 if(keyEvent.key == input.key){
-                    engine.inputs[input.name] = true
+                    this.inputs[input.name] = true
                     
-                    $.each(input.overrideList, function(overrideIndex, overrideName){
-                        engine.inputs[overrideName] = false
+                    $.each(input.overrideList, (overrideIndex, overrideName)=>{
+                        this.inputs[overrideName] = false
                     })
                 }
             })
             
-            $(document).keyup(function(keyEvent){
+            $(document).keyup((keyEvent)=>{
                 if(keyEvent.key == input.key){
-                    engine.inputs[input.name] = false
+                    this.inputs[input.name] = false
                 }
             })
         })
@@ -36,37 +35,41 @@ class Engine{
         this.objs.push(gameObj)
     }
     start(){
-        let engine = this
-        setInterval(function(){
-            engine.update()
+        setInterval(()=>{
+            this.update()
+            this.physics()
         }, this.timestep)
         
-        window.requestAnimationFrame(function(){
-            engine.render()
+        window.requestAnimationFrame(()=>{
+            this.render()
+        })
+    }
+    physics(){
+        $.each(this.objs, (index, obj)=>{
+            if(obj.physics){
+                obj.applyPhysics(this)
+            }
         })
     }
     render(){
-        let engine = this
-        
         this.frameCount = ++this.frameCount % this.fps
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.lineWidth = 2
         
-        $.each(this.objs, function(index, obj){
+        $.each(this.objs, (index, obj)=>{
             if(obj.draw){
-                obj.draw(engine.ctx, engine.frameCount)
+                obj.draw(this.ctx, this.frameCount)
             }
         })
         
-        window.requestAnimationFrame(function(){
-            engine.render()
+        window.requestAnimationFrame(()=>{
+            this.render()
         })
     }
     update(){
-        let engine = this
-        $.each(this.objs, function(index, obj){
+        $.each(this.objs, (index, obj)=>{
             if(obj.update){
-                obj.update(engine)
+                obj.update(this)
             }
         })
     }

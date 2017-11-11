@@ -1,6 +1,6 @@
 class Sprite extends GameObj{
-    constructor(update, draw, x, y, spriteSheet){
-        super(update, draw, x, y, spriteSheet.frameWidth, spriteSheet.frameHeight)
+    constructor(x, y, spriteSheet, options){
+        super(x, y, spriteSheet.frameWidth, spriteSheet.frameHeight, options)
         
         $.extend(this, {
             sheet: spriteSheet,

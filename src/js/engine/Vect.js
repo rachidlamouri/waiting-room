@@ -4,10 +4,8 @@ class Vect{
             x: x,
             y: y,
             z: z,
-            mag: x,
-            dir: y,
             width: x,
-            height: x,
+            height: y,
         })
     }
     
