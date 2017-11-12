@@ -1,11 +1,16 @@
-let Scene = $.extend(class{
-    constructor(inputList){
+let Scene = Object.assign(class{
+    constructor(canvasWidth, canvasHeight, inputList){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()
         }
         
+        let canvas = document.createElement('canvas')
+        canvas.width = canvasWidth
+        canvas.height = canvasHeight
+        $('body').append(canvas)
+        
         $.extend(this, {
-            engine: new Engine($('canvas')[0], inputList)
+            engine: new Engine(canvas, inputList)
         })
     }
     

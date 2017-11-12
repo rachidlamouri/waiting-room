@@ -8,7 +8,7 @@ var Elevator = require(Paths.spriteFile('Elevator'))
 
 class SceneTest extends Scene{
     constructor(){
-        super([
+        super(320, 240, [
             new Input('right', 'd', ['left', 'down']),
             new Input('left', 'a', ['right', 'down']),
             new Input('down', 's', ['left', 'right']),
