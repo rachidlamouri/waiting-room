@@ -1,3 +1,5 @@
+var ImageSize = require('image-size')
+
 class SpriteSheet{
     constructor(path, columns, animations){
         let size = ImageSize(path)

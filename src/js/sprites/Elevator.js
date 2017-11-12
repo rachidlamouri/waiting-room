@@ -1,3 +1,5 @@
+var Floor = require(Paths.spriteFile('Floor'))
+
 class Elevator extends GameObj{
     constructor(x, y, width, height){
         super(x, y, width, height, {

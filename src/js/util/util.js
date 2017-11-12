@@ -126,3 +126,13 @@ window.Debug = new (require(Paths.srcFile('js/util/Debug')))()
 
 // TestSuite
 window.TestSuite = require(Paths.srcFile('js/util/TestSuite'))
+
+// Game Engine
+window.Vect = require(Paths.engFile('Vect'))
+window.Box = require(Paths.engFile('Box'))
+window.Input = require(Paths.engFile('Input'))
+window.Engine = require(Paths.engFile('Engine'))
+window.Scene = require(Paths.engFile('Scene'))
+window.GameObj = require(Paths.engFile('GameObj'))
+window.SpriteSheet = require(Paths.engFile('SpriteSheet'))
+window.Sprite = require(Paths.engFile('Sprite'))

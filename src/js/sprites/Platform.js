@@ -1,3 +1,5 @@
+var Wall = require(Paths.spriteFile('Wall'))
+
 class Platform extends GameObj{
     constructor(x, y, width, height){
         super(x, y, width, height, {

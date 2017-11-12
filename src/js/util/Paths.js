@@ -39,8 +39,14 @@ var Paths = $.extend(class{
     appFile(filePath){
         return this.app+filePath
     }
+    assetFile(filename){
+        return this.srcFile('images/assets/')+filename
+    }
     dataFile(filePath){
         return this.data+filePath
+    }
+    engFile(filename){
+        return this.srcFile('js/engine/')+filename
     }
     extraFile(filePath){
         return this.extra+filePath
@@ -50,6 +56,12 @@ var Paths = $.extend(class{
     }
     resFile(filePath){
         return this.res+filePath
+    }
+    sceneFile(filename){
+        return this.srcFile('js/scenes/')+filename
+    }
+    spriteFile(filename){
+        return this.srcFile('js/sprites/')+filename
     }
     srcFile(filePath){
         return this.src+filePath

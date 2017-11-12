@@ -2,24 +2,6 @@ var remote = require('electron').remote
 var ImageSize = require('image-size')
 var Paths = window.Paths
 
-Paths.engFile = function(filename){
-    return Paths.srcFile('js/engine/')+filename
-}
-Paths.assetFile = function(filename){
-    return Paths.srcFile('images/assets/')+filename
-}
-Paths.spriteFile = function(filename){
-    return Paths.srcFile('js/sprites/')+filename
-}
-
-var Engine = require(Paths.engFile('Engine'))
-var Input = require(Paths.engFile('Input'))
-var Vect = require(Paths.engFile('Vect'))
-var Box = require(Paths.engFile('Box'))
-var GameObj = require(Paths.engFile('GameObj'))
-var SpriteSheet = require(Paths.engFile('SpriteSheet'))
-var Sprite = require(Paths.engFile('Sprite'))
-
 var Dog = require(Paths.spriteFile('Dog'))
 var Millie = require(Paths.spriteFile('Millie'))
 var Coco = require(Paths.spriteFile('Coco'))

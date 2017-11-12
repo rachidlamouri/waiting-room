@@ -1,3 +1,8 @@
+var Elevator = require(Paths.spriteFile('Elevator'))
+var Floor = require(Paths.spriteFile('Floor'))
+var Platform = require(Paths.spriteFile('Platform'))
+var Wall = require(Paths.spriteFile('Wall'))
+
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){
         super(x, y, spriteSheet, $.extend({
