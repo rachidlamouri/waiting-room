@@ -10,6 +10,9 @@ class Engine{
             timestep: 10,
         })
         
+        $(document).unbind('keydown')
+        $(document).unbind('keyup')
+        
         $.each(inputList, (inputIndex, input)=>{
             this.inputs[input.name] = false
             
