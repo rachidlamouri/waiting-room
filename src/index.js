@@ -7,6 +7,8 @@ let win
 
 app.on('ready', function(){
     win = new BrowserWindow({
+        width: 1200,
+        height: 600,
         backgroundColor: '#FFF',
         //frame: false,
         //fullscreen: true,

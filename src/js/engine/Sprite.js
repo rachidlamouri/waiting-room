@@ -16,7 +16,7 @@ class Sprite extends GameObj{
         ctx.drawImage(
             this.sheet.img,
             this.offset.x*this.sheet.frameWidth, this.offset.y*this.sheet.frameHeight, this.sheet.frameWidth, this.sheet.frameHeight,
-            this.getLeft(), this.getTop(), this.dim.width, this.dim.height
+            this.pos.x - this.dim.width/2, this.pos.y - this.dim.height/2, this.dim.width, this.dim.height
         );
     }
     setAnimation(animation){

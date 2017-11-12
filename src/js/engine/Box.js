@@ -9,13 +9,15 @@ class Box{
             right: x + width,
             top: y,
             bottom: y + height,
+            center: new Vect(x + width/2, y + height/2),
         })
     }
     checkCollision(box){
         return !(this.isAbove(box) || this.isBelow(box) || this.isLeftOf(box) || this.isRightOf(box))
     }
-    draw(ctx){
+    draw(ctx, color = '#000000'){
         ctx.beginPath()
+        ctx.strokeStyle = color
         ctx.rect(this.x, this.y, this.width, this.height)
         ctx.stroke()
     }

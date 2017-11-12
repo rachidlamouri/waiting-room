@@ -5,78 +5,99 @@ class GameObj{
         }
         
         $.extend(this, {
+            id: TestSuite.randomText(100),
             update: options.update,
             pos: new Vect(x, y),
             dim: new Vect(width, height),
             vx: 0,
             vy: 0,
+            collider: options.collider === true? new Box(0, 0, width, height): options.collider,
+            trigger: options.trigger === true? new Box(0, 0, width, height): options.trigger,
             physics: options.physics === true,
             gravity: Util.isUndefined(options.gravity, .01),
             collisionList: Util.isUndefined(options.collisionList, []),
+            triggerList: Util.isUndefined(options.triggerList, []),
         })
     }
     addCollisionType(objClass){
         this.collisionList.push(objClass)
     }
     applyPhysics(engine){
-        let box
+        if(!this.ignoreGravity){
+            this.vy += this.gravity
+        }else{
+            this.ignoreGravity = false
+        }
         
-        this.pos.x += this.vx*engine.timestep
-        box = this.getBox()
-        $.each(engine.objs, (index, obj)=>{
-            $.each(this.collisionList, (index, collisionType)=>{
-                if(obj instanceof collisionType && box.checkCollision(obj.getBox())){
-                    this.handleCollisionX(obj)
-                }
-            })
-        })
-        
-        this.vy += this.gravity
         this.pos.y += this.vy*engine.timestep
-        box = this.getBox()
+        this.pos.x += this.vx*engine.timestep
+        
+        let collisionBox = this.getColliderBox()
+        let triggerBox = this.getTriggerBox()
         $.each(engine.objs, (index, obj)=>{
-            $.each(this.collisionList, (index, collisionType)=>{
-                if(obj instanceof collisionType && box.checkCollision(obj.getBox())){
-                    this.handleCollisionY(obj)
-                }
-            })
+            if(this.id == obj.id){
+                return
+            }
+            
+            if(collisionBox != undefined){
+                $.each(this.collisionList, (index, collisionType)=>{
+                    if(obj instanceof collisionType && collisionBox.checkCollision(obj.getColliderBox())){
+                        this.handleCollision(obj)
+                    }
+                })
+            }
+            
+            if(triggerBox != undefined){
+                $.each(obj.triggerList, (index, triggerType)=>{
+                    if(this instanceof triggerType && triggerBox.checkCollision(obj.getColliderBox()) && obj.handleTrigger){
+                        obj.handleTrigger(this)
+                    }
+                })
+            }
         })
     }
     draw(ctx, frameCount){
-        this.getBox().draw(ctx)
+        this.getMeshBox().draw(ctx)
     }
-    getBox(){
-        return new Box(this.getLeft(), this.getTop(), this.dim.width, this.dim.height)
+    getColliderBox(){
+        return this.getRelativeBox(this.collider)
     }
-    getLeft(){
-        return this.pos.x - this.dim.width/2
-    }
-    getTop(){
-        return this.pos.y - this.dim.height/2
-    }
-    handleCollisionX(collider){
-        let box = this.getBox()
-        let colliderBox = collider.getBox()
+    getRelativeBox(relativeDims){
+        if(relativeDims == undefined){
+            return undefined
+        }
         
-        if(!box.isAbove(colliderBox) && !box.isBelow(colliderBox)){
-            if(this.vx > 0 && box.right >= colliderBox.left){
+        return new Box(this.pos.x - relativeDims.x - relativeDims.width/2, this.pos.y - relativeDims.y - relativeDims.height/2, relativeDims.width, relativeDims.height)
+    }
+    getMeshBox(){
+        return this.getRelativeBox(new Box(0, 0, this.dim.width, this.dim.height))
+    }
+    getTriggerBox(){
+        return this.getRelativeBox(this.trigger)
+    }
+    handleCollision(collider){
+        let box
+        let colliderBox
+        
+        box = this.getColliderBox()
+        colliderBox = collider.getColliderBox()
+        if(box.bottom > colliderBox.top + 2 && box.top < colliderBox.bottom - 2){
+            if(this.vx > 0 && box.center.x < colliderBox.left){
                 this.vx = 0
                 this.pos.x -= (box.right - colliderBox.left + .001)
-            }else if(this.vx < 0 && box.left <= colliderBox.right){
+            }else if(this.vx < 0 && box.center.x > colliderBox.right){
                 this.vx = 0
                 this.pos.x += (colliderBox.right - box.left + .001)
             }
         }
-    }
-    handleCollisionY(collider){
-        let box = this.getBox()
-        let colliderBox = collider.getBox()
         
-        if(!box.isLeftOf(colliderBox) && !box.isRightOf(colliderBox)){
-            if(this.vy > 0 && box.bottom >= colliderBox.top){
+        box = this.getColliderBox()
+        colliderBox = collider.getColliderBox()
+        if(box.right > colliderBox.left + 2 && box.left < colliderBox.right - 2){
+            if(this.vy > 0 && box.center.y < colliderBox.top){
                 this.vy = 0
                 this.pos.y -= (box.bottom - colliderBox.top + .001)
-            }else if(this.vy < 0 && box.top <= colliderBox.bottom){
+            }else if(this.vy < 0 && box.center.y > colliderBox.bottom){
                 this.vy = 0
                 this.pos.y += (colliderBox.bottom - box.top + .001)
             }
