@@ -14,6 +14,7 @@ class SceneTest extends Scene{
                 'left': new Input(['a', 'A'], [14]),
                 'down': new Input(['s', 'S'], [13]),
                 'jump': new Input(['w', 'W', ' '], [12, 0]),
+                'reload': new Input(['Escape'], [8]),
             }),
             new PlayerInputs({
                 'right': new Input(['ArrowRight'], [15]),
@@ -26,9 +27,9 @@ class SceneTest extends Scene{
     
     load(){
         let coco = new Coco(300, 150)
-        let millie = new Millie(70, 80)
+        let millie = new Millie(100, 140)
         millie.setControllerId(0)
-        coco.setControllerId(1)
+        //coco.setControllerId(1)
         
         super.load([
             // Floor and side walls
@@ -36,11 +37,6 @@ class SceneTest extends Scene{
             new Wall(5,   110, 10, 220),
             new Wall(315, 110, 10, 220),
             new Elevator(25, 205, 30, 5),
-            
-            
-            new Wall(128, 205, 20, 10),
-            new Wall(178, 205, 20, 10),
-            new Wall(228, 205, 20, 10),
             
             // Large platforms
             new Platform(100, 50, 25, 25),
@@ -52,11 +48,16 @@ class SceneTest extends Scene{
             new Platform(150, 150, 20, 10),
             new Platform(200, 150, 20, 10),
             
+            /*
+            new Wall(128, 205, 20, 10),
+            new Wall(178, 205, 20, 10),
+            new Wall(228, 205, 20, 10),
+            
             // Small walls
             new Wall(128, 217, 8, 6),
             new Wall(178, 217, 8, 6),
             new Wall(228, 217, 8, 6),
-            
+            */
             // Characters
             millie,
             coco,
