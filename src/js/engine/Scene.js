@@ -1,5 +1,5 @@
 let Scene = Object.assign(class{
-    constructor(canvasWidth, canvasHeight, inputList){
+    constructor(canvasWidth, canvasHeight, keyInputs, gamepadInputs){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()
         }
@@ -10,7 +10,7 @@ let Scene = Object.assign(class{
         $('body').append(canvas)
         
         $.extend(this, {
-            engine: new Engine(canvas, inputList)
+            engine: new Engine(canvas, keyInputs, gamepadInputs)
         })
     }
     

@@ -1,9 +1,25 @@
 class Input{
-    constructor(name, key, overrideList = []){
+    constructor(keyList = [], buttonIndices = []){
         $.extend(this, {
-            name: name,
-            key: key,
-            overrideList: overrideList
+            keyList: keyList,
+            buttonIndices: buttonIndices,
+            pressed: false,
+        })
+    }
+    
+    reset(keyInputs, gamepad){
+        this.pressed = false
+        
+        $.each(this.keyList, (index, key)=>{
+            this.pressed |= keyInputs[key].pressed
+        })
+        
+        if(gamepad == null){
+            return
+        }
+        
+        $.each(this.buttonIndices, (index, buttonIndex)=>{
+            this.pressed |= gamepad.buttons[buttonIndex].pressed
         })
     }
 }

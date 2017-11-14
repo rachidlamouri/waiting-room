@@ -9,10 +9,12 @@ var Elevator = require(Paths.spriteFile('Elevator'))
 class SceneTest extends Scene{
     constructor(){
         super(320, 240, [
-            new Input('right', 'd', ['left', 'down']),
-            new Input('left', 'a', ['right', 'down']),
-            new Input('down', 's', ['left', 'right']),
-            new Input('jump', 'w'),
+            new PlayerInputs({
+                'right': new Input(['d', 'D'], [15]),
+                'left': new Input(['a', 'A'], [14]),
+                'down': new Input(['s', 'S'], [13]),
+                'jump': new Input(['w', 'W', ' '], [12, 0]),
+            })
         ])
     }
     

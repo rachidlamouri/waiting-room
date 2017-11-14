@@ -35,10 +35,10 @@ class Dog extends Sprite{
             return
         }
         
-        let inputs = engine.inputs
+        let inputs = engine.getPlayerInputs(0).inputs
         
         this.sitting = false
-        if(inputs.down){
+        if(inputs.down.pressed){
             if(this.facingRight){
                 this.setAnimation('sitRight')
             }else{
@@ -46,11 +46,11 @@ class Dog extends Sprite{
             }
             this.vx = 0
             this.sitting = true
-        }else if(inputs.left){
+        }else if(inputs.left.pressed){
             this.facingRight = false
             this.setAnimation('walkLeft')
             this.vx = -this.speed
-        }else if(inputs.right){
+        }else if(inputs.right.pressed){
             this.facingRight = true
             this.setAnimation('walkRight')
             this.vx = this.speed
@@ -63,9 +63,9 @@ class Dog extends Sprite{
             this.vx = 0
         }
         
-        if(!this.jumping && engine.inputs.jump && this.vy == 0){
+        if(!this.jumping && inputs.jump.pressed && this.vy == 0){
             this.jumping = true
-        }else if(this.jumpUpdateCount == Dog.JUMP_UPDATES && !engine.inputs.jump){
+        }else if(this.jumpUpdateCount == Dog.JUMP_UPDATES && !inputs.jump.pressed){
             this.jumpUpdateCount = 0
             this.jumping = false
         }

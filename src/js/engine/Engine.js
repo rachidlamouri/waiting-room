@@ -1,44 +1,26 @@
 class Engine{
-    constructor(canvas, inputList){
+    constructor(canvas, playerInputsList){
         $.extend(this, {
             canvas: canvas,
             ctx: canvas.getContext('2d'),
             frameCount: -1,
             fps: 60,
+            inputListener: new InputListener(playerInputsList),
             inputs: [],
             objs: [],
             timestep: 10,
-        })
-        
-        $(document).unbind('keydown')
-        $(document).unbind('keyup')
-        
-        $.each(inputList, (inputIndex, input)=>{
-            this.inputs[input.name] = false
-            
-            $(document).keydown((keyEvent)=>{
-                if(keyEvent.key == input.key){
-                    this.inputs[input.name] = true
-                    
-                    $.each(input.overrideList, (overrideIndex, overrideName)=>{
-                        this.inputs[overrideName] = false
-                    })
-                }
-            })
-            
-            $(document).keyup((keyEvent)=>{
-                if(keyEvent.key == input.key){
-                    this.inputs[input.name] = false
-                }
-            })
         })
     }
     
     addObj(gameObj){
         this.objs.push(gameObj)
     }
+    getPlayerInputs(index){
+        return this.inputListener.playerInputsList[index]
+    }
     start(){
         setInterval(()=>{
+            this.inputListener.resetInputs()
             this.update()
             this.physics()
         }, this.timestep)
