@@ -31,11 +31,11 @@ class Dog extends Sprite{
         }
     }
     update(engine){
-        if(!this.controlled){
+        if(this.controllerId == undefined){
             return
         }
         
-        let inputs = engine.getPlayerInputs(0).inputs
+        let inputs = engine.getPlayerInputs(this.controllerId).inputs
         
         this.sitting = false
         if(inputs.down.pressed){

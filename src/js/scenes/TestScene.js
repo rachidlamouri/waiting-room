@@ -14,6 +14,12 @@ class SceneTest extends Scene{
                 'left': new Input(['a', 'A'], [14]),
                 'down': new Input(['s', 'S'], [13]),
                 'jump': new Input(['w', 'W', ' '], [12, 0]),
+            }),
+            new PlayerInputs({
+                'right': new Input(['ArrowRight'], [15]),
+                'left': new Input(['ArrowLeft'], [14]),
+                'down': new Input(['ArrowDown'], [13]),
+                'jump': new Input(['ArrowUp'], [12, 0]),
             })
         ])
     }
@@ -21,7 +27,8 @@ class SceneTest extends Scene{
     load(){
         let coco = new Coco(300, 150)
         let millie = new Millie(70, 80)
-        millie.setControlled(true)
+        millie.setControllerId(0)
+        coco.setControllerId(1)
         
         super.load([
             // Floor and side walls

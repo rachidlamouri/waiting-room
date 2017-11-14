@@ -6,6 +6,7 @@ class GameObj{
         
         $.extend(this, {
             id: TestSuite.randomText(100),
+            controllerId: undefined,
             update: options.update,
             pos: new Vect(x, y),
             dim: new Vect(width, height),
@@ -103,8 +104,8 @@ class GameObj{
             }
         }
     }
-    setControlled(controlled){
-        this.controlled = controlled
+    setControllerId(controllerId){
+        this.controllerId = controllerId
     }
 }
 module.exports = GameObj
