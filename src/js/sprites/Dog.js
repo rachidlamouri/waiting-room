@@ -22,6 +22,7 @@ class Dog extends Sprite{
             jumpUpdates: 8,
             jumpUpdateCount: 0,
             jumping: false,
+            pausing: false,
             platformSpeed: 0,
             sitting: false,
             speed: .09,
@@ -48,6 +49,30 @@ class Dog extends Sprite{
             trigger.elevate(this)
         }
     }
+    simpleUpdate(engine){
+        if(this.controllerId == undefined){
+            return
+        }
+        let inputs = engine.getPlayerInputs(this.controllerId).inputs
+        
+        if(!this.pausing && inputs.pause.pressed){
+            this.pausing = true
+            
+            if(engine.isRunning()){
+                engine.pause()
+            }else if(engine.isPaused()){
+                engine.resume()
+            }
+        }
+        
+        if(this.pausing && !inputs.pause.pressed){
+            this.pausing = false
+        }
+        
+        if(inputs.reload.pressed){
+            remote.getCurrentWindow().reload()
+        }
+    }
     update(engine){
         if(this.controllerId == undefined){
             return
@@ -55,10 +80,6 @@ class Dog extends Sprite{
         
         let inputs = engine.getPlayerInputs(this.controllerId).inputs
         this.sitting = false
-        
-        if(inputs.reload.pressed){
-            remote.getCurrentWindow().reload()
-        }
         
         this.vx = 0
         if(!this.grounded){

@@ -1,4 +1,4 @@
-class Engine{
+let Engine = $.extend(class{
     constructor(canvas, playerInputsList){
         $.extend(this, {
             canvas: canvas,
@@ -8,7 +8,9 @@ class Engine{
             inputListener: new InputListener(playerInputsList),
             inputs: [],
             objs: [],
+            state: Engine.STATE.stopped,
             timestep: 10,
+            lastTimestamp: undefined,
         })
     }
     
@@ -17,6 +19,94 @@ class Engine{
     }
     getPlayerInputs(index){
         return this.inputListener.playerInputsList[index]
+    }
+    isPaused(){
+        return this.state == Engine.STATE.paused
+    }
+    isRunning(){
+        return this.state == Engine.STATE.running
+    }
+    isStopped(){
+        return this.state == Engine.STATE.stopped
+    }
+    isStopping(){
+        return this.state == Engine.STATE.stopping
+    }
+    setState(state){
+        this.state = state
+    }
+    
+    // Game Loop
+    start(){
+        if(!this.isStopped()){
+            return
+        }
+        
+        this.setState(Engine.STATE.running)
+        this.lastTimestamp = undefined
+        this.requestFrame()
+    }
+    pause(){
+        if(!this.isRunning()){
+            return
+        }
+        
+        this.setState(Engine.STATE.paused)
+    }
+    resume(){
+        if(!this.isPaused()){
+            return
+        }
+        
+        this.setState(Engine.STATE.running)
+    }
+    stop(){
+        if(!this.isRunning() && !this.isPaused()){
+            return
+        }
+        
+        this.setState(Engine.STATE.stopping)
+    }
+    requestFrame(){
+        if(this.isStopping()){
+            this.setState(Engine.STATE.stopped)
+            return
+        }
+        
+        window.requestAnimationFrame((timestamp)=>{
+            if(this.lastTimestamp == undefined){
+                this.lastTimestamp = timestamp
+                this.requestFrame()
+            }else{
+                this.timestep = timestamp - this.lastTimestamp
+                this.lastTimestamp = timestamp
+                this.computeFrame()
+            }
+        })
+    }
+    computeFrame(){
+        this.inputListener.resetInputs()
+        this.simpleUpdate(this)
+        if(this.isRunning()){
+            this.update()
+            this.physics()
+            this.render()
+        }
+        this.requestFrame()
+    }
+    simpleUpdate(){
+        $.each(this.objs, (index, obj)=>{
+            if(obj.simpleUpdate){
+                obj.simpleUpdate(this)
+            }
+        })
+    }
+    update(){
+        $.each(this.objs, (index, obj)=>{
+            if(obj.update){
+                obj.update(this)
+            }
+        })
     }
     physics(){
         $.each(this.objs, (index, obj)=>{
@@ -35,28 +125,14 @@ class Engine{
                 obj.draw(this.ctx, this.frameCount)
             }
         })
-        
-        window.requestAnimationFrame(()=>{
-            this.render()
-        })
     }
-    start(){
-        setInterval(()=>{
-            this.inputListener.resetInputs()
-            this.update()
-            this.physics()
-        }, this.timestep)
-        
-        window.requestAnimationFrame(()=>{
-            this.render()
-        })
+},
+/* Global Vars */{
+    STATE: {
+        stopped: 1,
+        running: 2,
+        paused: 3,
+        stopping: 4,
     }
-    update(){
-        $.each(this.objs, (index, obj)=>{
-            if(obj.update){
-                obj.update(this)
-            }
-        })
-    }
-}
+})
 module.exports = Engine

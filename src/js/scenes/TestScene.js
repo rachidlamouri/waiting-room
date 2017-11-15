@@ -14,7 +14,8 @@ class SceneTest extends Scene{
                 'left': new Input(['a', 'A'], [14]),
                 'down': new Input(['s', 'S'], [13]),
                 'jump': new Input(['w', 'W', ' '], [12, 0]),
-                'reload': new Input(['Escape'], [8]),
+                'reload': new Input(['r', 'R'], [8]),
+                'pause': new Input(['Escape'], [9]),
             }),
             new PlayerInputs({
                 'right': new Input(['ArrowRight'], [15]),
