@@ -22,8 +22,7 @@ class ContextMenu{
         this.menu.append(new remote.MenuItem({
             label: 'Inspect Element',
             click: (menuItem, browserWindow, clickEvent) => {
-                let position = this.getPosition()
-                remote.getCurrentWindow().inspectElement(position.x, position.y)
+                remote.getCurrentWindow().inspectElement(this.position.x, this.position.y)
             },
         }))
     }

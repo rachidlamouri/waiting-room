@@ -1,4 +1,4 @@
-let Scene = Object.assign(class{
+let Scene = $.extend(class{
     constructor(canvasWidth, canvasHeight, keyInputs, gamepadInputs){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()

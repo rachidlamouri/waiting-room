@@ -18,17 +18,6 @@ class Engine{
     getPlayerInputs(index){
         return this.inputListener.playerInputsList[index]
     }
-    start(){
-        setInterval(()=>{
-            this.inputListener.resetInputs()
-            this.update()
-            this.physics()
-        }, this.timestep)
-        
-        window.requestAnimationFrame(()=>{
-            this.render()
-        })
-    }
     physics(){
         $.each(this.objs, (index, obj)=>{
             if(obj.physics){
@@ -46,6 +35,17 @@ class Engine{
                 obj.draw(this.ctx, this.frameCount)
             }
         })
+        
+        window.requestAnimationFrame(()=>{
+            this.render()
+        })
+    }
+    start(){
+        setInterval(()=>{
+            this.inputListener.resetInputs()
+            this.update()
+            this.physics()
+        }, this.timestep)
         
         window.requestAnimationFrame(()=>{
             this.render()

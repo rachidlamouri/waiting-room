@@ -10,7 +10,7 @@ window.onerror = function(message, source, lineNum, colNum, error){
     }
 }
 
-var exec = remote.exec
+var {exec} = require('child_process')
 var fs = require('fs')
 var path = require('path')
 var DateFormat = require('dateformat')
@@ -44,15 +44,8 @@ window.Util = {
         
         return value
     },
-    isUndefined(value, arg1, arg2){
-        /* Usage:
-            isUndefined(value, valIfUndefined)
-            isUndefined(value, valIfDefined, valIfUndefined)
-        */
-        let definedVal = arguments.length < 3? value: arg1
-        let undefinedVal = arguments.length < 3? arg1: arg2
-        
-        return value == undefined? undefinedVal: definedVal
+    isUndefined(value, undefinedVal, definedVal){
+        return value == undefined? undefinedVal: (arguments.length < 3? value: definedVal)
     },
     run(command, done = function(output){}){
         let output = ''
@@ -97,7 +90,7 @@ $.extend(String.prototype, {
         return this == ''? 0: parseFloat(this.replace(/,/g, ''))
     },
     toAttr: function(value){
-        value = Util.isUndefined(value, `="${value}"`, '')
+        value = Util.isUndefined(value, '', `="${value}"`)
         return `[${this}${value}]`
     },
     toBool(){
@@ -112,30 +105,32 @@ $.extend(String.prototype, {
 })
 
 // Paths
-window.Paths = new (require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}Paths`))()
+window.Paths = require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}Paths`)
+window.paths = new Paths()
 
 // File
-var {File, AppFile, DataFile, ExtraFile, ResFile, DataFile, SrcFile} = require(Paths.srcFile('js/util/File'))
+var {File, AppFile, DataFile, ExtraFile, ResFile, DataFile, SrcFile} = require(paths.src('js/util/File'))
 
 // ContextMenu
-window.ContextMenu = require(Paths.srcFile('js/util/ContextMenu'))
-window.DefaultMenu = new ContextMenu($(document))
+window.ContextMenu = require(paths.src('js/util/ContextMenu'))
+window.contextMenu = new ContextMenu($(document))
 
 // Debug
-window.Debug = new (require(Paths.srcFile('js/util/Debug')))()
+window.Debug = require(paths.src('js/util/Debug'))
+window.debug = new Debug()
 
 // TestSuite
-window.TestSuite = require(Paths.srcFile('js/util/TestSuite'))
+window.TestSuite = require(paths.src('js/util/TestSuite'))
 
 // Game Engine
-window.Vect = require(Paths.engFile('Vect'))
-window.Box = require(Paths.engFile('Box'))
-window.Input = require(Paths.engFile('Input'))
-window.KeyInput = require(Paths.engFile('KeyInput'))
-window.PlayerInputs = require(Paths.engFile('PlayerInputs'))
-window.InputListener = require(Paths.engFile('InputListener'))
-window.Engine = require(Paths.engFile('Engine'))
-window.Scene = require(Paths.engFile('Scene'))
-window.GameObj = require(Paths.engFile('GameObj'))
-window.SpriteSheet = require(Paths.engFile('SpriteSheet'))
-window.Sprite = require(Paths.engFile('Sprite'))
+window.Vect = require(paths.eng('Vect'))
+window.Box = require(paths.eng('Box'))
+window.Input = require(paths.eng('Input'))
+window.KeyInput = require(paths.eng('KeyInput'))
+window.PlayerInputs = require(paths.eng('PlayerInputs'))
+window.InputListener = require(paths.eng('InputListener'))
+window.Engine = require(paths.eng('Engine'))
+window.Scene = require(paths.eng('Scene'))
+window.GameObj = require(paths.eng('GameObj'))
+window.SpriteSheet = require(paths.eng('SpriteSheet'))
+window.Sprite = require(paths.eng('Sprite'))

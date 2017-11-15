@@ -1,5 +1,5 @@
 var os = require('os')
-var Paths = window.Paths
+var paths = window.paths
 
 let File = $.extend(class{
     constructor(path){
@@ -82,31 +82,31 @@ let File = $.extend(class{
 
 class AppFile extends File{
     constructor(path){
-        super(Paths.appFile(path))
+        super(paths.app(path))
     }
 }
 
 class DataFile extends File{
     constructor(path){
-        super(Paths.dataFile(path))
+        super(paths.data(path))
     }
 }
 
 class ExtraFile extends File{
     constructor(path){
-        super(Paths.extraFile(path))
+        super(paths.extra(path))
     }
 }
 
 class ResFile extends File{
     constructor(path){
-        super(Paths.resFile(path))
+        super(paths.res(path))
     }
 }
 
 class SrcFile extends File{
     constructor(path){
-        super(Paths.srcFile(path))
+        super(paths.src(path))
     }
 }
 

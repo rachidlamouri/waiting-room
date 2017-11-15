@@ -1,4 +1,4 @@
-var Wall = require(Paths.spriteFile('Wall'))
+var Wall = require(paths.sprite('Wall'))
 
 class Platform extends GameObj{
     constructor(x, y, width, height){

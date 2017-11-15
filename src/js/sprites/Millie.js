@@ -1,8 +1,8 @@
-var Dog = require(Paths.spriteFile('Dog'))
+var Dog = require(paths.sprite('Dog'))
 
 class Millie extends Dog{
     constructor(x, y){
-        super(x, y, new SpriteSheet(Paths.assetFile('millie.png'), Dog.COLUMNS, Dog.ANIMATIONS))
+        super(x, y, new SpriteSheet(paths.asset('millie.png'), Dog.COLUMNS, Dog.ANIMATIONS))
     }
 }
 module.exports = Millie

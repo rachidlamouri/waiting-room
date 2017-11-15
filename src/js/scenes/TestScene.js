@@ -1,10 +1,10 @@
-var Millie = require(Paths.spriteFile('Millie'))
-var Coco = require(Paths.spriteFile('Coco'))
+var Millie = require(paths.sprite('Millie'))
+var Coco = require(paths.sprite('Coco'))
 
-var Floor = require(Paths.spriteFile('Floor'))
-var Wall = require(Paths.spriteFile('Wall'))
-var Platform = require(Paths.spriteFile('Platform'))
-var Elevator = require(Paths.spriteFile('Elevator'))
+var Floor = require(paths.sprite('Floor'))
+var Wall = require(paths.sprite('Wall'))
+var Platform = require(paths.sprite('Platform'))
+var Elevator = require(paths.sprite('Elevator'))
 
 class SceneTest extends Scene{
     constructor(){

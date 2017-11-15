@@ -1,9 +1,9 @@
 var remote = require('electron').remote
 
-var Elevator = require(Paths.spriteFile('Elevator'))
-var Floor = require(Paths.spriteFile('Floor'))
-var Platform = require(Paths.spriteFile('Platform'))
-var Wall = require(Paths.spriteFile('Wall'))
+var Elevator = require(paths.sprite('Elevator'))
+var Floor = require(paths.sprite('Floor'))
+var Platform = require(paths.sprite('Platform'))
+var Wall = require(paths.sprite('Wall'))
 
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){

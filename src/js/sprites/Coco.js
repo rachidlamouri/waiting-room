@@ -1,8 +1,8 @@
-var Dog = require(Paths.spriteFile('Dog'))
+var Dog = require(paths.sprite('Dog'))
 
 class Coco extends Dog{
     constructor(x, y){
-        super(x, y, new SpriteSheet(Paths.assetFile('coco.png'), Dog.COLUMNS, Dog.ANIMATIONS))
+        super(x, y, new SpriteSheet(paths.asset('coco.png'), Dog.COLUMNS, Dog.ANIMATIONS))
         
         this.setAnimation('sitLeft')
     }

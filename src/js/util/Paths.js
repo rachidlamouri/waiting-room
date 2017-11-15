@@ -14,63 +14,64 @@ var path = require('path')
 
 var Paths = $.extend(class{
     constructor(){
-        this.app = `${__dirname.split(Paths.SRC_NAME)[0]}`
-        this.src = `${this.app}${Paths.SRC_NAME}${Paths.DELIMITER}`
+        this.folders = {}
+        this.folders.app = `${__dirname.split(Paths.SRC_NAME)[0]}`
+        this.folders.src = `${this.folders.app}${Paths.SRC_NAME}${Paths.DELIMITER}`
         
-        let appName = path.basename(this.app)
+        let appName = path.basename(this.folders.app)
         this.asarExists = appName == Paths.ASAR_NAME
         
-        let appPackage = JSON.parse(fs.readFileSync(this.appFile('package.json')))
-        let dataName = this.asarExists? appPackage.name: appPackage.name+Paths.DATA_SUFFIX
+        let appPackage = JSON.parse(fs.readFileSync(this.app('package.json')))
+        let dataName = this.asarExists? appPackage.productName: Paths.DEFAULT_DATA_NAME
         
-        this.res = this.asarExists? this.app.split(appName)[0]: this.app
-        this.data = this.asarExists? `${app.getPath('appData')}${Paths.DELIMITER}${dataName}${Paths.DELIMITER}`: `${this.appFile(dataName)}${Paths.DELIMITER}`
-        this.extra = `${this.resFile(Paths.EXTRA_NAME)}${Paths.DELIMITER}`
+        this.folders.res = this.asarExists? this.folders.app.split(appName)[0]: this.folders.app
+        this.folders.data = this.asarExists? `${app.getPath('appData')}${Paths.DELIMITER}${dataName}${Paths.DELIMITER}`: `${this.app(dataName)}${Paths.DELIMITER}`
+        this.folders.extra = `${this.res(Paths.EXTRA_NAME)}${Paths.DELIMITER}`
         
-        if(!fs.existsSync(this.extra)){
-            fs.mkdirSync(this.extra)
+        if(!fs.existsSync(this.folders.extra)){
+            fs.mkdirSync(this.folders.extra)
         }
         
-        if(!fs.existsSync(this.data)){
-            fs.mkdirSync(this.data)
+        if(!fs.existsSync(this.folders.data)){
+            fs.mkdirSync(this.folders.data)
         }
     }
     
-    appFile(filePath){
-        return this.app+filePath
+    app(relativePath = ''){
+        return this.folders.app+relativePath
     }
-    assetFile(filename){
-        return this.srcFile('images/assets/')+filename
+    asset(relativePath = ''){
+        return this.src('img/assets/')+relativePath
     }
-    dataFile(filePath){
-        return this.data+filePath
+    data(relativePath = ''){
+        return this.folders.data+relativePath
     }
-    engFile(filename){
-        return this.srcFile('js/engine/')+filename
+    eng(relativePath = ''){
+        return this.src('js/engine/')+relativePath
     }
-    extraFile(filePath){
-        return this.extra+filePath
+    extra(relativePath = ''){
+        return this.folders.extra+relativePath
     }
     getAsarExists(){
         return this.asarExists
     }
-    resFile(filePath){
-        return this.res+filePath
+    scene(relativePath = ''){
+        return this.src('js/scenes/')+relativePath
     }
-    sceneFile(filename){
-        return this.srcFile('js/scenes/')+filename
+    sprite(relativePath = ''){
+        return this.src('js/sprites/')+relativePath
     }
-    spriteFile(filename){
-        return this.srcFile('js/sprites/')+filename
+    res(relativePath = ''){
+        return this.folders.res+relativePath
     }
-    srcFile(filePath){
-        return this.src+filePath
+    src(relativePath = ''){
+        return this.folders.src+relativePath
     }
 },
 /* Global */{
     APP_NAME: 'app',
     ASAR_NAME: 'app.asar',
-    DATA_SUFFIX: '-Data',
+    DEFAULT_DATA_NAME: 'data',
     DELIMITER: path.sep,
     EXTRA_NAME: 'extra',
     SRC_NAME: 'src',
