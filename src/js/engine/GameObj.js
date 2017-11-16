@@ -1,3 +1,6 @@
+var Vect = EngineUtil.Vect
+var Box = EngineUtil.Box
+
 class GameObj{
     constructor(x=0, y=0, width=0, height=0, options = {}){
         if(options.draw === false || typeof options.draw == 'function'){
@@ -5,7 +8,7 @@ class GameObj{
         }
         
         $.extend(this, {
-            id: TestSuite.randomText(100),
+            id: Util.randomText(100),
             controllerId: undefined,
             update: options.update,
             pos: new Vect(x, y),

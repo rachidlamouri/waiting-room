@@ -1,3 +1,5 @@
+var InputListener = EngineUtil.InputListener
+
 let Engine = $.extend(class{
     constructor(canvas, playerInputsList){
         $.extend(this, {

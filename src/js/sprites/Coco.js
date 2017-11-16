@@ -1,3 +1,5 @@
+var paths = Util.paths
+var SpriteSheet = EngineUtil.SpriteSheet
 var Dog = require(paths.sprite('Dog'))
 
 class Coco extends Dog{

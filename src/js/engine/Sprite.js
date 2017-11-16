@@ -1,3 +1,6 @@
+var Vect = EngineUtil.Vect
+var GameObj = EngineUtil.GameObj
+
 class Sprite extends GameObj{
     constructor(x, y, spriteSheet, options){
         super(x, y, spriteSheet.frameWidth, spriteSheet.frameHeight, options)

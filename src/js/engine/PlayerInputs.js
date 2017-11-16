@@ -1,3 +1,5 @@
+var KeyInput = EngineUtil.KeyInput
+
 class PlayerInputs{
     constructor(inputs){
         $.extend(this, {

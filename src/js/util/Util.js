@@ -8,6 +8,10 @@ window.onerror = function(message, source, lineNum, colNum, error){
         let output = error.message+os.EOL+error.stack
         dialog.showErrorBox('Error', output)
     }
+    
+    if(window.Util == undefined || Util.debug == undefined){
+        win.webContents.openDevTools()
+    }
 }
 
 var {exec} = require('child_process')
@@ -17,6 +21,8 @@ var DateFormat = require('dateformat')
 
 // Util
 window.Util = {
+    CHARS: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+    
     FORMAT_COMMAS: ',',
     FORMAT_PERCENT: '%',
     
@@ -46,6 +52,13 @@ window.Util = {
     },
     isUndefined(value, undefinedVal, definedVal){
         return value == undefined? undefinedVal: (arguments.length < 3? value: definedVal)
+    },
+    randomText(length = 20){
+        let string = ''
+        for(let i=0; i < length; i++){
+            string += Util.CHARS.charAt(Math.floor(Math.random() * Util.CHARS.length))
+        }
+        return string
     },
     run(command, done = function(output){}){
         let output = ''
@@ -105,32 +118,19 @@ $.extend(String.prototype, {
 })
 
 // Paths
-window.Paths = require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}Paths`)
-window.paths = new Paths()
+Util.Paths = require(`${__dirname.split('src')[0]}${path.sep}src${path.sep}js${path.sep}util${path.sep}Paths`)
+Util.paths = new Util.Paths()
 
 // File
-var {File, AppFile, DataFile, ExtraFile, ResFile, DataFile, SrcFile} = require(paths.src('js/util/File'))
+$.extend(Util, require(Util.paths.src('js/util/File')))
 
 // ContextMenu
-window.ContextMenu = require(paths.src('js/util/ContextMenu'))
-window.contextMenu = new ContextMenu($(document))
+Util.ContextMenu = require(Util.paths.src('js/util/ContextMenu'))
+Util.contextMenu = new Util.ContextMenu($(document))
 
 // Debug
-window.Debug = require(paths.src('js/util/Debug'))
-window.debug = new Debug()
+Util.Debug = require(Util.paths.src('js/util/Debug'))
+Util.debug = new Util.Debug()
 
 // TestSuite
-window.TestSuite = require(paths.src('js/util/TestSuite'))
-
-// Game Engine
-window.Vect = require(paths.eng('Vect'))
-window.Box = require(paths.eng('Box'))
-window.Input = require(paths.eng('Input'))
-window.KeyInput = require(paths.eng('KeyInput'))
-window.PlayerInputs = require(paths.eng('PlayerInputs'))
-window.InputListener = require(paths.eng('InputListener'))
-window.Engine = require(paths.eng('Engine'))
-window.Scene = require(paths.eng('Scene'))
-window.GameObj = require(paths.eng('GameObj'))
-window.SpriteSheet = require(paths.eng('SpriteSheet'))
-window.Sprite = require(paths.eng('Sprite'))
+Util.TestSuite = require(Util.paths.src('js/util/TestSuite'))

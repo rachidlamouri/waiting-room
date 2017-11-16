@@ -1,3 +1,6 @@
+var paths = Util.paths
+var Box = EngineUtil.Box
+var GameObj = EngineUtil.GameObj
 var Floor = require(paths.sprite('Floor'))
 
 class Elevator extends GameObj{

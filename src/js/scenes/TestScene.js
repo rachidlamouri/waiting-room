@@ -1,3 +1,11 @@
+var paths = Util.paths
+
+var Engine = EngineUtil.Engine
+var Input = EngineUtil.Input
+var PlayerInputs = EngineUtil.PlayerInputs
+var Scene = EngineUtil.Scene
+var SpriteSheet = EngineUtil.SpriteSheet
+
 var Millie = require(paths.sprite('Millie'))
 var Coco = require(paths.sprite('Coco'))
 

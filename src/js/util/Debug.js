@@ -1,5 +1,6 @@
 var remote = require('electron').remote
-var ContextMenu = window.ContextMenu
+var ContextMenu = Util.ContextMenu
+var paths = Util.paths
 
 let Debug = $.extend(class{
     constructor(){
@@ -14,7 +15,7 @@ let Debug = $.extend(class{
         
         // Open dev tools
         let openDevToolsMeta = $(Debug.ATTR_OPEN_TOOLS.toAttr())
-        if(openDevToolsMeta.length > 0 && openDevToolsMeta.attr(Debug.ATTR_OPEN_TOOLS).toBool()){
+        if(!paths.getAsarExists() && openDevToolsMeta.length > 0 && openDevToolsMeta.attr(Debug.ATTR_OPEN_TOOLS).toBool()){
             remote.getCurrentWindow().webContents.openDevTools()
         }
     }

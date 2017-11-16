@@ -1,5 +1,7 @@
 var remote = require('electron').remote
+var paths = Util.paths
 
+var Sprite = EngineUtil.Sprite
 var Elevator = require(paths.sprite('Elevator'))
 var Floor = require(paths.sprite('Floor'))
 var Platform = require(paths.sprite('Platform'))

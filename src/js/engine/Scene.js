@@ -1,3 +1,6 @@
+var paths = Util.paths
+var Engine = EngineUtil.Engine
+
 let Scene = $.extend(class{
     constructor(canvasWidth, canvasHeight, keyInputs, gamepadInputs){
         if(document.readyState !== 'complete'){

@@ -1,3 +1,5 @@
+var Vect = EngineUtil.Vect
+
 class Box{
     constructor(x, y, width, height){
         $.extend(this, {

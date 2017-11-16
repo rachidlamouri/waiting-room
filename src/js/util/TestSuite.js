@@ -4,14 +4,6 @@ let TestSuite = $.extend(class{
         init.call(this)
     }
     
-    static randomText(length = 20){
-        let string = ''
-        for(let i=0; i < length; i++){
-            string += TestSuite.CHARS.charAt(Math.floor(Math.random() * TestSuite.CHARS.length))
-        }
-        return string
-    }
-    
     assert(title, value, expected, endSuiteOnFail = true){
         if(value != expected){
             if(endSuiteOnFail){
@@ -40,8 +32,6 @@ let TestSuite = $.extend(class{
     }
 },
 /* Global Vars*/{
-    CHARS: 'abcdefghijklmnopqrstuvwxyz1234567890',
-    
     AssertionFailedException: class{
         constructor(title, value, expected){
             this.message = `${title}: expected ${expected} was ${value}`

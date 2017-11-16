@@ -1,5 +1,6 @@
+var fs = require('fs')
 var os = require('os')
-var paths = window.paths
+var paths = Util.paths
 
 let File = $.extend(class{
     constructor(path){
