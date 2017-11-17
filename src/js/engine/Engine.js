@@ -19,8 +19,11 @@ let Engine = $.extend(class{
     addObj(gameObj){
         this.objs.push(gameObj)
     }
+    getPlayerInputStates(index){
+        return this.inputListener.playerInputsList[index].getInputStates()
+    }
     getPlayerInputs(index){
-        return this.inputListener.playerInputsList[index]
+        return this.inputListener.playerInputsList[index].inputs
     }
     isPaused(){
         return this.state == Engine.STATE.paused
@@ -118,13 +121,12 @@ let Engine = $.extend(class{
         })
     }
     render(){
-        this.frameCount = ++this.frameCount % this.fps
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.lineWidth = 2
         
         $.each(this.objs, (index, obj)=>{
             if(obj.draw){
-                obj.draw(this.ctx, this.frameCount)
+                obj.draw(this.ctx, this.timestep)
             }
         })
     }

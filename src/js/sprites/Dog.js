@@ -55,7 +55,7 @@ class Dog extends Sprite{
         if(this.controllerId == undefined){
             return
         }
-        let inputs = engine.getPlayerInputs(this.controllerId).inputs
+        let inputs = engine.getPlayerInputs(this.controllerId)
         
         if(!this.pausing && inputs.pause.pressed){
             this.pausing = true
@@ -80,7 +80,7 @@ class Dog extends Sprite{
             return
         }
         
-        let inputs = engine.getPlayerInputs(this.controllerId).inputs
+        let inputs = engine.getPlayerInputs(this.controllerId)
         this.sitting = false
         
         this.vx = 0

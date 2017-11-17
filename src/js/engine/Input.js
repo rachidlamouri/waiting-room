@@ -11,7 +11,7 @@ class Input{
         this.pressed = false
         
         $.each(this.keyList, (index, key)=>{
-            this.pressed |= keyInputs[key].pressed
+            this.pressed = this.pressed || keyInputs[key].pressed
         })
         
         if(gamepad == null){
@@ -19,7 +19,7 @@ class Input{
         }
         
         $.each(this.buttonIndices, (index, buttonIndex)=>{
-            this.pressed |= gamepad.buttons[buttonIndex].pressed
+            this.pressed = this.pressed || gamepad.buttons[buttonIndex].pressed
         })
     }
 }

@@ -21,7 +21,12 @@ class GameObj{
             gravity: Util.isUndefined(options.gravity, .01),
             collisionList: Util.isUndefined(options.collisionList, []),
             triggerList: Util.isUndefined(options.triggerList, []),
+            state: {
+                simpleActions: {},
+            },
         })
+        
+        $.extend(this.state, Util.isUndefined(options.state, {}))
     }
     addCollisionType(objClass){
         this.collisionList.push(objClass)
@@ -59,6 +64,19 @@ class GameObj{
                 })
             }
         })
+    }
+    checkSimpleAction(input, key, action){
+        if((this.state.simpleActions[key] == undefined || this.state.simpleActions[key] == 0) && input){
+            // Perform action
+            this.state.simpleActions[key] = 1
+            action()
+        }else if(this.state.simpleActions[key] == 1 && input){
+            // Wait for input to be released
+            this.state.simpleActions[key] = 2
+        }else if((this.state.simpleActions[key] == 1 || this.state.simpleActions[key] == 2) && !input){
+            // Wait for input to be pressed
+            this.state.simpleActions[key] = 0
+        }
     }
     draw(ctx, frameCount){
         this.getMeshBox().draw(ctx)

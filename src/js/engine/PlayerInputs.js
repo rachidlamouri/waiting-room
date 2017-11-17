@@ -14,6 +14,14 @@ class PlayerInputs{
         })
     }
     
+    getInputStates(){
+        let inputStates = {}
+        $.each(this.inputs, (key, input)=>{
+            inputStates[key] = input.pressed
+        })
+        
+        return inputStates
+    }
     keydown(keyEvent){
         $.each(this.keyInputs, (key, keyInput)=>{
             keyInput.keydown(keyEvent)
