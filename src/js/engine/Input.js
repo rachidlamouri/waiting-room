@@ -23,4 +23,22 @@ class Input{
         })
     }
 }
+$.extend(Input, {
+    A: 0,
+    B: 1,
+    X: 2,
+    Y: 3,
+    LB: 4,
+    RB: 5,
+    LT: 6,
+    RT: 7,
+    SELECT: 8,
+    START: 9,
+    L_CLICK: 10,
+    R_CLICK: 11,
+    PAD_UP: 12,
+    PAD_DOWN: 13,
+    PAD_LEFT: 14,
+    PAD_RIGHT: 15,
+})
 module.exports = Input

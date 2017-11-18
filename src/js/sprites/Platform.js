@@ -4,7 +4,7 @@ var GameObj = EngineUtil.GameObj
 var Wall = require(paths.sprite('Wall'))
 
 class Platform extends GameObj{
-    constructor(x, y, width, height){
+    constructor(x, y, width, height, speed){
         super(x, y, width, height, {
             physics: true,
             gravity: 0,
@@ -14,7 +14,7 @@ class Platform extends GameObj{
         })
         
         this.movingRight = true
-        this.speed = .06
+        this.speed = Util.isUndefined(speed, .06)
     }
     draw(ctx){
         this.getTriggerBox().draw(ctx, '#FF0000')
@@ -28,7 +28,7 @@ class Platform extends GameObj{
         }
     }
     update(){
-        this.vx = this.movingRight? this.speed: -this.speed
+        this.vel.x = this.movingRight? this.speed: -this.speed
     }
 }
 module.exports = Platform

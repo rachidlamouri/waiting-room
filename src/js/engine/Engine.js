@@ -85,6 +85,12 @@ let Engine = $.extend(class{
             }else{
                 this.timestep = timestamp - this.lastTimestamp
                 this.lastTimestamp = timestamp
+                
+                if(this.timestep > 40){
+                    this.timestep = 40
+                    this.lastTimestamp = timestamp + this.timestep
+                }
+                
                 this.computeFrame()
             }
         })

@@ -8,17 +8,18 @@ class GameObj{
         }
         
         $.extend(this, {
-            id: Util.randomText(100),
+            id: GameObj.OBJ_COUNT++,
             controllerId: undefined,
             update: options.update,
             pos: new Vect(x, y),
             dim: new Vect(width, height),
-            vx: 0,
-            vy: 0,
+            vel: new Vect(0,0),
+            terminalVel: Util.isUndefined(options.terminalVel, new Vect(0, .1)),
+            acc: new Vect(0,0),
             collider: options.collider === true? new Box(0, 0, width, height): options.collider,
             trigger: options.trigger === true? new Box(0, 0, width, height): options.trigger,
             physics: options.physics === true,
-            gravity: Util.isUndefined(options.gravity, .01),
+            gravity: Util.isUndefined(options.gravity, .001),
             collisionList: Util.isUndefined(options.collisionList, []),
             triggerList: Util.isUndefined(options.triggerList, []),
             state: {
@@ -32,14 +33,15 @@ class GameObj{
         this.collisionList.push(objClass)
     }
     applyPhysics(engine){
-        if(!this.ignoreGravity){
-            this.vy += this.gravity
-        }else{
-            this.ignoreGravity = false
+        this.vel.x += this.acc.x*engine.timestep
+        this.vel.y += (this.gravity + this.acc.y)*engine.timestep
+        
+        if(this.vel.y > this.terminalVel.y){
+            this.vel.y = this.terminalVel.y
         }
         
-        this.pos.y += this.vy*engine.timestep
-        this.pos.x += this.vx*engine.timestep
+        this.pos.x += this.vel.x*engine.timestep
+        this.pos.y += this.vel.y*engine.timestep
         
         let collisionBox = this.getColliderBox()
         let triggerBox = this.getTriggerBox()
@@ -100,33 +102,62 @@ class GameObj{
     handleCollision(collider){
         let box
         let colliderBox
+        let collided = false
         
         box = this.getColliderBox()
         colliderBox = collider.getColliderBox()
-        if(box.bottom > colliderBox.top + 2 && box.top < colliderBox.bottom - 2){
-            if(this.vx > 0 && box.center.x < colliderBox.left){
-                this.vx = 0
-                this.pos.x -= (box.right - colliderBox.left + .001)
-            }else if(this.vx < 0 && box.center.x > colliderBox.right){
-                this.vx = 0
-                this.pos.x += (colliderBox.right - box.left + .001)
+        if(box.bottom > colliderBox.top + GameObj.COLLISION_THRESHOLD && box.top < colliderBox.bottom - GameObj.COLLISION_THRESHOLD){
+            if(this.vel.x > 0 && box.center.x < colliderBox.left){
+                collided = true
+                if(this.onCollisionX){
+                    this.onCollisionX(collider)
+                }
+                
+                this.vel.x = 0
+                this.pos.x = colliderBox.left - this.dim.width/2
+            }else if(this.vel.x < 0 && box.center.x > colliderBox.right){
+                collided = true
+                if(this.onCollisionX){
+                    this.onCollisionX(collider)
+                }
+                
+                this.vel.x = 0
+                this.pos.x = colliderBox.right + this.dim.width/2
             }
         }
         
         box = this.getColliderBox()
         colliderBox = collider.getColliderBox()
-        if(box.right > colliderBox.left + 2 && box.left < colliderBox.right - 2){
-            if(this.vy > 0 && box.center.y < colliderBox.top){
-                this.vy = 0
-                this.pos.y -= (box.bottom - colliderBox.top + .001)
-            }else if(this.vy < 0 && box.center.y > colliderBox.bottom){
-                this.vy = 0
-                this.pos.y += (colliderBox.bottom - box.top + .001)
+        if(box.right > colliderBox.left + GameObj.COLLISION_THRESHOLD && box.left < colliderBox.right - GameObj.COLLISION_THRESHOLD){
+            if(this.vel.y > 0 && box.center.y < colliderBox.top){
+                collided = true
+                if(this.onCollisionY){
+                    this.onCollisionY(collider)
+                }
+                
+                this.vel.y = 0
+                this.pos.y = colliderBox.top - this.dim.height/2
+            }else if(this.vel.y < 0 && box.center.y > colliderBox.bottom){
+                collided = true
+                if(this.onCollisionY){
+                    this.onCollisionY(collider)
+                }
+                
+                this.vel.y = 0
+                this.pos.y = colliderBox.bottom + this.dim.height/2
             }
+        }
+        
+        if(collided && this.onCollision){
+            this.onCollision(collider)
         }
     }
     setControllerId(controllerId){
         this.controllerId = controllerId
     }
 }
+$.extend(GameObj, {
+    COLLISION_THRESHOLD: 2,
+    OBJ_COUNT: 0,
+})
 module.exports = GameObj

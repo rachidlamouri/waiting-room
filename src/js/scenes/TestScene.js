@@ -18,44 +18,46 @@ class SceneTest extends Scene{
     constructor(){
         super(320, 240, [
             new PlayerInputs({
-                'right': new Input(['d', 'D'], [15]),
-                'left': new Input(['a', 'A'], [14]),
-                'down': new Input(['s', 'S'], [13]),
-                'jump': new Input(['w', 'W', ' '], [12, 0]),
-                'reload': new Input(['r', 'R'], [8]),
-                'pause': new Input(['Escape'], [9]),
+                'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
+                'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
+                'jump': new Input(['w', 'W', ' '], [Input.PAD_UP, Input.A]),
+                'sit': new Input(['s', 'S'], [Input.PAD_DOWN]),
+                'bark': new Input(['q', 'Q'], [Input.B]),
+                'reload': new Input(['r', 'R'], [Input.SELECT]),
+                'pause': new Input(['Escape'], [Input.START]),
             }),
             new PlayerInputs({
-                'right': new Input(['ArrowRight'], [15]),
-                'left': new Input(['ArrowLeft'], [14]),
-                'down': new Input(['ArrowDown'], [13]),
-                'jump': new Input(['ArrowUp'], [12, 0]),
+                'left': new Input(['ArrowLeft'], [Input.PAD_LEFT]),
+                'right': new Input(['ArrowRight'], [Input.PAD_RIGHT]),
+                'jump': new Input(['ArrowUp'], [Input.PAD_RIGHT, Input.PAD_RIGHT]),
+                'sit': new Input(['ArrowDown'], [Input.PAD_RIGHT]),
+                'bark': new Input(['/', '?'], [Input.PAD_RIGHT]),
             })
         ])
     }
     
     load(){
         let coco = new Coco(300, 150)
-        let millie = new Millie(100, 140)
+        let millie = new Millie(50, 30)
         millie.setControllerId(0)
-        //coco.setControllerId(1)
+        coco.setControllerId(1)
         
         super.load([
             // Floor and side walls
-            new Floor(160, 230, 320, 20),
-            new Wall(5,   110, 10, 220),
-            new Wall(315, 110, 10, 220),
-            new Elevator(25, 205, 30, 5),
+            new Floor(160, 200, 320, 20),
+            new Wall(5,   80, 10, 220),
+            new Wall(315, 80, 10, 220),
+            new Elevator(25, 70, 30, 5),
             
             // Large platforms
             new Platform(100, 50, 25, 25),
-            new Wall(200, 50, 25, 25),
-            new Wall(50, 50, 25, 25),
+            new Platform(200, 50, 25, 25, 0),
+            new Platform(50, 50, 25, 25, 0),
             
             // Small platforms
-            new Platform(100, 150, 20, 10),
-            new Platform(150, 150, 20, 10),
-            new Platform(200, 150, 20, 10),
+            new Platform(30, 150, 40, 10),
+            new Platform(100, 150, 40, 10),
+            new Platform(170, 150, 40, 10),
             
             /*
             new Wall(128, 205, 20, 10),
@@ -68,8 +70,8 @@ class SceneTest extends Scene{
             new Wall(228, 217, 8, 6),
             */
             // Characters
-            millie,
             coco,
+            millie,
         ])
     }
 }
