@@ -38,6 +38,8 @@ class SceneTest extends Scene{
     
     load(){
         let coco = new Coco(300, 150)
+        coco.setAnimation('idleLeft')
+        
         let millie = new Millie(50, 30)
         millie.setControllerId(0)
         coco.setControllerId(1)

@@ -7,7 +7,7 @@ class Platform extends GameObj{
         super(x, y, width, height, {
             physics: true,
             gravity: 0,
-            collisionList: [Wall, Platform],
+            collisionList: ['Wall', 'Platform'],
             collider: true,
             trigger: new Box(0, height/2 + 1, width, 1),
         })

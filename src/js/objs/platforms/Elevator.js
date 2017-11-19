@@ -8,7 +8,7 @@ class Elevator extends GameObj{
         super(x, y, width, height, {
             physics: true,
             gravity: 0,
-            collisionList: [Floor],
+            collisionList: ['Floor'],
             collider: true,
             trigger: new Box(0, height/2 + 1, width, 1),
             terminalVel: new Vect(0, .1),
@@ -37,7 +37,7 @@ class Elevator extends GameObj{
         }
     }
     onCollisionY(collider){
-        if(collider.instanceoOf('Floor')){
+        if(collider.instanceOf('Floor')){
             this.state.elevating = 2
         }
     }
