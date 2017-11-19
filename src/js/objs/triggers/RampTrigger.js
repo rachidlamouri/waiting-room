@@ -19,6 +19,8 @@ class RampTrigger extends LevelTrigger{
         $.each(walls, (index, wall)=>{
             wall.collapse()
         })
+        
+        engine.rotateCanvas(-30)
     }
 }
 module.exports = RampTrigger

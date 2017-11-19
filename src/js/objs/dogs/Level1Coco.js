@@ -18,5 +18,12 @@ class Level1Coco extends Coco{
             trigger.onTrigger(engine)
         }
     }
+    update(engine){
+        super.update(engine)
+        
+        if(!this.state.canWalk){
+            this.vel.x = -this.walkSpeed/2
+        }
+    }
 }
 module.exports = Level1Coco

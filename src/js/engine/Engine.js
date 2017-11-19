@@ -68,6 +68,11 @@ let Engine = $.extend(class{
     removeObjById(id){
         this.removeIds.push(id)
     }
+    rotateCanvas(degrees){
+        this.ctx.translate(this.canvas.width/2, this.canvas.height/2)
+        this.ctx.rotate(Math.PI*degrees/180)
+        this.ctx.translate(-this.canvas.width/2, -this.canvas.height/2)
+    }
     setState(state){
         this.state = state
     }
@@ -159,7 +164,7 @@ let Engine = $.extend(class{
         })
     }
     render(){
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.clearRect(-this.canvas.width/2, -this.canvas.height/2, 2*this.canvas.width, 2*this.canvas.height)
         this.ctx.lineWidth = 2
         
         $.each(this.objs, (index, obj)=>{

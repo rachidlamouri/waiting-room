@@ -29,21 +29,21 @@ class Level1 extends Scene{
     }
     
     load(){
-        let coco = new Level1Coco(40, 140)
+        let coco = new Level1Coco(200, 140)//new Level1Coco(40, 140)
         coco.setControllerId(0)
         
         super.load([
             // Floor
-            new Floor(160, 150, 320, 10),
+            new Floor(160, 150, 400, 10),
             
             // Left/right barriers
             new CollapseWall(-5, 120, 10, 50),
             new CollapseWall(325, 120, 10, 50),
             
             // Hurdles
-            new CollapseWall(90, 140, 4, 6),
-            new CollapseWall(150, 140, 4, 6),
-            new CollapseWall(220, 140, 4, 6),
+            new Wall(90, 140, 4, 6),
+            new Wall(150, 140, 4, 6),
+            new Wall(220, 140, 4, 6),
             
             // Trigger 1
             new RampTrigger(270, 114, 70, 60),
