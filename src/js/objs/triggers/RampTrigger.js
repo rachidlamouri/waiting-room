@@ -10,8 +10,15 @@ class RampTrigger extends LevelTrigger{
     
     onTrigger(engine){
         engine.removeObjById(this.id)
-        let walls = engine.getObjsByTag('collapse')
-        console.log(walls)
+        
+        let coco = engine.getObjsByClass('Dog')
+        let walls = engine.getObjsByClass('CollapseWall')
+        
+        coco[0].state.canWalk = false
+        
+        $.each(walls, (index, wall)=>{
+            wall.collapse()
+        })
     }
 }
 module.exports = RampTrigger

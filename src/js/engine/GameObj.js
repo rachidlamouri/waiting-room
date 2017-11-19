@@ -46,28 +46,33 @@ class GameObj{
         
         let collisionBox = this.getColliderBox()
         let triggerBox = this.getTriggerBox()
-        $.each(engine.objs, (index, obj)=>{
+        
+        for(let k=0; k < engine.objs.length && (collisionBox != undefined || triggerBox != undefined); k++){
+            let obj = engine.objs[k]
             if(this.id == obj.id){
-                return
+                continue
             }
             
             if(collisionBox != undefined){
-                $.each(this.collisionList, (index, collisionType)=>{
-                    if(obj instanceof collisionType && collisionBox.checkCollision(obj.getColliderBox())){
+                for(let i=0; i < this.collisionList.length; i++){
+                    let collisionType = this.collisionList[i]
+                    if(obj.instanceOf(collisionType) && collisionBox.checkCollision(obj.getColliderBox())){
                         this.handleCollision(obj)
+                        break
                     }
-                })
+                }
             }
             
             if(triggerBox != undefined){
-                $.each(obj.triggerList, (index, triggerType)=>{
-                    
-                    if(this instanceof triggerType && triggerBox.checkCollision(obj.getColliderBox()) && obj.handleTrigger){
+                for(let i=0; i < obj.triggerList.length; i++){
+                    let triggerType = obj.triggerList[i]
+                    if(this.instanceOf(triggerType) && triggerBox.checkCollision(obj.getColliderBox()) && obj.handleTrigger){
                         obj.handleTrigger(engine, this)
+                        break
                     }
-                })
+                }
             }
-        })
+        }
     }
     checkSimpleAction(input, key, action){
         if((this.state.simpleActions[key] == undefined || this.state.simpleActions[key] == 0) && input){
@@ -154,6 +159,9 @@ class GameObj{
             this.onCollision(collider)
         }
     }
+    instanceOf(name){
+        return GameObj.instanceOf(this, name)
+    }
     setControllerId(controllerId){
         this.controllerId = controllerId
     }
@@ -161,5 +169,10 @@ class GameObj{
 $.extend(GameObj, {
     COLLISION_THRESHOLD: 2,
     OBJ_COUNT: 0,
+    
+    instanceOf(obj, name){
+        let constructorName = obj.__proto__.constructor.name
+        return constructorName != 'Object' && (constructorName == name || GameObj.instanceOf(obj.__proto__, name))
+    },
 })
 module.exports = GameObj

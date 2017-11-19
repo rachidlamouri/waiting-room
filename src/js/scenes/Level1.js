@@ -11,6 +11,7 @@ var Level1Coco = require(paths.obj('dogs/Level1Coco'))
 
 var Floor = require(paths.obj('barriers/Floor'))
 var Wall = require(paths.obj('barriers/Wall'))
+var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 
 class Level1 extends Scene{
     constructor(){
@@ -28,8 +29,6 @@ class Level1 extends Scene{
     }
     
     load(){
-        let collapseTag = ['collapse']
-        
         let coco = new Level1Coco(40, 140)
         coco.setControllerId(0)
         
@@ -38,26 +37,16 @@ class Level1 extends Scene{
             new Floor(160, 150, 320, 10),
             
             // Left/right barriers
-            new Wall(-5, 120, 10, 50, {
-                tags: collapseTag,
-            }),
-            new Wall(325, 120, 10, 50, {
-                tags: collapseTag,
-            }),
+            new CollapseWall(-5, 120, 10, 50),
+            new CollapseWall(325, 120, 10, 50),
             
             // Hurdles
-            new Wall(90, 140, 4, 6, {
-                tags: collapseTag,
-            }),
-            new Wall(150, 140, 4, 6, {
-                tags: collapseTag,
-            }),
-            new Wall(220, 140, 4, 6, {
-                tags: collapseTag,
-            }),
+            new CollapseWall(90, 140, 4, 6),
+            new CollapseWall(150, 140, 4, 6),
+            new CollapseWall(220, 140, 4, 6),
             
             // Trigger 1
-            new RampTrigger(250, 140, 50, 60),
+            new RampTrigger(270, 114, 70, 60),
             
             // Player
             coco,

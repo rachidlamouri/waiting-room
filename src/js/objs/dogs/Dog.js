@@ -4,18 +4,12 @@ var paths = Util.paths
 var Vect = EngineUtil.Vect
 var Sprite = EngineUtil.Sprite
 
-var LevelTrigger = require(paths.obj('triggers/LevelTrigger'))
-var Elevator = require(paths.obj('platforms/Elevator'))
-var Platform = require(paths.obj('platforms/Platform'))
-var Floor = require(paths.obj('barriers/Floor'))
-var Wall = require(paths.obj('barriers/Wall'))
-
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){
         super(x, y, spriteSheet, $.extend({
             physics: true,
-            collisionList: [Floor, Wall, Platform, Elevator],
-            triggerList: [Platform, Elevator, LevelTrigger],
+            collisionList: ['Floor', 'Wall', 'Platform', 'Elevator'],
+            triggerList: ['Platform', 'Elevator', 'LevelTrigger'],
             collider: true,
         }, options))
         
@@ -28,6 +22,7 @@ class Dog extends Sprite{
         })
         
         $.extend(this.state, {
+            canWalk: true,
             facingRight: true,
             grounded: false,
             jumpFrameCount: 0,
@@ -48,10 +43,10 @@ class Dog extends Sprite{
         }
     }
     handleTrigger(engine, trigger){
-        if(trigger instanceof Platform){
+        if(trigger.instanceOf('Platform')){
             this.platformId = trigger.id
             this.platformSpeed = trigger.movingRight? trigger.speed: -trigger.speed
-        }else if(trigger instanceof Elevator && this.state.barking){
+        }else if(trigger.instanceOf('Elevator') && this.state.barking){
             trigger.elevate()
         }
     }
@@ -87,12 +82,12 @@ class Dog extends Sprite{
             console.log('Bark!')
         })
         
-        if(inputs.right){
+        if(inputs.right && this.state.canWalk){
             this.state.facingRight = true
             this.state.walking = !this.state.sitting
         }
         
-        if(inputs.left){
+        if(inputs.left && this.state.canWalk){
             this.state.facingRight = false
             this.state.walking = !this.state.sitting
         }

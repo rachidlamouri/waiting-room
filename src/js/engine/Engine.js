@@ -21,6 +21,18 @@ let Engine = $.extend(class{
     addObj(gameObj){
         this.objs.push(gameObj)
     }
+    getObjsByClass(className){
+        let matchingObjs = []
+        
+        $.each(this.objs, (index, obj)=>{
+            if(obj.instanceOf(className)){
+                matchingObjs.push(obj)
+                return
+            }
+        })
+        
+        return matchingObjs
+    }
     getObjsByTag(expectedTag){
         let taggedObjs = []
         
@@ -28,6 +40,7 @@ let Engine = $.extend(class{
             $.each(obj.tags, (index, tag)=>{
                 if(tag == expectedTag){
                     taggedObjs.push(obj)
+                    return
                 }
             })
         })

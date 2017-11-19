@@ -1,7 +1,6 @@
 var paths = Util.paths
 var Box = EngineUtil.Box
 var GameObj = EngineUtil.GameObj
-var Wall = require(paths.obj('barriers/Wall'))
 
 class Platform extends GameObj{
     constructor(x, y, width, height, speed){
@@ -23,7 +22,7 @@ class Platform extends GameObj{
     handleCollision(collider){
         super.handleCollision(collider)
         
-        if(collider instanceof Wall || collider instanceof Platform){
+        if(collider.instanceOf('Wall') || collider.instanceOf('Platform')){
             this.movingRight = !this.movingRight
         }
     }
