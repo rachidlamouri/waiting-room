@@ -3,6 +3,8 @@ var paths = Util.paths
 
 var Vect = EngineUtil.Vect
 var Sprite = EngineUtil.Sprite
+
+var LevelTrigger = require(paths.sprite('triggers/LevelTrigger'))
 var Elevator = require(paths.sprite('Elevator'))
 var Floor = require(paths.sprite('Floor'))
 var Platform = require(paths.sprite('Platform'))
@@ -13,7 +15,7 @@ class Dog extends Sprite{
         super(x, y, spriteSheet, $.extend({
             physics: true,
             collisionList: [Floor, Wall, Platform, Elevator],
-            triggerList: [Platform, Elevator],
+            triggerList: [Platform, Elevator, LevelTrigger],
             collider: true,
         }, options))
         
@@ -45,7 +47,7 @@ class Dog extends Sprite{
             this.state.grounded = true
         }
     }
-    handleTrigger(trigger){
+    handleTrigger(engine, trigger){
         if(trigger instanceof Platform){
             this.platformId = trigger.id
             this.platformSpeed = trigger.movingRight? trigger.speed: -trigger.speed
@@ -81,6 +83,9 @@ class Dog extends Sprite{
         // State
         this.state.sitting = this.state.grounded && inputs.sit
         this.state.barking = inputs.bark
+        this.checkSimpleAction(inputs.bark, 'bark', ()=>{
+            console.log('Bark!')
+        })
         
         if(inputs.right){
             this.state.facingRight = true

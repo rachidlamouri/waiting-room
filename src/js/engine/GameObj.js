@@ -25,6 +25,7 @@ class GameObj{
             state: {
                 simpleActions: {},
             },
+            tags: Util.isUndefined(options.tags, []),
         })
         
         $.extend(this.state, Util.isUndefined(options.state, {}))
@@ -60,8 +61,9 @@ class GameObj{
             
             if(triggerBox != undefined){
                 $.each(obj.triggerList, (index, triggerType)=>{
+                    
                     if(this instanceof triggerType && triggerBox.checkCollision(obj.getColliderBox()) && obj.handleTrigger){
-                        obj.handleTrigger(this)
+                        obj.handleTrigger(engine, this)
                     }
                 })
             }

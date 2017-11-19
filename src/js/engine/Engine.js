@@ -13,11 +13,26 @@ let Engine = $.extend(class{
             state: Engine.STATE.stopped,
             timestep: 10,
             lastTimestamp: undefined,
+            
+            removeIds: [],
         })
     }
     
     addObj(gameObj){
         this.objs.push(gameObj)
+    }
+    getObjsByTag(expectedTag){
+        let taggedObjs = []
+        
+        $.each(this.objs, (index, obj)=>{
+            $.each(obj.tags, (index, tag)=>{
+                if(tag == expectedTag){
+                    taggedObjs.push(obj)
+                }
+            })
+        })
+        
+        return taggedObjs
     }
     getPlayerInputStates(index){
         return this.inputListener.playerInputsList[index].getInputStates()
@@ -36,6 +51,9 @@ let Engine = $.extend(class{
     }
     isStopping(){
         return this.state == Engine.STATE.stopping
+    }
+    removeObjById(id){
+        this.removeIds.push(id)
     }
     setState(state){
         this.state = state
@@ -102,6 +120,7 @@ let Engine = $.extend(class{
             this.update()
             this.physics()
             this.render()
+            this.removeObjs()
         }
         this.requestFrame()
     }
@@ -135,6 +154,19 @@ let Engine = $.extend(class{
                 obj.draw(this.ctx, this.timestep)
             }
         })
+    }
+    removeObjs(){
+        $.each(this.removeIds, (index, id)=>{
+            for(let i=0; i < this.objs.length; i++){
+                let obj = this.objs[i]
+                if(obj.id == id){
+                    this.objs.splice(i, 1)
+                    return
+                }
+            }
+        })
+        
+        this.removeIds = []
     }
 },
 /* Global Vars */{
