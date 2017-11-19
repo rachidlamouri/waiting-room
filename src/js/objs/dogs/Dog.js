@@ -4,11 +4,11 @@ var paths = Util.paths
 var Vect = EngineUtil.Vect
 var Sprite = EngineUtil.Sprite
 
-var LevelTrigger = require(paths.sprite('triggers/LevelTrigger'))
-var Elevator = require(paths.sprite('Elevator'))
-var Floor = require(paths.sprite('Floor'))
-var Platform = require(paths.sprite('Platform'))
-var Wall = require(paths.sprite('Wall'))
+var LevelTrigger = require(paths.obj('triggers/LevelTrigger'))
+var Elevator = require(paths.obj('platforms/Elevator'))
+var Platform = require(paths.obj('platforms/Platform'))
+var Floor = require(paths.obj('barriers/Floor'))
+var Wall = require(paths.obj('barriers/Wall'))
 
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){

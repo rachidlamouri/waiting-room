@@ -1,6 +1,6 @@
 var paths = Util.paths
 var SpriteSheet = EngineUtil.SpriteSheet
-var Dog = require(paths.sprite('Dog'))
+var Dog = require(paths.obj('dogs/Dog'))
 
 class Millie extends Dog{
     constructor(x, y){

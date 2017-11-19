@@ -6,15 +6,11 @@ var PlayerInputs = EngineUtil.PlayerInputs
 var Scene = EngineUtil.Scene
 var SpriteSheet = EngineUtil.SpriteSheet
 
-var Millie = require(paths.sprite('Millie'))
-var Level1Coco = require(paths.sprite('Level1Coco'))
+var RampTrigger = require(paths.obj('triggers/RampTrigger'))
+var Level1Coco = require(paths.obj('dogs/Level1Coco'))
 
-var RampTrigger = require(paths.sprite('triggers/RampTrigger'))
-
-var Floor = require(paths.sprite('Floor'))
-var Wall = require(paths.sprite('Wall'))
-var Platform = require(paths.sprite('Platform'))
-var Elevator = require(paths.sprite('Elevator'))
+var Floor = require(paths.obj('barriers/Floor'))
+var Wall = require(paths.obj('barriers/Wall'))
 
 class Level1 extends Scene{
     constructor(){

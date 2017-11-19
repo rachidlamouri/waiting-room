@@ -1,7 +1,7 @@
 var paths = Util.paths
 var Box = EngineUtil.Box
 var GameObj = EngineUtil.GameObj
-var Wall = require(paths.sprite('Wall'))
+var Wall = require(paths.obj('barriers/Wall'))
 
 class Platform extends GameObj{
     constructor(x, y, width, height, speed){

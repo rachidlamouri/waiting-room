@@ -1,5 +1,5 @@
 var paths = Util.paths
-var LevelTrigger = require(paths.sprite('triggers/LevelTrigger'))
+var LevelTrigger = require(paths.obj('triggers/LevelTrigger'))
 
 class RampTrigger extends LevelTrigger{
     constructor(x, y, width, height){

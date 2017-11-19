@@ -1,8 +1,8 @@
 var paths = Util.paths
 var SpriteSheet = EngineUtil.SpriteSheet
 
-var RampTrigger = require(paths.sprite('triggers/RampTrigger'))
-var Coco = require(paths.sprite('Coco'))
+var RampTrigger = require(paths.obj('triggers/RampTrigger'))
+var Coco = require(paths.obj('dogs/Coco'))
 
 class Level1Coco extends Coco{
     constructor(x, y){

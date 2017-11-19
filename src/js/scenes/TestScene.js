@@ -6,13 +6,13 @@ var PlayerInputs = EngineUtil.PlayerInputs
 var Scene = EngineUtil.Scene
 var SpriteSheet = EngineUtil.SpriteSheet
 
-var Millie = require(paths.sprite('Millie'))
-var Coco = require(paths.sprite('Coco'))
+var Millie = require(paths.obj('dogs/Millie'))
+var Coco = require(paths.obj('dogs/Coco'))
 
-var Floor = require(paths.sprite('Floor'))
-var Wall = require(paths.sprite('Wall'))
-var Platform = require(paths.sprite('Platform'))
-var Elevator = require(paths.sprite('Elevator'))
+var Floor = require(paths.obj('barriers/Floor'))
+var Wall = require(paths.obj('barriers/Wall'))
+var Platform = require(paths.obj('platforms/Platform'))
+var Elevator = require(paths.obj('platforms/Elevator'))
 
 class SceneTest extends Scene{
     constructor(){

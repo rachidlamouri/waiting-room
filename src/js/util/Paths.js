@@ -58,8 +58,8 @@ var Paths = $.extend(class{
     scene(relativePath = ''){
         return this.src('js/scenes/')+relativePath
     }
-    sprite(relativePath = ''){
-        return this.src('js/sprites/')+relativePath
+    obj(relativePath = ''){
+        return this.src('js/objs/')+relativePath
     }
     res(relativePath = ''){
         return this.folders.res+relativePath

@@ -5,7 +5,7 @@ var PlayerInputs = EngineUtil.PlayerInputs
 var Scene = EngineUtil.Scene
 var SpriteSheet = EngineUtil.SpriteSheet
 
-var SpriteController = require(paths.sprite('SpriteController'))
+var SpriteController = require(paths.obj('SpriteController'))
 class SpriteViewer extends Scene{
     constructor(){
         super(320, 240, [

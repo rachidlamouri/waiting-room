@@ -2,7 +2,7 @@ var paths = Util.paths
 var Vect = EngineUtil.Vect
 var Box = EngineUtil.Box
 var GameObj = EngineUtil.GameObj
-var Floor = require(paths.sprite('Floor'))
+var Floor = require(paths.obj('barriers/Floor'))
 
 class Elevator extends GameObj{
     constructor(x, y, width, height){
