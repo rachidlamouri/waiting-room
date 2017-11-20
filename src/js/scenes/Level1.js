@@ -22,8 +22,6 @@ class Level1 extends Scene{
                 'jump': new Input(['w', 'W', ' '], [Input.PAD_UP, Input.A]),
                 'sit': new Input(['s', 'S'], [Input.PAD_DOWN]),
                 'bark': new Input(['q', 'Q'], [Input.B]),
-                'reload': new Input(['r', 'R'], [Input.SELECT]),
-                'pause': new Input(['Escape'], [Input.START]),
             }),
         ])
     }

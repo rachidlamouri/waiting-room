@@ -14,7 +14,6 @@ class SpriteViewer extends Scene{
                 'left': new Input(['a']),
                 'down': new Input(['s']),
                 'up': new Input(['w']),
-                'reload': new Input(['r']),
             })
         ])
     }

@@ -3,17 +3,22 @@ var KeyInput = EngineUtil.KeyInput
 class PlayerInputs{
     constructor(inputs){
         $.extend(this, {
-            inputs: inputs,
+            inputs: {},
             keyInputs: {},
         })
         
-        $.each(this.inputs, (index, input)=>{
-            $.each(input.keyList, (index, key)=>{
-                this.keyInputs[key] = new KeyInput(key)
-            })
+        $.each(inputs, (key, input)=>{
+            this.addInput(key, input)
         })
     }
     
+    addInput(key, input){
+        this.inputs[key] = input
+        
+        $.each(input.keyList, (index, key)=>{
+            this.keyInputs[key] = new KeyInput(key)
+        })
+    }
     getInputStates(){
         let inputStates = {}
         $.each(this.inputs, (key, input)=>{

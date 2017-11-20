@@ -83,6 +83,12 @@ window.Util = {
 // jQuery
 window.$ = window.jQuery = require('jquery')
 
+$.fn.extend({
+    showFlex(){
+        this.css('display', 'flex')
+    },
+})
+
 // Custom Number Functions
 $.extend(Number.prototype, {
     parseNum(){

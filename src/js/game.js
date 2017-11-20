@@ -1,9 +1,7 @@
 var paths = Util.paths
-var TestScene = require(paths.scene('TestScene'))
-var SpriteViewer = require(paths.scene('SpriteViewer'))
-var Level1 = require(paths.scene('Level1'))
+var MainMenu = require(paths.scene('MainMenu'))
 
 $(document).ready(function(){
-    let scene = new Level1()
+    let scene = new MainMenu()
     scene.load()
 })

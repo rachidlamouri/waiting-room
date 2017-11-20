@@ -1,10 +1,11 @@
 var InputListener = EngineUtil.InputListener
+var GameObj = EngineUtil.GameObj
 
 let Engine = $.extend(class{
-    constructor(canvas, playerInputsList){
+    constructor(scene, playerInputsList){
         $.extend(this, {
-            canvas: canvas,
-            ctx: canvas.getContext('2d'),
+            scene: scene,
+            ctx: scene.canvas.getContext('2d'),
             frameCount: -1,
             fps: 60,
             inputListener: new InputListener(playerInputsList),
@@ -69,9 +70,9 @@ let Engine = $.extend(class{
         this.removeIds.push(id)
     }
     rotateCanvas(degrees){
-        this.ctx.translate(this.canvas.width/2, this.canvas.height/2)
+        this.ctx.translate(this.scene.canvas.width/2, this.scene.canvas.height/2)
         this.ctx.rotate(Math.PI*degrees/180)
-        this.ctx.translate(-this.canvas.width/2, -this.canvas.height/2)
+        this.ctx.translate(-this.scene.canvas.width/2, -this.scene.canvas.height/2)
     }
     setState(state){
         this.state = state
@@ -92,6 +93,8 @@ let Engine = $.extend(class{
             return
         }
         
+        $('canvas').css('opacity', '.95')
+        $('.pause-menu').showFlex()
         this.setState(Engine.STATE.paused)
     }
     resume(){
@@ -99,6 +102,8 @@ let Engine = $.extend(class{
             return
         }
         
+        $('canvas').css('opacity', '1')
+        $('.pause-menu').hide()
         this.setState(Engine.STATE.running)
     }
     stop(){
@@ -164,7 +169,7 @@ let Engine = $.extend(class{
         })
     }
     render(){
-        this.ctx.clearRect(-this.canvas.width/2, -this.canvas.height/2, 2*this.canvas.width, 2*this.canvas.height)
+        this.ctx.clearRect(-this.scene.canvas.width/2, -this.scene.canvas.height/2, 2*this.scene.canvas.width, 2*this.scene.canvas.height)
         this.ctx.lineWidth = 2
         
         $.each(this.objs, (index, obj)=>{

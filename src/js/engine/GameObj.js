@@ -11,6 +11,7 @@ class GameObj{
             id: GameObj.OBJ_COUNT++,
             controllerId: undefined,
             update: options.update,
+            simpleUpdate: options.simpleUpdate,
             pos: new Vect(x, y),
             dim: new Vect(width, height),
             vel: new Vect(0,0),

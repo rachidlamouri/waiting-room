@@ -50,24 +50,6 @@ class Dog extends Sprite{
             trigger.elevate()
         }
     }
-    simpleUpdate(engine){
-        if(this.controllerId == undefined){
-            return
-        }
-        let inputs = engine.getPlayerInputStates(this.controllerId)
-        
-        this.checkSimpleAction(inputs.pause, 'pause', ()=>{
-            if(engine.isRunning()){
-                engine.pause()
-            }else if(engine.isPaused()){
-                engine.resume()
-            }
-        })
-        
-        this.checkSimpleAction(inputs.reload, 'reload', ()=>{
-            remote.getCurrentWindow().reload()
-        })
-    }
     update(engine){
         if(this.controllerId == undefined){
             return
