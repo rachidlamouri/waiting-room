@@ -89,7 +89,7 @@ class Scene{
         scene.load()
     }
     unload(){
-        this.engine.stop()
+        this.engine.unload()
         this.body.empty()
     }
 }

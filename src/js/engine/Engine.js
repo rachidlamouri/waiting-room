@@ -110,6 +110,10 @@ let Engine = $.extend(class{
     translateCanvas(x, y){
         this.ctx.translate(x, y)
     }
+    unload(){
+        this.stop()
+        this.inputListener.unload()
+    }
     
     // Game Loop
     start(){
