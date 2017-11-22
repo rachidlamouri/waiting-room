@@ -14,7 +14,7 @@ class Dog extends Sprite{
         }, options))
         
         $.extend(this, {
-            airSpeedIdle: .03,
+            airSpeedIdle: .01,
             jumpSpeedY: .2,
             lastPlatformSpeed: 0,
             platformSpeed: 0,
@@ -93,7 +93,7 @@ class Dog extends Sprite{
             this.vel.x = this.state.facingRight? this.walkSpeed: -this.walkSpeed
         }else if(this.state.grounded){
             this.vel.x = 0
-        }else if(this.state.jumping == 0){
+        }else{
             this.vel.x = this.state.facingRight? this.airSpeedIdle: -this.airSpeedIdle
         }
         

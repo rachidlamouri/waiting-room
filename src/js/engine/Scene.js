@@ -1,11 +1,14 @@
+var remote = require('electron').remote
+
 var SrcFile = Util.SrcFile
 var paths = Util.paths
 var Engine = EngineUtil.Engine
+var Vect = EngineUtil.Vect
 var GameObj = EngineUtil.GameObj
 var Input = EngineUtil.Input
 
-let Scene = $.extend(class{
-    constructor(canvasWidth, canvasHeight, playerInputsList){
+class Scene{
+    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, playerInputsList){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()
         }
@@ -17,17 +20,19 @@ let Scene = $.extend(class{
         
         $.extend(this, {
             body: $('body'),
-            canvasWidth: canvasWidth,
-            canvasHeight: canvasHeight,
+            ctxWidth: ctxWidth,
+            ctxHeight: ctxHeight,
+            screen: new Screen(screenLeft, screenTop, Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, ctxWidth - Scene.CANVAS_WIDTH, ctxHeight - Scene.CANVAS_HEIGHT),
             playerInputsList: playerInputsList,
         })
     }
     
-    load(objList){
+    load(objList, scrollX = 0, scrollY = 0){
         this.canvas = document.createElement('canvas')
-        this.canvas.width = this.canvasWidth
-        this.canvas.height = this.canvasHeight
+        this.canvas.width = Scene.CANVAS_WIDTH//this.ctxWidth//Scene.CANVAS_WIDTH
+        this.canvas.height = Scene.CANVAS_HEIGHT//this.ctxHeight//Scene.CANVAS_HEIGHT
         this.body.append(this.canvas)
+        window.scrollTo(scrollX, scrollY)
         
         this.body.append(Scene.PAUSE_HTML)
         let pauseMenu = $('.pause-menu')
@@ -66,7 +71,8 @@ let Scene = $.extend(class{
                 })
                 
                 this.checkSimpleAction(inputs.reloadScene, 'reloadScene', ()=>{
-                    engine.scene.reload()
+                    remote.getCurrentWindow().reload()
+                    //engine.scene.reload()
                 })
             },
         })
@@ -86,12 +92,55 @@ let Scene = $.extend(class{
         this.engine.stop()
         this.body.empty()
     }
-},
-/* Global Vars */{
+}
+$.extend(Scene, {
+    CANVAS_WIDTH: 320,
+    CANVAS_HEIGHT: 240,
+    
     PAUSE_HTML: (new SrcFile('html/pause_menu.html')).read(),
+    
+    // Unit square
+    U: 40,
+    
+    // Screen unit
+    SU: new Vect(320, 240),
     
     DocumentNotReadyException: function(){
         this.message = 'You can only create a scene if the document is ready'
     }
 })
+
+class Screen{
+    constructor(left, top, width, height, maxLeft, maxTop){
+        $.extend(this, {
+            corner: new Vect(left, top),
+            dim: new Vect(width, height),
+            maxLeft: maxLeft,
+            maxTop: maxTop,
+        })
+    }
+    
+    getMid(){
+        return new Vect(this.corner.x + this.dim.width/2, this.corner.y + this.dim.height/2)
+    }
+    setCorner(left, top){
+        if(left < 0){
+            left = 0
+        }
+        
+        if(left > this.maxLeft){
+            left = this.maxLeft
+        }
+        
+        if(top < 0){
+            top = 0
+        }
+        
+        if(top > this.maxTop){
+            top = this.maxTop
+        }
+        
+        this.corner = new Vect(left, top)
+    }
+}
 module.exports = Scene

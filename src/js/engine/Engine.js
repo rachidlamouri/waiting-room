@@ -1,4 +1,5 @@
 var InputListener = EngineUtil.InputListener
+var Vect = EngineUtil.Vect
 var GameObj = EngineUtil.GameObj
 
 let Engine = $.extend(class{
@@ -17,10 +18,39 @@ let Engine = $.extend(class{
             
             removeIds: [],
         })
+        
+        this.ctx.translate(-scene.screen.corner.x, -scene.screen.corner.y)
     }
     
     addObj(gameObj){
         this.objs.push(gameObj)
+    }
+    follow(obj){
+        let screen = this.scene.screen
+        let oldCorner = new Vect(screen.corner.x, screen.corner.y)
+        
+        let mid = screen.getMid()
+        let diff = new Vect(mid.x - (obj.pos.x - 80), mid.y - (obj.pos.y - 20))
+        
+        if(diff.x < 1){
+            diff.x = 0
+        }
+        
+        if(diff.y < -20){
+            diff.y = -2
+        }else if(diff.y < -10){
+            diff.y = -1
+        }else{
+            diff.y = 0
+        }
+        
+        if(diff.y > 0){
+            diff.y = 0
+        }
+        
+        screen.setCorner(screen.corner.x - diff.x, screen.corner.y - diff.y)
+        diff = new Vect(oldCorner.x - screen.corner.x, oldCorner.y - screen.corner.y)
+        this.ctx.translate(diff.x, diff.y)
     }
     getObjsByClass(className){
         let matchingObjs = []
@@ -70,12 +100,15 @@ let Engine = $.extend(class{
         this.removeIds.push(id)
     }
     rotateCanvas(degrees){
-        this.ctx.translate(this.scene.canvas.width/2, this.scene.canvas.height/2)
+        this.ctx.translate(this.scene.ctxWidth/2, this.scene.ctxHeight/2)
         this.ctx.rotate(Math.PI*degrees/180)
-        this.ctx.translate(-this.scene.canvas.width/2, -this.scene.canvas.height/2)
+        this.ctx.translate(-this.scene.ctxWidth/2, -this.scene.ctxHeight/2)
     }
     setState(state){
         this.state = state
+    }
+    translateCanvas(x, y){
+        this.ctx.translate(x, y)
     }
     
     // Game Loop
@@ -169,14 +202,26 @@ let Engine = $.extend(class{
         })
     }
     render(){
-        this.ctx.clearRect(-this.scene.canvas.width/2, -this.scene.canvas.height/2, 2*this.scene.canvas.width, 2*this.scene.canvas.height)
+        this.ctx.clearRect(0, 0, this.scene.ctxWidth, this.scene.ctxHeight)
         this.ctx.lineWidth = 2
+        
+        //this.renderReference()
         
         $.each(this.objs, (index, obj)=>{
             if(obj.draw){
                 obj.draw(this.ctx, this.timestep)
             }
         })
+    }
+    renderReference(){
+        let screen = this.scene.screen
+        let mid = screen.getMid()
+        this.ctx.beginPath()
+        this.ctx.arc(mid.x, mid.y, 10, 0, 2*Math.PI)
+        this.ctx.stroke()
+        this.ctx.beginPath()
+        this.ctx.arc(screen.corner.x, screen.corner.y, 10, 0, 2*Math.PI)
+        this.ctx.stroke()
     }
     removeObjs(){
         $.each(this.removeIds, (index, id)=>{

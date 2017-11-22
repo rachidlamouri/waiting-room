@@ -15,12 +15,11 @@ class RampTrigger extends LevelTrigger{
         let walls = engine.getObjsByClass('CollapseWall')
         
         coco[0].state.canWalk = false
+        coco[0].state.rotate.rotating = true
         
         $.each(walls, (index, wall)=>{
             wall.collapse()
         })
-        
-        engine.rotateCanvas(-30)
     }
 }
 module.exports = RampTrigger

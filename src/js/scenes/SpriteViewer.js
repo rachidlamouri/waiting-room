@@ -8,7 +8,7 @@ var SpriteSheet = EngineUtil.SpriteSheet
 var SpriteController = require(paths.obj('SpriteController'))
 class SpriteViewer extends Scene{
     constructor(){
-        super(320, 240, [
+        super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, [
             new PlayerInputs({
                 'right': new Input(['d']),
                 'left': new Input(['a']),

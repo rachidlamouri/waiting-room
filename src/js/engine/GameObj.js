@@ -27,6 +27,7 @@ class GameObj{
                 simpleActions: {},
             },
             tags: Util.isUndefined(options.tags, []),
+            color: Util.isUndefined(options.color, '#000000'),
         })
         
         $.extend(this.state, Util.isUndefined(options.state, {}))
@@ -89,7 +90,7 @@ class GameObj{
         }
     }
     draw(ctx, frameCount){
-        this.getMeshBox().draw(ctx)
+        this.getMeshBox().draw(ctx, this.color)
     }
     getColliderBox(){
         return this.getRelativeBox(this.collider)

@@ -4,6 +4,8 @@ var Engine = EngineUtil.Engine
 var Input = EngineUtil.Input
 var PlayerInputs = EngineUtil.PlayerInputs
 var Scene = EngineUtil.Scene
+var Vect = EngineUtil.Vect
+var GameObj = EngineUtil.GameObj
 var SpriteSheet = EngineUtil.SpriteSheet
 
 var RampTrigger = require(paths.obj('triggers/RampTrigger'))
@@ -15,7 +17,7 @@ var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 
 class Level1 extends Scene{
     constructor(){
-        super(320, 240, [
+        super(1600, 960, 4*Scene.CANVAS_WIDTH, 0, [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
@@ -27,24 +29,72 @@ class Level1 extends Scene{
     }
     
     load(){
-        let coco = new Level1Coco(200, 140)//new Level1Coco(40, 140)
+        let U = Scene.U
+        let SU = Scene.SU
+        
+        let screenOptions = [
+            {color: '#0000FF'},
+            {color: '#00FF00'},
+        ]
+        
+        let coco = new Level1Coco(4*SU.x + 5*U, 3.5*U)
         coco.setControllerId(0)
         
         super.load([
-            // Floor
-            new Floor(160, 150, 400, 10),
+        /*
+            // Screen row 0
+            new GameObj(0.5*SU.x, 0.5*SU.y, SU.x, SU.y, screenOptions[0]),
+            new GameObj(1.5*SU.x, 0.5*SU.y, SU.x, SU.y, screenOptions[0]),
+            new GameObj(2.5*SU.x, 0.5*SU.y, SU.x, SU.y, screenOptions[0]),
+            new GameObj(3.5*SU.x, 0.5*SU.y, SU.x, SU.y, screenOptions[0]),
+            new GameObj(4.5*SU.x, 0.5*SU.y, SU.x, SU.y, screenOptions[0]),
             
-            // Left/right barriers
-            new CollapseWall(-5, 120, 10, 50),
-            new CollapseWall(325, 120, 10, 50),
+            // Screen row 1
+            new GameObj(0.5*SU.x, 1.5*SU.y, SU.x, SU.y, screenOptions[1]),
+            new GameObj(1.5*SU.x, 1.5*SU.y, SU.x, SU.y, screenOptions[1]),
+            new GameObj(2.5*SU.x, 1.5*SU.y, SU.x, SU.y, screenOptions[1]),
+            new GameObj(3.5*SU.x, 1.5*SU.y, SU.x, SU.y, screenOptions[1]),
+            
+            // Screen row 2
+            new GameObj(0.5*SU.x, 2.5*SU.y, SU.x, SU.y, screenOptions[0]),
+            new GameObj(1.5*SU.x, 2.5*SU.y, SU.x, SU.y, screenOptions[0]),
+            new GameObj(2.5*SU.x, 2.5*SU.y, SU.x, SU.y, screenOptions[0]),
+        */
+            // Terrain
+                // 0,0
+            new Floor(0.0*SU.x + 6.50*U, SU.y, 5.00*U, 4*U),
+                // 0,1
+            new Floor(1.0*SU.x + 2.50*U, SU.y, 1.00*U, 4*U),
+            new Floor(1.0*SU.x + 4.75*U, SU.y, 1.50*U, 4*U),
+            new Floor(1.0*SU.x + 7.50*U, SU.y, 3.00*U, 4*U),
+                // 0,2
+            new Floor(2.0*SU.x + 3.75*U, SU.y, 3.50*U, 4*U),
+                // 0,3
+            new Floor(3.0*SU.x + 1.25*U, SU.y, 6.50*U, 4*U),
+                // 0,4
+            new Floor(4.0*SU.x + 2.50*U, SU.y, 11.0*U, 4*U),
+                // 1,0
+            new Floor(0.0*SU.x + 7.00*U, 2*SU.y, 6.00*U, 4*U),
+                // 1,1
+            new Floor(1.0*SU.x + 3.75*U, 2*SU.y, 1.50*U, 4*U),
+                // 1,2
+            new Floor(2.0*SU.x + 0.25*U, 2*SU.y, 6.50*U, 4*U),
+                // 1,3
+            new Floor(3.0*SU.x + 2.00*U, 2*SU.y, 12.0*U, 4*U),
+                // 2,x
+            new Floor(1.0*SU.x + 6.00*U, 3*SU.y + 2*U, 20.0*U, 8*U),
+            
+            // Barriers
+            new CollapseWall(4*SU.x, 3*U, U/4, 2*U),
+            new Wall(5*SU.x, 3*U, U/4, 2*U),
             
             // Hurdles
-            new Wall(90, 140, 4, 6),
-            new Wall(150, 140, 4, 6),
-            new Wall(220, 140, 4, 6),
+            new Wall(4*SU.x + 2.0*U, 4*U - 4, 4, 8),
+            new Wall(4*SU.x + 3.5*U, 4*U - 4, 4, 8),
+            new Wall(4*SU.x + 5.0*U, 4*U - 4, 4, 8),
             
             // Trigger 1
-            new RampTrigger(270, 114, 70, 60),
+            new RampTrigger(4*SU.x + 7.5*U, 3*U, 1*U, 2*U),
             
             // Player
             coco,

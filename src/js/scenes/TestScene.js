@@ -16,7 +16,7 @@ var Elevator = require(paths.obj('platforms/Elevator'))
 
 class SceneTest extends Scene{
     constructor(){
-        super(320, 240, [
+        super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),

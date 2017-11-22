@@ -10,13 +10,12 @@ body{
     align-items: center;
     justify-content: center;
     background-color: #222;
+    overflow: auto;
 }
 
 canvas{
     display: flex;
     background-color: white;
-    
-    cursor: none;
 }
 
 .main-menu, .pause-menu{
