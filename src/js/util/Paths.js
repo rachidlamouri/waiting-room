@@ -55,14 +55,17 @@ var Paths = $.extend(class{
     getAsarExists(){
         return this.asarExists
     }
-    scene(relativePath = ''){
-        return this.src('js/scenes/')+relativePath
+    mp3(relativePath = ''){
+        return this.src('audio/mp3/')+relativePath
     }
     obj(relativePath = ''){
         return this.src('js/objs/')+relativePath
     }
     res(relativePath = ''){
         return this.folders.res+relativePath
+    }
+    scene(relativePath = ''){
+        return this.src('js/scenes/')+relativePath
     }
     src(relativePath = ''){
         return this.folders.src+relativePath

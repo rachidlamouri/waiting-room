@@ -19,12 +19,18 @@ class Scene{
         }
         
         $.extend(this, {
+            audio: $('<audio></audio>')[0],
             body: $('body'),
             ctxWidth: ctxWidth,
             ctxHeight: ctxHeight,
             screen: new Screen(screenLeft, screenTop, Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, ctxWidth - Scene.CANVAS_WIDTH, ctxHeight - Scene.CANVAS_HEIGHT),
             playerInputsList: playerInputsList,
         })
+        
+        this.audio.src = paths.mp3('test_song.mp3')
+        this.body.append(this.audio)
+        this.audio.loop = true
+        //this.audio.play()
     }
     
     load(objList, scrollX = 0, scrollY = 0){
