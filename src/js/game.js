@@ -1,7 +1,7 @@
 var paths = Util.paths
-var MainMenu = require(paths.scene('MainMenu'))
+var Level2 = require(paths.scene('Level2'))
 
 $(document).ready(function(){
-    let scene = new MainMenu()
+    let scene = new Level2()
     scene.load()
 })
