@@ -22,6 +22,7 @@ class Dog extends Sprite{
         })
         
         $.extend(this.state, {
+            canJump: true,
             canWalk: true,
             facingRight: true,
             grounded: false,
@@ -77,7 +78,7 @@ class Dog extends Sprite{
         this.vel.x = 0
         
         // Jump
-        if(this.state.jumping == 0 && this.state.grounded && inputs.jump){
+        if(this.state.jumping == 0 && this.state.grounded && inputs.jump && this.state.canJump){
             this.lastPlatformSpeed = this.platformSpeed
             this.state.jumping = 1
             this.vel.y -= this.jumpSpeedY
