@@ -3,6 +3,7 @@ var paths = Util.paths
 
 var Vect = EngineUtil.Vect
 var Sprite = EngineUtil.Sprite
+var Sound = EngineUtil.Sound
 
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){
@@ -39,7 +40,12 @@ class Dog extends Sprite{
     onCollisionY(collider){
         let box = this.getColliderBox()
         let colliderBox = collider.getColliderBox()
+        
         if(this.vel.y > 0 && box.center.y < colliderBox.top){
+            if(this.vel.y > .02){
+                new Sound('thump.wav')
+            }
+            
             this.state.grounded = true
         }
     }

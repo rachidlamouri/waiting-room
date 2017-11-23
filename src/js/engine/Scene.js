@@ -29,7 +29,7 @@ class Scene{
             unloadSpeed: 500,
         })
         
-        this.audio.src = paths.mp3('test_song.mp3')
+        this.audio.src = paths.sound('test_song.mp3')
         this.body.append(this.audio)
         this.audio.loop = true
         //this.audio.play()
