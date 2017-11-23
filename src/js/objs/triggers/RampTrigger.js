@@ -4,7 +4,7 @@ var LevelTrigger = require(paths.obj('triggers/LevelTrigger'))
 class RampTrigger extends LevelTrigger{
     constructor(x, y, width, height){
         super(x, y, width, height, {
-            
+            color: '#A5FF00'
         })
     }
     

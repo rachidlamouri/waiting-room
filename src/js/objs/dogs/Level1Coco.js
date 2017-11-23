@@ -9,11 +9,12 @@ class Level1Coco extends Coco{
         
         $.extend(this.state, {
             canWalk: true,
+            drop: false,
             rotate: {
                 angle: 0,
                 elapsedTime: 0,
                 maxAngle: -20,
-                maxTranslate: new Vect(150, 220),
+                maxTranslate: new Vect(120, 220),
                 rotating: false,
                 totalTime: 3000,
                 translate: new Vect(0, 0),
@@ -31,6 +32,10 @@ class Level1Coco extends Coco{
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('RampTrigger')){
             trigger.onTrigger(engine)
+        }else if(trigger.instanceOf('DropTrigger')){
+            this.state.drop = true
+        }else if(trigger.instanceOf('SlideTrigger')){
+            this.state.drop = false
         }
     }
     update(engine){
@@ -40,8 +45,13 @@ class Level1Coco extends Coco{
         let rotateState = this.state.rotate
         
         if(slideState.sliding){
-            this.vel.x = slideState.speed
             engine.follow(this)
+            
+            if(this.state.drop){
+                this.vel.x = -2*this.airSpeedIdle
+            }else{
+                this.vel.x = slideState.speed
+            }
         }
         
         if(rotateState.rotating){

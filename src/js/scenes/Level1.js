@@ -9,6 +9,8 @@ var GameObj = EngineUtil.GameObj
 var SpriteSheet = EngineUtil.SpriteSheet
 
 var RampTrigger = require(paths.obj('triggers/RampTrigger'))
+var DropTrigger = require(paths.obj('triggers/DropTrigger'))
+var SlideTrigger = require(paths.obj('triggers/SlideTrigger'))
 var Level1Coco = require(paths.obj('dogs/Level1Coco'))
 
 var Floor = require(paths.obj('barriers/Floor'))
@@ -17,7 +19,8 @@ var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 
 class Level1 extends Scene{
     constructor(){
-        super(1600, 960, 4*Scene.CANVAS_WIDTH, 0, [
+        let SU = Scene.SU
+        super(5*SU.x, 3.5*SU.y, 4*Scene.CANVAS_WIDTH, 0, [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
@@ -64,9 +67,9 @@ class Level1 extends Scene{
                 // 0,0
             new Floor(0.0*SU.x + 6.50*U, SU.y, 5.00*U, 4*U),
                 // 0,1
-            new Floor(1.0*SU.x + 2.50*U, SU.y, 1.00*U, 4*U),
-            new Floor(1.0*SU.x + 4.75*U, SU.y, 1.50*U, 4*U),
-            new Floor(1.0*SU.x + 7.50*U, SU.y, 3.00*U, 4*U),
+            new Floor(1.0*SU.x + 3.00*U, SU.y, 2.00*U, 4*U),
+            new Floor(1.0*SU.x + 5.75*U, SU.y, 1.50*U, 4*U),
+            new Floor(1.0*SU.x + 8.00*U, SU.y, 2.00*U, 4*U),
                 // 0,2
             new Floor(2.0*SU.x + 3.75*U, SU.y, 3.50*U, 4*U),
                 // 0,3
@@ -83,6 +86,33 @@ class Level1 extends Scene{
             new Floor(3.0*SU.x + 2.00*U, 2*SU.y, 12.0*U, 4*U),
                 // 2,x
             new Floor(1.0*SU.x + 6.00*U, 3*SU.y + 2*U, 20.0*U, 8*U),
+            
+            // MovementTriggers
+                // 0,0
+            new DropTrigger (0*SU.x + 3.00*U, 2*SU.y + 0.00*U, 1.50*U, 24.0*U),
+                // 0,1
+            new DropTrigger (1*SU.x + 1.50*U, 1*SU.y + 0.00*U, 1.00*U, 0.50*U),
+            new SlideTrigger(1*SU.x + 1.50*U, 1*SU.y + 4.00*U, 2.00*U, 0.50*U),
+            new DropTrigger (1*SU.x + 4.50*U, 1*SU.y + 0.00*U, 1.00*U, 0.50*U),
+            new SlideTrigger(1*SU.x + 4.50*U, 1*SU.y + 4.00*U, 2.00*U, 0.50*U),
+            new DropTrigger (1*SU.x + 6.75*U, 1*SU.y + 0.00*U, 0.50*U, 0.50*U),
+            new SlideTrigger(1*SU.x + 6.75*U, 1*SU.y + 4.00*U, 2.00*U, 0.50*U),
+                // 0,2
+            new DropTrigger (2*SU.x + 1.50*U, 1*SU.y + 0.00*U, 1.00*U, 0.50*U),
+            new SlideTrigger(2*SU.x + 1.50*U, 1*SU.y + 4.00*U, 2.00*U, 0.50*U),
+            new DropTrigger (2*SU.x + 5.75*U, 1*SU.y + 0.00*U, 0.50*U, 0.50*U),
+            new SlideTrigger(2*SU.x + 5.75*U, 1*SU.y + 4.00*U, 2.00*U, 0.50*U),
+                // 0,3
+            new DropTrigger (3*SU.x + 4.75*U, 1*SU.y + 0.00*U, 0.50*U, 0.50*U),
+            new SlideTrigger(3*SU.x + 4.75*U, 1*SU.y + 4.00*U, 2.00*U, 0.50*U),
+                // 1,1
+            new DropTrigger (1*SU.x + 2.50*U, 2*SU.y + 0.00*U, 1.00*U, 0.50*U),
+            new SlideTrigger(1*SU.x + 2.50*U, 2*SU.y + 4.00*U, 2.00*U, 0.50*U),
+            new DropTrigger (1*SU.x + 4.75*U, 2*SU.y + 0.00*U, 0.50*U, 0.50*U),
+            new SlideTrigger(1*SU.x + 4.75*U, 2*SU.y + 4.00*U, 2.00*U, 0.50*U),
+                // 1,1
+            new DropTrigger (2*SU.x + 3.75*U, 2*SU.y + 0.00*U, 0.50*U, 0.50*U),
+            new SlideTrigger(2*SU.x + 3.75*U, 2*SU.y + 4.00*U, 2.00*U, 0.50*U),
             
             // Barriers
             new CollapseWall(4*SU.x, 3*U, U/4, 2*U),

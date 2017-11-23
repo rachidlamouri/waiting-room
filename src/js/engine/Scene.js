@@ -35,8 +35,8 @@ class Scene{
     
     load(objList, scrollX = 0, scrollY = 0){
         this.canvas = document.createElement('canvas')
-        this.canvas.width = Scene.CANVAS_WIDTH//this.ctxWidth//Scene.CANVAS_WIDTH
-        this.canvas.height = Scene.CANVAS_HEIGHT//this.ctxHeight//Scene.CANVAS_HEIGHT
+        this.canvas.width = Scene.CANVAS_WIDTH//this.ctxWidth
+        this.canvas.height = Scene.CANVAS_HEIGHT//this.ctxHeight
         this.body.append(this.canvas)
         window.scrollTo(scrollX, scrollY)
         
