@@ -30,7 +30,7 @@ class Level1Coco extends Coco{
     }
     
     handleTrigger(engine, trigger){
-        if(trigger.instanceOf('RampTrigger')){
+        if(trigger.instanceOf('RampTrigger') || trigger.instanceOf('EndTrigger')){
             trigger.onTrigger(engine)
         }else if(trigger.instanceOf('DropTrigger')){
             this.state.drop = true

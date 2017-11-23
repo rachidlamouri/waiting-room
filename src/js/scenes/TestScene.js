@@ -14,7 +14,7 @@ var Wall = require(paths.obj('barriers/Wall'))
 var Platform = require(paths.obj('platforms/Platform'))
 var Elevator = require(paths.obj('platforms/Elevator'))
 
-class SceneTest extends Scene{
+class TestScene extends Scene{
     constructor(){
         super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, [
             new PlayerInputs({
@@ -75,4 +75,4 @@ class SceneTest extends Scene{
         ])
     }
 }
-module.exports = SceneTest
+module.exports = TestScene

@@ -11,6 +11,7 @@ var SpriteSheet = EngineUtil.SpriteSheet
 var RampTrigger = require(paths.obj('triggers/RampTrigger'))
 var DropTrigger = require(paths.obj('triggers/DropTrigger'))
 var SlideTrigger = require(paths.obj('triggers/SlideTrigger'))
+var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 var Level1Coco = require(paths.obj('dogs/Level1Coco'))
 
 var Floor = require(paths.obj('barriers/Floor'))
@@ -64,6 +65,10 @@ class Level1 extends Scene{
             new GameObj(2.5*SU.x, 2.5*SU.y, SU.x, SU.y, screenOptions[0]),
         */
             // Terrain
+                // 0,-1
+            new Wall (0.0*SU.x - 1.00*U, 2*SU.y, 2*U, 4*SU.y, {
+                draw: false,
+            }),
                 // 0,0
             new Floor(0.0*SU.x + 6.50*U, SU.y, 5.00*U, 4*U),
                 // 0,1
@@ -113,6 +118,8 @@ class Level1 extends Scene{
                 // 1,1
             new DropTrigger (2*SU.x + 3.75*U, 2*SU.y + 0.00*U, 0.50*U, 0.50*U),
             new SlideTrigger(2*SU.x + 3.75*U, 2*SU.y + 4.00*U, 2.00*U, 0.50*U),
+                // 2,0
+            new EndTrigger  (0*SU.x + 2.00*U, 4*SU.y + 0.00*U, 10.0*U, 1.00*U, 'TestScene'),
             
             // Barriers
             new CollapseWall(4*SU.x, 3*U, U/4, 2*U),

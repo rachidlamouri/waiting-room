@@ -25,6 +25,8 @@ class Scene{
             ctxHeight: ctxHeight,
             screen: new Screen(screenLeft, screenTop, Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, ctxWidth - Scene.CANVAS_WIDTH, ctxHeight - Scene.CANVAS_HEIGHT),
             playerInputsList: playerInputsList,
+            loadSpeed: 500,
+            unloadSpeed: 500,
         })
         
         this.audio.src = paths.mp3('test_song.mp3')
@@ -35,30 +37,27 @@ class Scene{
     
     load(objList, scrollX = 0, scrollY = 0){
         this.canvas = document.createElement('canvas')
+        this.canvas.style.opacity = 0
         this.canvas.width = Scene.CANVAS_WIDTH//this.ctxWidth
         this.canvas.height = Scene.CANVAS_HEIGHT//this.ctxHeight
         this.body.append(this.canvas)
         window.scrollTo(scrollX, scrollY)
         
         this.body.append(Scene.PAUSE_HTML)
-        let pauseMenu = $('.pause-menu')
-        pauseMenu.find('.button').click((clickEvent)=>{
+        this.pauseMenu = $('.pause-menu')
+        this.pauseMenu.find('.button').click((clickEvent)=>{
             let button = $(clickEvent.target)
             let action = button.attr('action')
             
-            let scene
             if(action == 'main-menu'){
-                let MainMenu = require(paths.scene('MainMenu'))
-                scene = new MainMenu()
-                
-                this.unload()
-                scene.load()
+                this.unload('MainMenu')
             }else if(action == 'retry'){
                 this.reload()
             }else if(action == 'continue'){
-                pauseMenu.hide()
                 this.engine.resume()
             }
+            
+            this.pauseMenu.hide()
         })
         
         this.engine = new Engine(this, this.playerInputsList)
@@ -88,15 +87,23 @@ class Scene{
         })
         
         this.engine.start()
+        $(this.canvas).fadeTo(this.loadSpeed, 1)
     }
     reload(){
-        this.unload()
-        let scene = new this.constructor()
-        scene.load()
+        this.unload(this.constructor.name)
     }
-    unload(){
-        this.engine.unload()
-        this.body.empty()
+    unload(nextSceneClass){
+        if(this.engine){
+            this.engine.unload()
+        }
+        
+        $(this.canvas).fadeTo(this.unloadSpeed, 0, ()=>{
+            this.body.empty()
+            
+            let sceneClass = require(paths.scene(nextSceneClass))
+            let scene = new sceneClass()
+            scene.load()
+        })
     }
 }
 $.extend(Scene, {
