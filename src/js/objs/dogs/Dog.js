@@ -16,6 +16,7 @@ class Dog extends Sprite{
         }, options))
         
         $.extend(this, {
+            walkingFile: options.walkingFile,
             airSpeedIdle: .01,
             jumpSpeedY: .2,
             lastPlatformSpeed: 0,
@@ -39,9 +40,9 @@ class Dog extends Sprite{
         this.setAnimation('idleRight')
         
         this.sounds = {
-            walking: new Sound('walking', false, false),
             bark: new SoundBank(['bark1', 'bark2', 'bark3', 'bark4', 'bark5']),
             thump: new SoundBank(['thump1', 'thump2', 'thump3', 'thump4', 'thump5']),
+            walking: new Sound(this.walkingFile, false, false)
         }
         
         this.sounds.walking.elem.on('ended', (soundEvent)=>{
