@@ -41,6 +41,7 @@ class Dog extends Sprite{
         this.sounds = {
             walking: new Sound('walking', false, false),
             bark: new SoundBank(['bark1', 'bark2', 'bark3', 'bark4', 'bark5']),
+            thump: new SoundBank(['thump1', 'thump2', 'thump3', 'thump4', 'thump5']),
         }
         
         this.sounds.walking.elem.on('ended', (soundEvent)=>{
@@ -53,7 +54,7 @@ class Dog extends Sprite{
     onCollisionX(collider){
         this.state.collidedX = true
         if(!this.state.collidingX){
-            new Sound('thump')
+            this.sounds.thump.play()
         }
     }
     onCollisionY(collider){
@@ -62,7 +63,7 @@ class Dog extends Sprite{
         
         if(this.vel.y > 0 && box.center.y < colliderBox.top){
             if(this.state.airFrames > 6){
-                new Sound('thump')
+                this.sounds.thump.play()
             }
             
             this.state.grounded = true
