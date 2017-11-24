@@ -4,6 +4,7 @@ var paths = Util.paths
 var Vect = EngineUtil.Vect
 var Sprite = EngineUtil.Sprite
 var Sound = EngineUtil.Sound
+var SoundBank = EngineUtil.SoundBank
 
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){
@@ -38,7 +39,8 @@ class Dog extends Sprite{
         this.setAnimation('idleRight')
         
         this.sounds = {
-            walking: new Sound('walking', false, false)
+            walking: new Sound('walking', false, false),
+            bark: new SoundBank(['bark1', 'bark2', 'bark3', 'bark4', 'bark5']),
         }
         
         this.sounds.walking.elem.on('ended', (soundEvent)=>{
@@ -93,7 +95,7 @@ class Dog extends Sprite{
         this.state.sitting = this.state.grounded && inputs.sit
         this.state.barking = inputs.bark
         this.checkSimpleAction(inputs.bark, 'bark', ()=>{
-            new Sound('bark')
+            this.sounds.bark.play()
         })
         
         if(inputs.right && this.state.canWalk){
