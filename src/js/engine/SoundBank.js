@@ -8,7 +8,6 @@ class SoundBank{
     
     play(){
         let index = Math.floor(Math.random()*this.soundNames.length)
-        console.log(index)
         new Sound(this.soundNames[index])
     }
 }
