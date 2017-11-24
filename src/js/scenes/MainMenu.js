@@ -5,7 +5,7 @@ var Scene = EngineUtil.Scene
 
 class MainMenu extends Scene{
     constructor(){
-        super(undefined, undefined, undefined, undefined, undefined, undefined)
+        super(undefined, undefined, undefined, undefined, 'main_menu1', undefined)
     }
     
     load(){
