@@ -5,7 +5,7 @@ var Scene = EngineUtil.Scene
 
 class MainMenu extends Scene{
     constructor(){
-        super()
+        super(undefined, undefined, undefined, undefined, undefined, undefined)
     }
     
     load(){
@@ -24,6 +24,8 @@ class MainMenu extends Scene{
                 this.unload('SpriteViewer')
             }
         })
+        
+        super.fadeIn()
     }
 }
 $.extend(MainMenu, {

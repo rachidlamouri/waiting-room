@@ -8,7 +8,7 @@ var GameObj = EngineUtil.GameObj
 var Input = EngineUtil.Input
 
 class Scene{
-    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, playerInputsList){
+    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, songPath, playerInputsList){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()
         }
@@ -29,12 +29,21 @@ class Scene{
             unloadSpeed: 500,
         })
         
-        this.audio.src = paths.sound('test_song.mp3')
+        if(songPath != undefined){
+            this.audio.src = paths.sound(songPath)
+        }
         this.body.append(this.audio)
         this.audio.loop = true
-        //this.audio.play()
     }
     
+    fadeIn(){
+        this.audio.volume = 0
+        if(this.audio.src != ''){
+            this.audio.play()
+        }
+        $(this.audio).animate({volume: 1}, this.loadSpeed)
+        $(this.canvas).fadeTo(this.loadSpeed, 1)
+    }
     load(objList, scrollX = 0, scrollY = 0){
         this.canvas = document.createElement('canvas')
         this.canvas.style.opacity = 0
@@ -87,7 +96,7 @@ class Scene{
         })
         
         this.engine.start()
-        $(this.canvas).fadeTo(this.loadSpeed, 1)
+        this.fadeIn()
     }
     reload(){
         this.unload(this.constructor.name)
@@ -97,6 +106,7 @@ class Scene{
             this.engine.unload()
         }
         
+        $(this.audio).animate({volume: 0}, this.unloadSpeed)
         $(this.canvas).fadeTo(this.unloadSpeed, 0, ()=>{
             this.body.empty()
             

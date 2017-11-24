@@ -21,7 +21,7 @@ var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 class Level1 extends Scene{
     constructor(){
         let SU = Scene.SU
-        super(5*SU.x, 3.5*SU.y, 4*Scene.CANVAS_WIDTH, 0, [
+        super(5*SU.x, 3.5*SU.y, 4*Scene.CANVAS_WIDTH, 0, 'level1', [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),

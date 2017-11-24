@@ -65,6 +65,9 @@ var Paths = $.extend(class{
         return this.src('js/scenes/')+relativePath
     }
     sound(relativePath = ''){
+        if(!relativePath.endsWith('.mp3')){
+            relativePath += '.mp3'
+        }
         return this.src('audio/sounds/')+relativePath
     }
     src(relativePath = ''){

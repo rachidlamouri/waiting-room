@@ -20,7 +20,7 @@ var TreatTrigger = require(paths.obj('triggers/TreatTrigger'))
 
 class Level2 extends Scene{
     constructor(){
-        super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, Scene.CANVAS_HEIGHT, [
+        super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, Scene.CANVAS_HEIGHT, undefined, [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
@@ -35,9 +35,9 @@ class Level2 extends Scene{
         let U = Scene.U
         let SU = Scene.SU
         
-        let millie = new Level2Millie(10, 1*SU.y + 5*U)
+        let millie = new Level2Millie(10, 1*SU.y + 5.4*U)
         let coco = new Level2Coco(300, 0)
-        //coco.setControllerId(0)
+        coco.setControllerId(0)
         millie.setControllerId(0)
         
         super.load([
@@ -56,7 +56,7 @@ class Level2 extends Scene{
             new CollapseWall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U),
             new TreatTrigger(6.50*U, 1*SU.y + 5.37*U, 10, 10),
             
-            coco,
+            //coco,
             millie,
         ])
     }

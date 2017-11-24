@@ -1,7 +1,7 @@
 var paths = Util.paths
 
 class Sound{
-    constructor(relativePath){
+    constructor(relativePath, autoPlay = true, autoDelete = true){
         let body = $('body')
         
         this.elem = $(Sound.HTML)
@@ -9,10 +9,16 @@ class Sound{
         this.audio.src = paths.sound(relativePath)
         
         body.append(this.audio)
-        this.audio.play()
-        this.elem.on('ended', (soundEvent)=>{
-            this.elem.remove()
-        })
+        
+        if(autoPlay){
+            this.audio.play()
+        }
+        
+        if(autoDelete){
+            this.elem.on('ended', (soundEvent)=>{
+                this.elem.remove()
+            })
+        }
     }
 }
 $.extend(Sound, {

@@ -1,4 +1,5 @@
 var paths = Util.paths
+var Sound = EngineUtil.Sound
 var SpriteSheet = EngineUtil.SpriteSheet
 var Millie = require(paths.obj('dogs/Millie'))
 

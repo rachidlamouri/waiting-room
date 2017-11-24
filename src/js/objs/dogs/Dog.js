@@ -23,6 +23,7 @@ class Dog extends Sprite{
         })
         
         $.extend(this.state, {
+            airFrames: 0,
             canJump: true,
             canWalk: true,
             facingRight: true,
@@ -35,15 +36,31 @@ class Dog extends Sprite{
         })
         
         this.setAnimation('idleRight')
+        
+        this.sounds = {
+            walking: new Sound('walking', false, false)
+        }
+        
+        this.sounds.walking.elem.on('ended', (soundEvent)=>{
+            if(this.state.walking){
+                this.sounds.walking.audio.play()
+            }
+        })
     }
     
+    onCollisionX(collider){
+        this.state.collidedX = true
+        if(!this.state.collidingX){
+            new Sound('thump')
+        }
+    }
     onCollisionY(collider){
         let box = this.getColliderBox()
         let colliderBox = collider.getColliderBox()
         
         if(this.vel.y > 0 && box.center.y < colliderBox.top){
-            if(this.vel.y > .02){
-                new Sound('thump.wav')
+            if(this.state.airFrames > 6){
+                new Sound('thump')
             }
             
             this.state.grounded = true
@@ -57,6 +74,14 @@ class Dog extends Sprite{
             trigger.elevate()
         }
     }
+    reset(){
+        this.platformSpeed = 0
+        this.state.grounded = false
+        this.state.walking = false
+        
+        this.state.collidingX = this.state.collidedX
+        this.state.collidedX = false
+    }
     update(engine){
         if(this.controllerId == undefined){
             return
@@ -68,7 +93,7 @@ class Dog extends Sprite{
         this.state.sitting = this.state.grounded && inputs.sit
         this.state.barking = inputs.bark
         this.checkSimpleAction(inputs.bark, 'bark', ()=>{
-            console.log('Bark!')
+            new Sound('bark')
         })
         
         if(inputs.right && this.state.canWalk){
@@ -97,6 +122,9 @@ class Dog extends Sprite{
         }
         
         if(this.state.walking){
+            if(this.sounds.walking.audio.paused && this.state.grounded){
+                this.sounds.walking.audio.play()
+            }
             this.vel.x = this.state.facingRight? this.walkSpeed: -this.walkSpeed
         }else if(this.state.grounded){
             this.vel.x = 0
@@ -129,9 +157,12 @@ class Dog extends Sprite{
             }
         }
         
-        this.platformSpeed = 0
-        this.state.grounded = false
-        this.state.walking = false
+        // Sound states
+        if(this.state.grounded){
+            this.state.airFrames = 0
+        }else{
+            this.state.airFrames++
+        }
     }
 }
 $.extend(Dog, {

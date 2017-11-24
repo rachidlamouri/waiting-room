@@ -130,6 +130,9 @@ let Engine = $.extend(class{
             return
         }
         
+        if(this.scene.audio.src != ''){
+            this.scene.audio.pause()
+        }
         $('canvas').css('opacity', '.95')
         $('.pause-menu').showFlex()
         this.setState(Engine.STATE.paused)
@@ -139,6 +142,9 @@ let Engine = $.extend(class{
             return
         }
         
+        if(this.scene.audio.src != ''){
+            this.scene.audio.play()
+        }
         $('canvas').css('opacity', '1')
         $('.pause-menu').hide()
         this.setState(Engine.STATE.running)
@@ -178,6 +184,7 @@ let Engine = $.extend(class{
         this.simpleUpdate(this)
         if(this.isRunning()){
             this.update()
+            this.reset()
             this.physics()
             this.render()
             this.removeObjs()
@@ -195,6 +202,13 @@ let Engine = $.extend(class{
         $.each(this.objs, (index, obj)=>{
             if(obj.update){
                 obj.update(this)
+            }
+        })
+    }
+    reset(){
+        $.each(this.objs, (index, obj)=>{
+            if(obj.reset){
+                obj.reset(this)
             }
         })
     }
