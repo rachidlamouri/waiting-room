@@ -167,6 +167,9 @@ class GameObj{
     setControllerId(controllerId){
         this.controllerId = controllerId
     }
+    updateCollider(){
+        this.collider = new Box(0, 0, this.dim.width, this.dim.height)
+    }
 }
 $.extend(GameObj, {
     COLLISION_THRESHOLD: 2,

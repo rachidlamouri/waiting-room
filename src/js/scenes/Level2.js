@@ -35,7 +35,7 @@ class Level2 extends Scene{
         let U = Scene.U
         let SU = Scene.SU
         
-        let millie = new Level2Millie(10, 1*SU.y + 5.4*U)
+        let millie = new Level2Millie(5*U, 1*SU.y + 5.4*U)
         let coco = new Level2Coco(300, 0)
         coco.setControllerId(0)
         millie.setControllerId(0)
