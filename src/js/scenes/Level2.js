@@ -20,7 +20,7 @@ var TreatTrigger = require(paths.obj('triggers/TreatTrigger'))
 
 class Level2 extends Scene{
     constructor(){
-        super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, Scene.CANVAS_HEIGHT, undefined, [
+        super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, Scene.CANVAS_HEIGHT, 'level2_theme', [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
