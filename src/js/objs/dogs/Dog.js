@@ -54,7 +54,7 @@ class Dog extends Sprite{
     
     onCollisionX(collider){
         this.state.collidedX = true
-        if(!this.state.collidingX){
+        if(!this.state.collidingX && !collider.instanceOf('InvisibleWall')){
             this.sounds.thump.play()
         }
     }
@@ -63,7 +63,7 @@ class Dog extends Sprite{
         let colliderBox = collider.getColliderBox()
         
         if(this.vel.y > 0 && box.center.y < colliderBox.top){
-            if(this.state.airFrames > 6){
+            if(this.state.airFrames > 6 && !collider.instanceOf('InvisibleWall')){
                 this.sounds.thump.play()
             }
             
