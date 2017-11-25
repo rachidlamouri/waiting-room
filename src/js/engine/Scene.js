@@ -30,7 +30,7 @@ class Scene{
         })
         
         if(songPath != undefined){
-            this.audio.src = paths.sound(songPath)
+            //this.audio.src = paths.sound(songPath)
         }
         this.body.append(this.audio)
         this.audio.loop = true

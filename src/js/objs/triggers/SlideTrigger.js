@@ -1,7 +1,7 @@
 var paths = Util.paths
-var LevelTrigger = require(paths.obj('triggers/LevelTrigger'))
+var InvisibleTrigger = require(paths.obj('triggers/InvisibleTrigger'))
 
-class SlideTrigger extends LevelTrigger{
+class SlideTrigger extends InvisibleTrigger{
     constructor(x, y, width, height){
         super(x, y, width, height, {
             color: '#00A5FF',

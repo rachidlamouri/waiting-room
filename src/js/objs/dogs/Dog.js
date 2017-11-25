@@ -11,7 +11,7 @@ class Dog extends Sprite{
         super(x, y, spriteSheet, $.extend({
             physics: true,
             collisionList: ['Floor', 'Wall', 'Platform', 'Elevator'],
-            triggerList: ['Platform', 'Elevator', 'LevelTrigger'],
+            triggerList: ['Platform', 'Elevator', 'InvisibleTrigger', 'SpriteTrigger'],
             collider: true,
         }, options))
         

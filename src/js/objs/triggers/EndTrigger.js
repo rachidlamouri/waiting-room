@@ -1,7 +1,7 @@
 var paths = Util.paths
-var LevelTrigger = require(paths.obj('triggers/LevelTrigger'))
+var InvisibleTrigger = require(paths.obj('triggers/InvisibleTrigger'))
 
-class EndTrigger extends LevelTrigger{
+class EndTrigger extends InvisibleTrigger{
     constructor(x, y, width, height, nextSceneClass){
         super(x, y, width, height, {
             color: '#00FFA5',
@@ -11,6 +11,7 @@ class EndTrigger extends LevelTrigger{
     }
     
     onTrigger(engine){
+        engine.removeObjById(this.id)
         engine.scene.unloadSpeed = 2000
         engine.scene.unload(this.nextSceneClass)
     }

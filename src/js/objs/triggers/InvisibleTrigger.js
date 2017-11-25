@@ -1,6 +1,6 @@
 var GameObj = EngineUtil.GameObj
 
-class LevelTrigger extends GameObj{
+class InvisibleTrigger extends GameObj{
     constructor(x, y, width, height, options){
         super(x, y, width, height, $.extend(options, {
             physics: true,
@@ -11,4 +11,4 @@ class LevelTrigger extends GameObj{
         }))
     }
 }
-module.exports = LevelTrigger
+module.exports = InvisibleTrigger

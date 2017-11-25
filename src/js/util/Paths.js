@@ -41,6 +41,9 @@ var Paths = $.extend(class{
         return this.folders.app+relativePath
     }
     asset(relativePath = ''){
+        if(!relativePath.endsWith('.png')){
+            relativePath += '.png'
+        }
         return this.src('img/assets/')+relativePath
     }
     data(relativePath = ''){
