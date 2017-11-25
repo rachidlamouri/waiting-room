@@ -1,1 +1,3 @@
 level1_theme: 80bpm
+level2_theme: 100bpm
+level3_theme: 120bpm
