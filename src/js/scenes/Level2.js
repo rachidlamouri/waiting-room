@@ -49,7 +49,7 @@ class Level2 extends Scene{
             // Floor and side walls
             new Floor(.5*SU.x, 2*SU.y, 1*SU.x, 1*U),
             new Wall(-1*U, 1*SU.y , 2*U, 2*SU.y),
-            new Wall(8*U, 1*SU.y + 3*U, 2*U, 5*U),
+            new Wall(8*U, 1*SU.y + 3.25*U, 2*U, 4.5*U),
             
             new CollapseWall(2.50*U, 1*SU.y + 5.25*U, 10, 0.50*U),
             new CollapseWall(3.60*U, 1*SU.y + 4.75*U, 30, 10),

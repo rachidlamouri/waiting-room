@@ -6,8 +6,12 @@ var SU = Scene.SU
 var U = Scene.U
 
 var Millie = require(paths.obj('dogs/Millie'))
+
 var Wall = require(paths.obj('barriers/Wall'))
+var SlideInWall = require(paths.obj('barriers/SlideInWall'))
 var GrowWall = require(paths.obj('barriers/GrowWall'))
+
+var Platform = require(paths.obj('platforms/Platform'))
 
 class Level2Millie extends Millie{
     constructor(x, y){
@@ -28,9 +32,17 @@ class Level2Millie extends Millie{
                     wall.collapse()
                 })
                 
-                let stage2StartPlatform = new GrowWall(6.5*U, 1*SU.y + 5.50*U, U, 0, 6.5*U, 1*SU.y + 5.25*U, U, .5*U, 2000)
-                stage2StartPlatform.grow()
-                engine.addObj(stage2StartPlatform)
+                let stage2Start = new GrowWall(6.5*U, 1*SU.y + 5.50*U, U, 0, 6.5*U, 1*SU.y + 5.25*U, U, .5*U, 2000)
+                stage2Start.grow()
+                
+                let stage2End = new SlideInWall(1.5*U, 5.5*U, 1.5*U, 1*SU.y + 4.5*U, 30, 10, 2000)
+                stage2End.move()
+                
+                let stage2Platform = new Platform(3*U, 1*SU.y + 4.5*U, 30, 10, 0)
+                
+                engine.addObj(stage2Start)
+                engine.addObj(stage2Platform)
+                engine.addObj(stage2End)
             }
         }
     }
