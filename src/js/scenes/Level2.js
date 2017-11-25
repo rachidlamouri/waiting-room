@@ -7,8 +7,8 @@ var Scene = EngineUtil.Scene
 var SpriteSheet = EngineUtil.SpriteSheet
 
 var Camera = require(paths.obj('Camera'))
-var Level2Coco = require(paths.obj('dogs/Level2Coco'))
-var Level2Millie = require(paths.obj('dogs/Level2Millie'))
+var Level2Coco = require(paths.obj('level2/Level2Coco'))
+var Level2Millie = require(paths.obj('level2/Level2Millie'))
 
 var Floor = require(paths.obj('barriers/Floor'))
 var Wall = require(paths.obj('barriers/Wall'))

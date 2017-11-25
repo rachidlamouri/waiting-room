@@ -18,6 +18,8 @@ class MainMenu extends Scene{
             
             if(action == 'level-1'){
                 this.unload('Level1')
+            }else if(action == 'level-2'){
+                this.unload('Level2')
             }else if(action == 'test-scene'){
                 this.unload('TestScene')
             }else if(action == 'sprite-viewer'){

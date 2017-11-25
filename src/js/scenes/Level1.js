@@ -8,11 +8,11 @@ var Vect = EngineUtil.Vect
 var GameObj = EngineUtil.GameObj
 var SpriteSheet = EngineUtil.SpriteSheet
 
-var RampTrigger = require(paths.obj('triggers/RampTrigger'))
-var DropTrigger = require(paths.obj('triggers/DropTrigger'))
-var SlideTrigger = require(paths.obj('triggers/SlideTrigger'))
+var Level1Coco = require(paths.obj('level1/Level1Coco'))
+var RampTrigger = require(paths.obj('level1/RampTrigger'))
+var DropTrigger = require(paths.obj('level1/DropTrigger'))
+var SlideTrigger = require(paths.obj('level1/SlideTrigger'))
 var EndTrigger = require(paths.obj('triggers/EndTrigger'))
-var Level1Coco = require(paths.obj('dogs/Level1Coco'))
 
 var Floor = require(paths.obj('barriers/Floor'))
 var Wall = require(paths.obj('barriers/Wall'))
