@@ -16,7 +16,7 @@ var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 var Platform = require(paths.obj('platforms/Platform'))
 var Elevator = require(paths.obj('platforms/Elevator'))
 
-var TreatTrigger = require(paths.obj('triggers/TreatTrigger'))
+var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
 class Level2 extends Scene{
     constructor(){
@@ -54,7 +54,7 @@ class Level2 extends Scene{
             new CollapseWall(2.50*U, 1*SU.y + 5.25*U, 10, 0.50*U),
             new CollapseWall(3.60*U, 1*SU.y + 4.75*U, 30, 10),
             new CollapseWall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U),
-            new TreatTrigger(6.50*U, 1*SU.y + 5.37*U, 10, 10),
+            new MillieTreat (6.50*U, 1*SU.y + 5.37*U),
             
             //coco,
             millie,

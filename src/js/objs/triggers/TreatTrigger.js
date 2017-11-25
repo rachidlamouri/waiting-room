@@ -3,9 +3,8 @@ var SpriteSheet = EngineUtil.SpriteSheet
 var SpriteTrigger = require(paths.obj('triggers/SpriteTrigger'))
 
 class TreatTrigger extends SpriteTrigger{
-    constructor(x, y){
-        super(x, y, new SpriteSheet(paths.asset('treat_millie'), 1, 1), {
-            color: '#A5FFA5',
+    constructor(x, y, filename){
+        super(x, y, new SpriteSheet(paths.asset(filename), 1, 1), {
         })
     }
     

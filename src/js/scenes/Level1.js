@@ -131,7 +131,7 @@ class Level1 extends Scene{
             new Wall(4*SU.x + 5.0*U, 4*U - 4, 4, 8),
             
             // Trigger 1
-            new RampTrigger(4*SU.x + 7.5*U, 3*U, 1*U, 2*U),
+            new RampTrigger(4*SU.x + 5.8*U, 3.2*U),
             
             // Player
             coco,

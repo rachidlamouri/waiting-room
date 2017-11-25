@@ -1,7 +1,7 @@
 var paths = Util.paths
-var Level2 = require(paths.scene('Level2'))
+var Level1 = require(paths.scene('Level1'))
 
 $(document).ready(function(){
-    let scene = new Level2()
+    let scene = new Level1()
     scene.load()
 })

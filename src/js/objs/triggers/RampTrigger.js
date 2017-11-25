@@ -1,15 +1,13 @@
 var paths = Util.paths
-var InvisibleTrigger = require(paths.obj('triggers/InvisibleTrigger'))
+var CocoTreat = require(paths.obj('triggers/CocoTreat'))
 
-class RampTrigger extends InvisibleTrigger{
-    constructor(x, y, width, height){
-        super(x, y, width, height, {
-            color: '#A5FF00'
-        })
+class RampTrigger extends CocoTreat{
+    constructor(x, y){
+        super(x, y)
     }
     
     onTrigger(engine){
-        engine.removeObjById(this.id)
+        super.onTrigger(engine)
         
         let coco = engine.getObjsByClass('Dog')
         let walls = engine.getObjsByClass('CollapseWall')
