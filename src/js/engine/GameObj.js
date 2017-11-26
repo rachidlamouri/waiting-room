@@ -10,7 +10,6 @@ class GameObj{
         $.extend(this, {
             id: GameObj.OBJ_COUNT++,
             controllerId: undefined,
-            update: options.update,
             simpleUpdate: options.simpleUpdate,
             pos: new Vect(x, y),
             dim: new Vect(width, height),
@@ -28,9 +27,33 @@ class GameObj{
             },
             tags: Util.isUndefined(options.tags, []),
             color: Util.isUndefined(options.color, '#000000'),
+            opacity: 1,
         })
         
         $.extend(this.state, Util.isUndefined(options.state, {}))
+        this.state.removeBy = {
+            collapse: false,
+            removing: false,
+        }
+        this.state.growTo = {
+            dimDiff: undefined,
+            distance: undefined,
+            endDim: undefined,
+            endPos: undefined,
+            elapsedTime: 0,
+            expectedTime: undefined,
+            growing: false,
+            startDim: undefined,
+            startPos: undefined,
+        }
+        this.state.slideTo = {
+            distance: undefined,
+            elapsedTime: 0,
+            expectedTime: undefined,
+            moving: false,
+            sliding: false,
+            startPos: undefined,
+        }
     }
     addCollisionType(objClass){
         this.collisionList.push(objClass)
@@ -90,7 +113,7 @@ class GameObj{
         }
     }
     draw(ctx, frameCount){
-        this.getMeshBox().draw(ctx, this.color)
+        this.getMeshBox().draw(ctx, this.color, this.opacity)
     }
     getColliderBox(){
         return this.getRelativeBox(this.collider)
@@ -107,6 +130,17 @@ class GameObj{
     }
     getTriggerBox(){
         return this.getRelativeBox(this.trigger)
+    }
+    growTo(endX, endY, endWidth, endHeight, expectedTime){
+        let growTo = this.state.growTo
+        growTo.dimDiff = new Vect(endWidth - this.dim.width, endHeight - this.dim.height)
+        growTo.distance = new Vect(endX - this.pos.x, endY - this.pos.y)
+        growTo.endPos = new Vect(endX, endY)
+        growTo.endDim = new Vect(endWidth, endHeight)
+        growTo.expectedTime = expectedTime
+        growTo.startDim = new Vect(this.dim.width, this.dim.height)
+        growTo.startPos = new Vect(this.pos.x, this.pos.y)
+        growTo.growing = true
     }
     handleCollision(collider){
         let box
@@ -164,8 +198,80 @@ class GameObj{
     instanceOf(name){
         return GameObj.instanceOf(this, name)
     }
+    removeBy(collapse){
+        let removeBy = this.state.removeBy
+        removeBy.collapse = collapse
+        removeBy.removing = true
+    }
     setControllerId(controllerId){
         this.controllerId = controllerId
+    }
+    slideTo(x, y, expectedTime){
+        let slideTo = this.state.slideTo
+        slideTo.startPos = new Vect(this.pos.x, this.pos.y)
+        slideTo.sliding = true
+        slideTo.expectedTime = expectedTime
+        slideTo.distance = new Vect(x - this.pos.x, y - this.pos.y)
+    }
+    update(engine){
+        let slideTo = this.state.slideTo
+        if(slideTo.sliding){
+            slideTo.elapsedTime += engine.timestep
+            let progress = slideTo.elapsedTime/slideTo.expectedTime
+            
+            if(progress > 1){
+                progress = 1
+                slideTo.sliding = false
+            }
+            
+            let expectedDistance = new Vect(progress*slideTo.distance.x, progress*slideTo.distance.y)
+            this.pos.x = slideTo.startPos.x + expectedDistance.x
+            this.pos.y = slideTo.startPos.y + expectedDistance.y
+        }
+        
+        let growTo = this.state.growTo
+        if(growTo.growing){
+            growTo.elapsedTime += engine.timestep
+            let progress = growTo.elapsedTime/growTo.expectedTime
+            
+            if(progress > 1){
+                progress = 1
+                growTo.growing = false
+            }
+            
+            let expectedDistance = new Vect(progress*growTo.distance.x, progress*growTo.distance.y)
+            this.pos.x = growTo.startPos.x + expectedDistance.x
+            this.pos.y = growTo.startPos.y + expectedDistance.y
+            
+            let expectedDimDiff = new Vect(progress*growTo.dimDiff.x, progress*growTo.dimDiff.y)
+            this.dim.width = growTo.startDim.x + expectedDimDiff.x
+            this.dim.height = growTo.startDim.y + expectedDimDiff.y
+            
+            this.updateCollider()
+        }
+        
+        let removeBy = this.state.removeBy
+        if(removeBy.removing){
+            if(removeBy.collapse){
+                // collapse
+                if(this.dim.height <= 0){
+                    engine.removeObjById(this.id)
+                }else{
+                    this.dim.height -= 2
+                    this.pos.y += 1
+                }
+            }else{
+                // fade
+                if(this.opacity == 0){
+                    engine.removeObjById(this.id)
+                }else{
+                    this.opacity -= .01
+                    if(this.opacity < 0){
+                        this.opacity = 0
+                    }
+                }
+            }
+        }
     }
     updateCollider(){
         this.collider = new Box(0, 0, this.dim.width, this.dim.height)

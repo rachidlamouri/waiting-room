@@ -12,7 +12,6 @@ var Level2Millie = require(paths.obj('level2/Level2Millie'))
 
 var Floor = require(paths.obj('barriers/Floor'))
 var Wall = require(paths.obj('barriers/Wall'))
-var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 var Platform = require(paths.obj('platforms/Platform'))
 var Elevator = require(paths.obj('platforms/Elevator'))
 
@@ -35,10 +34,12 @@ class Level2 extends Scene{
         let U = Scene.U
         let SU = Scene.SU
         
-        let millie = new Level2Millie(5*U, 1*SU.y + 5.4*U)
+        let millie = new Level2Millie(5*U + 30, 1*SU.y + 5.4*U)
         let coco = new Level2Coco(300, 0)
         coco.setControllerId(0)
         millie.setControllerId(0)
+        
+        let stage1Options = {tags: ['stage-1']}
         
         super.load([
             /*new Camera(300, 255, 10, 455, 2000, ()=>{
@@ -51,10 +52,11 @@ class Level2 extends Scene{
             new Wall(-1*U, 1*SU.y , 2*U, 2*SU.y),
             new Wall(8*U, 1*SU.y + 3.25*U, 2*U, 4.5*U),
             
-            new CollapseWall(2.50*U, 1*SU.y + 5.25*U, 10, 0.50*U),
-            new CollapseWall(3.60*U, 1*SU.y + 4.75*U, 30, 10),
-            new CollapseWall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U),
-            new MillieTreat (6.50*U, 1*SU.y + 5.37*U),
+            // Stage 1
+            new Wall(2.50*U, 1*SU.y + 5.25*U, 10, 0.50*U, stage1Options),
+            new Wall(3.60*U, 1*SU.y + 4.75*U, 30, 10, stage1Options),
+            new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
+            new MillieTreat (6.50*U, 1*SU.y + 5.37*U, 'stage-1'),
             
             //coco,
             millie,

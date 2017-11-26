@@ -73,7 +73,7 @@ class Dog extends Sprite{
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('Platform')){
             this.platformId = trigger.id
-            this.platformSpeed = trigger.movingRight? trigger.speed: -trigger.speed
+            this.platformSpeed = trigger.getSpeed()
         }else if(trigger.instanceOf('Elevator') && this.state.barking){
             trigger.elevate()
         }

@@ -17,11 +17,13 @@ class Box{
     checkCollision(box){
         return !(this.isAbove(box) || this.isBelow(box) || this.isLeftOf(box) || this.isRightOf(box))
     }
-    draw(ctx, color = '#000000'){
+    draw(ctx, color = '#000000', opacity = 1){
         ctx.beginPath()
         ctx.strokeStyle = color
+        ctx.globalAlpha = opacity
         ctx.rect(this.x, this.y, this.width, this.height)
         ctx.stroke()
+        ctx.globalAlpha = 1
     }
     isAbove(box){
         return this.bottom < box.top

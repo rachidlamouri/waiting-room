@@ -17,7 +17,6 @@ var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 var Floor = require(paths.obj('barriers/Floor'))
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
-var CollapseWall = require(paths.obj('barriers/CollapseWall'))
 
 class Level1 extends Scene{
     constructor(){
@@ -121,7 +120,7 @@ class Level1 extends Scene{
             new EndTrigger  (0*SU.x + 2.00*U, 4*SU.y + 0.00*U, 10.0*U, 1.00*U, 'TestScene'),
             
             // Barriers
-            new CollapseWall(4*SU.x, 3*U, U/4, 2*U),
+            new Wall(4*SU.x, 3*U, U/4, 2*U, {tags: ['collapse']}),
             new Wall(5*SU.x, 3*U, U/4, 2*U),
             
             // Hurdles

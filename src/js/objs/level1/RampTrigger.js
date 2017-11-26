@@ -10,13 +10,13 @@ class RampTrigger extends CocoTreat{
         super.onTrigger(engine)
         
         let coco = engine.getObjsByClass('Dog')
-        let walls = engine.getObjsByClass('CollapseWall')
+        let walls = engine.getObjsByTag('collapse')
         
         coco[0].state.canWalk = false
         coco[0].state.rotate.rotating = true
         
         $.each(walls, (index, wall)=>{
-            wall.collapse()
+            wall.removeBy(true)
         })
     }
 }
