@@ -41,7 +41,9 @@ class Camera extends GameObj{
             
             if(progress == 1){
                 this.state.moving = false
-                this.onEnd()
+                if(this.onEnd){
+                    this.onEnd()
+                }
             }
         }
     }

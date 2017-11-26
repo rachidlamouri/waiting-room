@@ -117,7 +117,7 @@ class Level1 extends Scene{
             new DropTrigger (2*SU.x + 3.75*U, 2*SU.y + 0.00*U, 0.50*U, 0.50*U),
             new SlideTrigger(2*SU.x + 3.75*U, 2*SU.y + 4.00*U, 2.00*U, 0.50*U),
                 // 2,0
-            new EndTrigger  (0*SU.x + 2.00*U, 4*SU.y + 0.00*U, 10.0*U, 1.00*U, 'TestScene'),
+            new EndTrigger  (0*SU.x + 2.00*U, 4*SU.y + 0.00*U, 10.0*U, 1.00*U, 'Level2'),
             
             // Barriers
             new Wall(4*SU.x, 3*U, U/4, 2*U, {tags: ['collapse']}),

@@ -40,11 +40,11 @@ let Engine = $.extend(class{
             diff.y = -2
         }else if(diff.y < -10){
             diff.y = -1
+        }else if(diff.y > 20){
+            diff.y = 2
+        }else if(diff.y > 10){
+            diff.y = 1
         }else{
-            diff.y = 0
-        }
-        
-        if(diff.y > 0){
             diff.y = 0
         }
         

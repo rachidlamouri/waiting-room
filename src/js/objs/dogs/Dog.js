@@ -52,6 +52,14 @@ class Dog extends Sprite{
         })
     }
     
+    disable(){
+        this.state.disabled = true
+        this.vel.x = 0
+        this.canWalk = false
+        this.canJump = false
+        this.airSpeedIdle = 0
+        this.state.airFrames = 0
+    }
     onCollisionX(collider){
         this.state.collidedX = true
         if(!this.state.collidingX && !collider.instanceOf('InvisibleWall')){
@@ -87,6 +95,8 @@ class Dog extends Sprite{
         this.state.collidedX = false
     }
     update(engine){
+        super.update(engine)
+        
         if(this.controllerId == undefined){
             return
         }

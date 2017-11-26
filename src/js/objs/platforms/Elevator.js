@@ -4,32 +4,34 @@ var Box = EngineUtil.Box
 var GameObj = EngineUtil.GameObj
 
 class Elevator extends GameObj{
-    constructor(x, y, width, height){
-        super(x, y, width, height, {
+    constructor(x, y, width, height, elevateTop, topTime, options){
+        super(x, y, width, height, $.extend(options, {
             physics: true,
             gravity: 0,
             collisionList: ['Floor'],
             collider: true,
-            trigger: new Box(0, height/2 + 1, width, 1),
+            trigger: new Box(0, height/2 + .5, width, 1),
             terminalVel: new Vect(0, .1),
+        }))
+        
+        $.extend(this, {
+            elapsedTime: 0,
+            elevateTop: elevateTop,
+            topTime: topTime,
         })
         
-        this.elevateTop = 40
-        this.elapsedTime = 0
-        this.topTime = 5000
-        
         /*
+           -1 waiting to start
             0 stopped top
             1 down
             2 stopped bottom
             3 up
         */
-        this.state.elevating = 1
+        this.state.elevating = -1
     }
-    
     draw(ctx){
         this.getTriggerBox().draw(ctx, '#FF0000')
-        this.getMeshBox().draw(ctx, '#00FF00')
+        this.getMeshBox().draw(ctx, '#0000FF')
     }
     elevate(){
         if(this.state.elevating == 2){
@@ -40,6 +42,9 @@ class Elevator extends GameObj{
         if(collider.instanceOf('Floor')){
             this.state.elevating = 2
         }
+    }
+    start(){
+        this.state.elevating = 1
     }
     update(engine){
         let before = this.state.elevating
