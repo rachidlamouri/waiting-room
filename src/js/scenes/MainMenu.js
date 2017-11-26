@@ -1,6 +1,8 @@
 var SrcFile = Util.SrcFile
 var paths = Util.paths
 
+var saveFile = EngineUtil.saveFile
+
 var Scene = EngineUtil.Scene
 var Input = EngineUtil.Input
 var InputListener = EngineUtil.InputListener
@@ -8,7 +10,8 @@ var PlayerInputs = EngineUtil.PlayerInputs
 
 class MainMenu extends Scene{
     constructor(){
-        super(undefined, undefined, undefined, undefined, 'main_menu1', [], true)
+        let song = saveFile.data.levels[1].enabled? 'main_menu2': 'main_menu1'
+        super(undefined, undefined, undefined, undefined, song, 0, [], true)
     }
     
     fadeIn(){
@@ -17,7 +20,7 @@ class MainMenu extends Scene{
     }
     load(){
         super.loadCanvas()
-        super.loadMenu(MainMenu.MAIN_HTML)
+        super.loadMenu(MainMenu.MAIN_HTML, saveFile.data.levels)
         super.loadEngine([])
         super.fadeIn()
     }

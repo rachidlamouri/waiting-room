@@ -1,5 +1,7 @@
 var remote = require('electron').remote
 
+var saveFile = EngineUtil.saveFile
+
 var SrcFile = Util.SrcFile
 var paths = Util.paths
 var Engine = EngineUtil.Engine
@@ -10,7 +12,7 @@ var PlayerInputs = EngineUtil.PlayerInputs
 var Sound = EngineUtil.Sound
 
 class Scene{
-    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, songPath, playerInputsList, staticMenu = false){
+    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, songPath, nextUnlockIndex, playerInputsList, staticMenu = false){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()
         }
@@ -47,6 +49,7 @@ class Scene{
             ctxWidth: ctxWidth,
             ctxHeight: ctxHeight,
             gamepadElem: $(Scene.GAMEPAD_HTML),
+            nextUnlockIndex: nextUnlockIndex,
             screen: new Screen(screenLeft, screenTop, Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, ctxWidth - Scene.CANVAS_WIDTH, ctxHeight - Scene.CANVAS_HEIGHT),
             playerInputsList: playerInputsList,
             loadSpeed: 500,
@@ -54,6 +57,8 @@ class Scene{
         })
         
         this.body.append(this.gamepadElem)
+        
+        this.volumeOn = saveFile.data.volumeOn
         
         if(songPath != undefined){
             this.audio.src = paths.sound(songPath)
@@ -67,7 +72,10 @@ class Scene{
         if(this.audio.src != ''){
             this.audio.play()
         }
-        $(this.audio).animate({volume: 1}, this.loadSpeed)
+        
+        if(this.volumeOn){
+            $(this.audio).animate({volume: 1}, this.loadSpeed)
+        }
         $(this.canvas).fadeTo(this.loadSpeed, 1)
     }
     load(objList, scrollX, scrollY){
@@ -151,25 +159,30 @@ class Scene{
         
         this.engine.start()
     }
-    loadMenu(html){
+    loadMenu(html, levelData = []){
         this.body.append(html)
         this.menuElem = $('.menu')
+        
+        $.each(levelData, (index, data)=>{
+            if(!data.enabled){
+                return
+            }
+            
+            let buttonElem = $(Scene.BUTTON_HTML)
+            buttonElem.html(data.name)
+            buttonElem.attr('class-name', data.className)
+            this.menuElem.append(buttonElem)
+        })
+        
         this.menuButtonElems = this.menuElem.find('.button')
         $(this.menuButtonElems[0]).addClass('selected')
         this.menuButtonElems.click((clickEvent)=>{
             let button = $(clickEvent.target)
             let action = button.attr('action')
             
-            if(action == 'level-1'){
-                this.unload('Level1')
-            }else if(action == 'level-2'){
-                this.unload('Level2')
-            }else if(action == 'level-3'){
-                this.unload('Level3')
-            }else if(action == 'test-scene'){
-                this.unload('TestScene')
-            }else if(action == 'sprite-viewer'){
-                this.unload('SpriteViewer')
+            if(action == 'level'){
+                let levelClass = button.attr('class-name')
+                this.unload(levelClass)
             }else if(action == 'main-menu'){
                 this.unload('MainMenu')
             }else if(action == 'retry'){
@@ -181,8 +194,9 @@ class Scene{
             this.menuElem.hide()
         })
         
-        this.volumeOn = true
         this.volumeElem = $('.volume-icon')
+        this.volumeElem.addClass(this.volumeOn? Scene.CLASS_ON: Scene.CLASS_OFF)
+        
         this.volumeElem.on('mouseenter', (mouseEvent)=>{
             let oldClass = this.volumeOn? Scene.CLASS_ON: Scene.CLASS_OFF
             let newClass = this.volumeOn? Scene.CLASS_OFF: Scene.CLASS_ON
@@ -206,6 +220,8 @@ class Scene{
             this.volumeElem.addClass(newClass)
             
             this.audio.volume = this.volumeOn? 1: 0
+            saveFile.data.volumeOn = this.volumeOn
+            saveFile.save()
         })
     }
     reload(){
@@ -225,6 +241,13 @@ class Scene{
             scene.load()
         })
     }
+    unlockNextLevel(){
+        let nextLevel = saveFile.data.levels[this.nextUnlockIndex]
+        if(!nextLevel.enabled){
+            nextLevel.enabled = true
+            saveFile.save()
+        }
+    }
 }
 $.extend(Scene, {
     CANVAS_WIDTH: 320,
@@ -232,6 +255,7 @@ $.extend(Scene, {
     
     PAUSE_HTML: (new SrcFile('html/pause_menu.html')).read(),
     GAMEPAD_HTML: (new SrcFile('html/gamepad_detected.html')).read(),
+    BUTTON_HTML: (new SrcFile('html/level_button.html')).read(),
     
     CLASS_ON: 'fa-volume-up',
     CLASS_OFF: 'fa-volume-off',

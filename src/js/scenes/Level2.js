@@ -19,7 +19,7 @@ var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
 class Level2 extends Scene{
     constructor(){
-        super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, 0, 'level2_theme', [
+        super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, 0, 'level2_theme', 2, [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),

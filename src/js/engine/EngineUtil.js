@@ -1,6 +1,8 @@
 var paths = Util.paths
 
 window.EngineUtil = {}
+EngineUtil.SaveFile = require(paths.eng('SaveFile'))
+EngineUtil.saveFile = new EngineUtil.SaveFile()
 EngineUtil.Sound = require(paths.eng('Sound'))
 EngineUtil.SoundBank = require(paths.eng('SoundBank'))
 EngineUtil.Vect = require(paths.eng('Vect'))

@@ -11,6 +11,8 @@ class EndTrigger extends InvisibleTrigger{
     }
     
     onTrigger(engine){
+        engine.scene.unlockNextLevel()
+        
         engine.removeObjById(this.id)
         engine.scene.unloadSpeed = 2000
         engine.scene.unload(this.nextSceneClass)
