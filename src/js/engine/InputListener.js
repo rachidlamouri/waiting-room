@@ -15,7 +15,21 @@ class InputListener{
                 })
             },
             gamepadConnected: (gamepadEvent)=>{
-                console.log(gamepadEvent)
+                let gamepads = navigator.getGamepads()
+                let numGamepads = 0
+                if(gamepads[0] != null){
+                    numGamepads++
+                    
+                    if(gamepads[1] != null){
+                        numGamepads++
+                    }
+                }
+                
+                let gamepadElem = $('.gamepad-detected')
+                gamepadElem.find('p').html('x'+numGamepads)
+                gamepadElem.fadeTo(1000, 1, ()=>{
+                    gamepadElem.fadeTo(1000, 0)
+                })
             },
         })
         

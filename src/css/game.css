@@ -3,6 +3,7 @@
     font-family: sans-serif;
     margin: 0px;
     padding: 0px;
+    user-select: none;
 }
 
 body{
@@ -18,7 +19,8 @@ canvas{
     background-color: white;
 }
 
-.main-menu, .pause-menu{
+.menu{
+    box-sizing: border-box;
     position: fixed;
     display: flex;
     width: 320px;
@@ -27,6 +29,7 @@ canvas{
     align-items: center;
     background-color: white;
     flex-direction: column;
+    padding: 8px;
 }
 
 .pause-menu{
@@ -57,10 +60,55 @@ canvas{
     padding-left: 50px;
 }
 
+.button.selected{
+    box-shadow: 0px 0px 2px 2px #888;
+}
+
 .button:hover{
     background-color: #DDD;
 }
 
 .button:active{
     background-color: #EEE;
+}
+
+.gamepad-detected{
+    position: fixed;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    
+    align-items: center;
+    background-color: #CCC;
+    border-radius: 12px;
+    flex-direction: column;
+    justify-content: flex-start;
+    opacity: 0;
+    z-index: 2;
+}
+
+.gamepad-detected i{
+    font-size: 30px;
+}
+
+.gamepad-detected p{
+    font-size: 16px;
+}
+
+.volume-icon{
+    position: fixed;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    
+    align-items: center;
+    align-self: flex-end;
+    font-size: 20px;
+    justify-content: flex-start;
+    justify-self: flex-start;
+}
+
+.volume-icon:hover{
+    color: #666;
+    cursor: pointer;
 }

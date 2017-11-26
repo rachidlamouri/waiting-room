@@ -2,33 +2,23 @@ var SrcFile = Util.SrcFile
 var paths = Util.paths
 
 var Scene = EngineUtil.Scene
+var Input = EngineUtil.Input
+var InputListener = EngineUtil.InputListener
+var PlayerInputs = EngineUtil.PlayerInputs
 
 class MainMenu extends Scene{
     constructor(){
-        super(undefined, undefined, undefined, undefined, 'main_menu1', undefined)
+        super(undefined, undefined, undefined, undefined, 'main_menu1', [], true)
     }
     
+    fadeIn(){
+        super.fadeIn()
+        this.menuElem.fadeTo(this.loadSpeed, 1)
+    }
     load(){
-        this.body.append(MainMenu.MAIN_HTML)
-        this.canvas = $('.main-menu')
-        let buttons = this.body.find('.button')
-        buttons.click((clickEvent)=>{
-            let button = $(clickEvent.target)
-            let action = button.attr('action')
-            
-            if(action == 'level-1'){
-                this.unload('Level1')
-            }else if(action == 'level-2'){
-                this.unload('Level2')
-            }else if(action == 'level-3'){
-                this.unload('Level3')
-            }else if(action == 'test-scene'){
-                this.unload('TestScene')
-            }else if(action == 'sprite-viewer'){
-                this.unload('SpriteViewer')
-            }
-        })
-        
+        super.loadCanvas()
+        super.loadMenu(MainMenu.MAIN_HTML)
+        super.loadEngine([])
         super.fadeIn()
     }
 }

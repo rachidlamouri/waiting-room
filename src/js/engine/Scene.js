@@ -6,16 +6,39 @@ var Engine = EngineUtil.Engine
 var Vect = EngineUtil.Vect
 var GameObj = EngineUtil.GameObj
 var Input = EngineUtil.Input
+var PlayerInputs = EngineUtil.PlayerInputs
+var Sound = EngineUtil.Sound
 
 class Scene{
-    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, songPath, playerInputsList){
+    constructor(ctxWidth, ctxHeight, screenLeft, screenTop, songPath, playerInputsList, staticMenu = false){
         if(document.readyState !== 'complete'){
             throw new Scene.DocumentNotReadyException()
         }
         
-        if(playerInputsList && playerInputsList.length > 0){
-            playerInputsList[0].addInput('reloadScene', new Input(['r', 'R'], [Input.SELECT]))
+        if(playerInputsList.length < 1){
+            playerInputsList.push(new PlayerInputs())
+        }
+        
+        if(playerInputsList.length < 2){
+            playerInputsList.push(new PlayerInputs())
+        }
+        
+        playerInputsList[0].addInput('reloadScene', new Input(['r', 'R'], [Input.SELECT]))
+        playerInputsList[0].addInput('menuUp', new Input(['w', 'W', 'ArrowUp'], [Input.PAD_UP]))
+        playerInputsList[0].addInput('menuDown', new Input(['s', 'S', 'ArrowDown'], [Input.PAD_DOWN]))
+        playerInputsList[0].addInput('menuSelect', new Input(['Enter'], [Input.A]))
+        
+        playerInputsList[1].addInput('reloadScene', new Input([], [Input.SELECT]))
+        playerInputsList[1].addInput('menuUp', new Input([], [Input.PAD_UP]))
+        playerInputsList[1].addInput('menuDown', new Input([], [Input.PAD_DOWN]))
+        playerInputsList[1].addInput('menuSelect', new Input([], [Input.A]))
+        
+        if(!staticMenu){
             playerInputsList[0].addInput('pause', new Input(['Escape'], [Input.START]))
+            playerInputsList[0].addInput('menuEscape', new Input(['Enter'], [Input.B]))
+            
+            playerInputsList[1].addInput('pause', new Input([], [Input.START]))
+            playerInputsList[1].addInput('menuEscape', new Input([], [Input.B]))
         }
         
         $.extend(this, {
@@ -23,14 +46,17 @@ class Scene{
             body: $('body'),
             ctxWidth: ctxWidth,
             ctxHeight: ctxHeight,
+            gamepadElem: $(Scene.GAMEPAD_HTML),
             screen: new Screen(screenLeft, screenTop, Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, ctxWidth - Scene.CANVAS_WIDTH, ctxHeight - Scene.CANVAS_HEIGHT),
             playerInputsList: playerInputsList,
             loadSpeed: 500,
             unloadSpeed: 500,
         })
         
+        this.body.append(this.gamepadElem)
+        
         if(songPath != undefined){
-            //this.audio.src = paths.sound(songPath)
+            this.audio.src = paths.sound(songPath)
         }
         this.body.append(this.audio)
         this.audio.loop = true
@@ -44,39 +70,30 @@ class Scene{
         $(this.audio).animate({volume: 1}, this.loadSpeed)
         $(this.canvas).fadeTo(this.loadSpeed, 1)
     }
-    load(objList, scrollX = 0, scrollY = 0){
+    load(objList, scrollX, scrollY){
+        this.loadCanvas(scrollX, scrollY)
+        this.loadMenu(Scene.PAUSE_HTML)
+        this.loadEngine(objList)
+        this.fadeIn()
+    }
+    loadCanvas(scrollX = 0, scrollY = 0){
         this.canvas = document.createElement('canvas')
         this.canvas.style.opacity = 0
         this.canvas.width = Scene.CANVAS_WIDTH//this.ctxWidth
         this.canvas.height = Scene.CANVAS_HEIGHT//this.ctxHeight
         this.body.append(this.canvas)
         window.scrollTo(scrollX, scrollY)
-        
-        this.body.append(Scene.PAUSE_HTML)
-        this.pauseMenu = $('.pause-menu')
-        this.pauseMenu.find('.button').click((clickEvent)=>{
-            let button = $(clickEvent.target)
-            let action = button.attr('action')
-            
-            if(action == 'main-menu'){
-                this.unload('MainMenu')
-            }else if(action == 'retry'){
-                this.reload()
-            }else if(action == 'continue'){
-                this.engine.resume()
-            }
-            
-            this.pauseMenu.hide()
-        })
-        
+    }
+    loadEngine(objList){
         this.engine = new Engine(this, this.playerInputsList)
         
-        let gameMaster = new GameObj(0, 0, 0, 0, {
+        let menuController = new GameObj(0, 0, 0, 0, {
             draw: false,
             simpleUpdate: function(engine){
-                let inputs = engine.getPlayerInputStates(0)
+                let inputs1 = engine.getPlayerInputStates(0)
+                let inputs2 = engine.getPlayerInputStates(1)
                 
-                this.checkSimpleAction(inputs.pause, 'pause', ()=>{
+                this.checkSimpleAction(inputs1.pause || inputs2.pause, 'pause', ()=>{
                     if(engine.isRunning()){
                         engine.pause()
                     }else if(engine.isPaused()){
@@ -84,19 +101,112 @@ class Scene{
                     }
                 })
                 
-                this.checkSimpleAction(inputs.reloadScene, 'reloadScene', ()=>{
+                this.checkSimpleAction(inputs1.reloadScene || inputs2.reloadScene, 'reloadScene', ()=>{
                     remote.getCurrentWindow().reload()
                     //engine.scene.reload()
                 })
+                
+                this.checkSimpleAction((inputs1.menuUp || inputs2.menuUp) && this.menuElem.is(':visible'), 'menuUp', ()=>{
+                    this.selectedButton--
+                    if(this.selectedButton < 0){
+                        this.selectedButton = this.menuButtonElems.length - 1
+                    }
+                    
+                    this.menuButtonElems.removeClass('selected')
+                    $(this.menuButtonElems[this.selectedButton]).addClass('selected')
+                    new Sound('walking_millie')
+                })
+                
+                this.checkSimpleAction((inputs1.menuDown || inputs2.menuDown) && this.menuElem.is(':visible'), 'menuDown', ()=>{
+                    this.selectedButton++
+                    if(this.selectedButton >= this.menuButtonElems.length){
+                        this.selectedButton = 0
+                    }
+                    
+                    this.menuButtonElems.removeClass('selected')
+                    $(this.menuButtonElems[this.selectedButton]).addClass('selected')
+                    new Sound('walking_millie')
+                })
+                
+                this.checkSimpleAction((inputs1.menuSelect || inputs2.menuSelect) && this.menuElem.is(':visible'), 'menuSelect', ()=>{
+                    $(this.menuButtonElems[this.selectedButton]).trigger('click')
+                    new Sound('thump1')
+                })
+                
+                this.checkSimpleAction((inputs1.menuEscape || inputs2.menuEscape) && this.menuElem.is(':visible'), 'menuEscape', ()=>{
+                    if(engine.isPaused()){
+                        engine.resume()
+                    }
+                })
             },
         })
-        objList.push(gameMaster)
+        menuController.menuElem = this.menuElem
+        menuController.selectedButton = 0
+        menuController.menuButtonElems = this.menuButtonElems
+        
+        objList.push(menuController)
         $.each(objList, (index, obj)=>{
             this.engine.addObj(obj)
         })
         
         this.engine.start()
-        this.fadeIn()
+    }
+    loadMenu(html){
+        this.body.append(html)
+        this.menuElem = $('.menu')
+        this.menuButtonElems = this.menuElem.find('.button')
+        $(this.menuButtonElems[0]).addClass('selected')
+        this.menuButtonElems.click((clickEvent)=>{
+            let button = $(clickEvent.target)
+            let action = button.attr('action')
+            
+            if(action == 'level-1'){
+                this.unload('Level1')
+            }else if(action == 'level-2'){
+                this.unload('Level2')
+            }else if(action == 'level-3'){
+                this.unload('Level3')
+            }else if(action == 'test-scene'){
+                this.unload('TestScene')
+            }else if(action == 'sprite-viewer'){
+                this.unload('SpriteViewer')
+            }else if(action == 'main-menu'){
+                this.unload('MainMenu')
+            }else if(action == 'retry'){
+                this.reload()
+            }else if(action == 'continue'){
+                this.engine.resume()
+            }
+            
+            this.menuElem.hide()
+        })
+        
+        this.volumeOn = true
+        this.volumeElem = $('.volume-icon')
+        this.volumeElem.on('mouseenter', (mouseEvent)=>{
+            let oldClass = this.volumeOn? Scene.CLASS_ON: Scene.CLASS_OFF
+            let newClass = this.volumeOn? Scene.CLASS_OFF: Scene.CLASS_ON
+            this.volumeElem.removeClass(oldClass)
+            this.volumeElem.addClass(newClass)
+        })
+        
+        this.volumeElem.on('mouseleave', (mouseEvent)=>{
+            let oldClass = this.volumeOn? Scene.CLASS_OFF: Scene.CLASS_ON
+            let newClass = this.volumeOn? Scene.CLASS_ON: Scene.CLASS_OFF
+            this.volumeElem.removeClass(oldClass)
+            this.volumeElem.addClass(newClass)
+        })
+        
+        this.volumeElem.click((clickEvent)=>{
+            this.volumeOn = !this.volumeOn
+            
+            let oldClass = this.volumeOn? Scene.CLASS_OFF: Scene.CLASS_ON
+            let newClass = this.volumeOn? Scene.CLASS_ON: Scene.CLASS_OFF
+            this.volumeElem.removeClass(oldClass)
+            this.volumeElem.addClass(newClass)
+            
+            this.audio.volume = this.volumeOn? 1: 0
+        })
     }
     reload(){
         this.unload(this.constructor.name)
@@ -121,6 +231,10 @@ $.extend(Scene, {
     CANVAS_HEIGHT: 240,
     
     PAUSE_HTML: (new SrcFile('html/pause_menu.html')).read(),
+    GAMEPAD_HTML: (new SrcFile('html/gamepad_detected.html')).read(),
+    
+    CLASS_ON: 'fa-volume-up',
+    CLASS_OFF: 'fa-volume-off',
     
     // Unit square
     U: 40,
