@@ -18,6 +18,7 @@ class Dog extends Sprite{
         $.extend(this, {
             walkingFile: options.walkingFile,
             airSpeedIdle: .01,
+            flySpeed: .15,
             jumpSpeedY: .2,
             lastPlatformSpeed: 0,
             platformSpeed: 0,
@@ -26,10 +27,13 @@ class Dog extends Sprite{
         
         $.extend(this.state, {
             airFrames: 0,
+            canFly: false,
             canJump: true,
             canWalk: true,
             facingRight: true,
+            flying: false,
             grounded: false,
+            hovering: false,
             jumpFrameCount: 0,
             jumping: 0,
             maxJumpFrames: 8,
@@ -84,10 +88,13 @@ class Dog extends Sprite{
             this.platformSpeed = trigger.getSpeed()
         }else if(trigger.instanceOf('Elevator') && this.state.barking){
             trigger.elevate()
+        }else if(trigger.instanceOf('Cloud')){
+            trigger.onTrigger(engine)
         }
     }
     reset(){
         this.platformSpeed = 0
+        this.state.flying = false
         this.state.grounded = false
         this.state.walking = false
         
@@ -120,6 +127,18 @@ class Dog extends Sprite{
             this.state.walking = !this.state.sitting
         }
         
+        if(inputs.right && this.state.canFly){
+            this.state.facingRight = true
+            this.state.flying = !this.state.grounded
+        }
+        
+        if(inputs.left && this.state.canFly){
+            this.state.facingRight = false
+            this.state.flying = !this.state.grounded
+        }
+        
+        this.state.hovering = this.state.canFly && !inputs.right && !inputs.left
+        
         this.vel.x = 0
         
         // Jump
@@ -140,7 +159,9 @@ class Dog extends Sprite{
                 this.sounds.walking.audio.play()
             }
             this.vel.x = this.state.facingRight? this.walkSpeed: -this.walkSpeed
-        }else if(this.state.grounded){
+        }else if(this.state.flying){
+            this.vel.x = this.state.facingRight? this.flySpeed: -this.flySpeed
+        }else if(this.state.grounded || this.state.hovering){
             this.vel.x = 0
         }else{
             this.vel.x = this.state.facingRight? this.airSpeedIdle: -this.airSpeedIdle

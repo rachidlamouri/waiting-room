@@ -28,6 +28,7 @@ class GameObj{
             tags: Util.isUndefined(options.tags, []),
             color: Util.isUndefined(options.color, '#000000'),
             opacity: 1,
+            fadeSpeed: Util.isUndefined(options.fadeSpeed, .01),
         })
         
         $.extend(this.state, Util.isUndefined(options.state, {}))
@@ -265,7 +266,7 @@ class GameObj{
                 if(this.opacity == 0){
                     engine.removeObjById(this.id)
                 }else{
-                    this.opacity -= .01
+                    this.opacity -= this.fadeSpeed
                     if(this.opacity < 0){
                         this.opacity = 0
                     }

@@ -5,6 +5,11 @@ var Input = EngineUtil.Input
 var PlayerInputs = EngineUtil.PlayerInputs
 var Scene = EngineUtil.Scene
 
+var Level3Coco = require(paths.obj('level3/Level3Coco'))
+var Level3Millie = require(paths.obj('level3/Level3Millie'))
+
+var Cloud = require(paths.obj('triggers/Cloud'))
+
 var Wall = require(paths.obj('barriers/Wall'))
 
 class Level3 extends Scene{
@@ -24,8 +29,16 @@ class Level3 extends Scene{
         let U = Scene.U
         let SU = Scene.SU
         
+        let millie  = new Level3Millie(4*U, 5.3*U)
+        let coco  = new Level3Coco(4*U, 5*U)
+        coco.setControllerId(0)
+        
         super.load([
-            new Wall(4*U, 3*U),
+            new Cloud(2*U, -4*U),
+            new Cloud(4*U, -2*U),
+            new Cloud(6*U, 0),
+            coco,
+            millie,
         ])
     }
 }
