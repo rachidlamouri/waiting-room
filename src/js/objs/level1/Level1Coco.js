@@ -40,12 +40,17 @@ class Level1Coco extends Coco{
     }
     update(engine){
         super.update(engine)
-        
         let slideState = this.state.slide
         let rotateState = this.state.rotate
         
         if(slideState.sliding){
             engine.follow(this)
+            
+            if(this.state.grounded){
+                this.setAnimation('proneRight')
+            }else{
+                this.setAnimation('walkRight')
+            }
             
             if(this.state.drop){
                 this.vel.x = -2*this.airSpeedIdle

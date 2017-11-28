@@ -20,6 +20,9 @@ class Level2Coco extends Coco{
     }
     
     onCollisionY(collider){
+        super.onCollisionY(collider)
+        
+        this.setAnimation('proneRight')
         if(this.state.level == 0){
             this.state.level = 1
         }
@@ -31,12 +34,11 @@ class Level2Coco extends Coco{
             return
         }
         
-        this.setAnimation('sitRight')
-        
         let inputs = engine.getPlayerInputStates(this.controllerId)
         
         if(this.state.level == 0){
             engine.follow(this)
+            this.setAnimation('walkRight')
         }else if(this.state.level == 1 && inputs.bark){
             this.state.level = 2
             

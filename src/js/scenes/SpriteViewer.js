@@ -22,7 +22,7 @@ class SpriteViewer extends Scene{
     
     load(){
         super.load([
-             new SpriteController(100, 140, new SpriteSheet(paths.asset('millie.png'), Dog.COLUMNS, Dog.ANIMATIONS.length)),
+             new SpriteController(100, 140, new SpriteSheet(paths.asset('coco.png'), Dog.COLUMNS, Dog.ANIMATIONS.length)),
         ])
     }
 }

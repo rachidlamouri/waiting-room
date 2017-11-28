@@ -38,6 +38,7 @@ class Dog extends Sprite{
             jumping: 0,
             maxJumpFrames: 8,
             sitting: false,
+            sliding: false,
             walking: false,
         })
         
@@ -216,6 +217,7 @@ $.extend(Dog, {
         'sitLeft',
         'flyRight',
         'flyLeft',
+        'proneRight',
     ],
     COLUMNS: 12,
 })

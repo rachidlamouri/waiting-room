@@ -91,6 +91,9 @@ class Level2Millie extends Millie{
                     
                     this.gravity = 0
                     this.slideTo(3.5*U, -U, 3000)
+                    
+                    coco.setAnimation('flyRight')
+                    this.setAnimation('flyRight')
                 })
                 frameCamera.start()
                 
