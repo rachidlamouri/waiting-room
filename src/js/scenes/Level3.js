@@ -11,6 +11,7 @@ var Level3Millie = require(paths.obj('level3/Level3Millie'))
 var Cloud = require(paths.obj('triggers/Cloud'))
 
 var Wall = require(paths.obj('barriers/Wall'))
+var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
 
 class Level3 extends Scene{
     constructor(){
@@ -34,6 +35,9 @@ class Level3 extends Scene{
         coco.setControllerId(0)
         
         super.load([
+            new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
+            new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
+        
             new Cloud(2*U, -4*U),
             new Cloud(4*U, -2*U),
             new Cloud(6*U, 0),

@@ -227,7 +227,7 @@ let Engine = $.extend(class{
         
         $.each(this.objs, (index, obj)=>{
             if(obj.draw){
-                obj.draw(this.ctx, this.timestep)
+                obj.draw(this.ctx, this.timestep, this)
             }
         })
     }
