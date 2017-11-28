@@ -29,7 +29,6 @@
     "release": "build"
   },
   "dependencies": {
-    "dateformat": "^3.0.2",
     "image-size": "^0.6.1",
     "jquery": "^3.2.1"
   },

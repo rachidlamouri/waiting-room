@@ -17,39 +17,11 @@ window.onerror = function(message, source, lineNum, colNum, error){
 var {exec} = require('child_process')
 var fs = require('fs')
 var path = require('path')
-var DateFormat = require('dateformat')
 
 // Util
 window.Util = {
     CHARS: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
     
-    FORMAT_COMMAS: ',',
-    FORMAT_PERCENT: '%',
-    
-    format(value, format, details = {}){
-        /* DateFormat
-            y: year
-            d: day
-            m: month
-            H: hour (24hr format)
-            M: minute
-            s: second
-        */
-        if(format == Util.FORMAT_PERCENT){
-            let precision = Util.isUndefined(details.precision, 0)
-            value = value.parseNum().toPercent(precision)
-        }else if(format == Util.FORMAT_COMMAS){
-            let precision = Util.isUndefined(details.precision, 0)
-            value = value.parseNum().toLocaleString(undefined, {
-                minimumFractionDigits: precision,
-                maximumFractionDigits: precision,
-            })
-        }else{
-            value = DateFormat(new Date(value), format)
-        }
-        
-        return value
-    },
     isUndefined(value, undefinedVal, definedVal){
         return value == undefined? undefinedVal: (arguments.length < 3? value: definedVal)
     },
