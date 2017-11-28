@@ -15,22 +15,18 @@ class Level3Millie extends Millie{
             canJump: false,
             canWalk: false,
             follow: true,
+            hovering: true,
         })
     }
     
     update(engine){
+        super.update(engine)
+        this.updateAnimation()
+        
         if(this.state.follow){
             let coco = engine.getObjsByClass('Level3Coco')[0]
             this.pos.x = coco.pos.x
             this.state.facingRight = coco.state.facingRight
-            
-            if(this.state.facingRight){
-                this.setAnimation('idleRight')
-            }else{
-                this.setAnimation('idleLeft')
-            }
-        }else{
-            super.update(engine)
         }
     }
 }

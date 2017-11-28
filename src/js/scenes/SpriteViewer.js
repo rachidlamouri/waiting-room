@@ -6,6 +6,8 @@ var Scene = EngineUtil.Scene
 var SpriteSheet = EngineUtil.SpriteSheet
 
 var SpriteController = require(paths.obj('SpriteController'))
+var Dog = require(paths.obj('dogs/Dog'))
+
 class SpriteViewer extends Scene{
     constructor(){
         super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, undefined, 0, [
@@ -20,7 +22,7 @@ class SpriteViewer extends Scene{
     
     load(){
         super.load([
-             new SpriteController(100, 140, new SpriteSheet(paths.asset('millie.png'), 6, 6)),
+             new SpriteController(100, 140, new SpriteSheet(paths.asset('millie.png'), Dog.COLUMNS, Dog.ANIMATIONS.length)),
         ])
     }
 }

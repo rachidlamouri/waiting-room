@@ -173,12 +173,23 @@ class Dog extends Sprite{
             this.vel.x += this.lastPlatformSpeed
         }
         
-        // Animation
+        this.updateAnimation()
+        
+        // Sound states
+        if(this.state.grounded){
+            this.state.airFrames = 0
+        }else{
+            this.state.airFrames++
+        }
+    }
+    updateAnimation(){
         if(this.state.facingRight){
             if(this.state.sitting){
                 this.setAnimation('sitRight')
             }else if(this.state.walking){
                 this.setAnimation('walkRight')
+            }else if(this.state.flying || this.state.hovering){
+                this.setAnimation('flyRight')
             }else{
                 this.setAnimation('idleRight')
             }
@@ -187,16 +198,11 @@ class Dog extends Sprite{
                 this.setAnimation('sitLeft')
             }else if(this.state.walking){
                 this.setAnimation('walkLeft')
+            }else if(this.state.flying || this.state.hovering){
+                this.setAnimation('flyLeft')
             }else{
                 this.setAnimation('idleLeft')
             }
-        }
-        
-        // Sound states
-        if(this.state.grounded){
-            this.state.airFrames = 0
-        }else{
-            this.state.airFrames++
         }
     }
 }
@@ -208,7 +214,9 @@ $.extend(Dog, {
         'idleLeft',
         'sitRight',
         'sitLeft',
+        'flyRight',
+        'flyLeft',
     ],
-    COLUMNS: 6,
+    COLUMNS: 12,
 })
 module.exports = Dog
