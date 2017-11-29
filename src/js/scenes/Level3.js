@@ -36,16 +36,28 @@ class Level3 extends Scene{
         let coco  = new Level3Coco(4*U, 5*U)
         coco.setControllerId(0)
         
+        let conductor = new Conductor()
+        conductor.addNote('--B-----', 6000)
+        conductor.addNote('---B----', 5500)
+        conductor.addNote('----B---', 5000)
+        conductor.addNote('-----B--', 4500)
+        conductor.addNote('------B-', 4000)
+        conductor.addNote('----B---', 3500)
+        conductor.addNote('---B----', 3000)
+        conductor.addNote('----B---', 2500)
+        conductor.addNote('---B----', 2000)
+        conductor.addNote('BBBBBBBB', 1500)
+        conductor.addNote('BBBBBBBB', 1000)
+        conductor.addNote('BBBBBBBB', 500)
+        conductor.addNote('BBBBBBBB', 0)
+        
         super.load([
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             
-            new Conductor(),
+            conductor,
             new Collector(.5*SU.x, SU.y + 2*U, SU.x, 2*U),
-        
-            new Cloud(2*U, -4*U),
-            new Cloud(4*U, -2*U),
-            new Cloud(6*U, 0),
+            
             coco,
             millie,
         ])

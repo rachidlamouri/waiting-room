@@ -12,11 +12,15 @@ class Conductor extends GameObj{
         $.extend(this, {
             elapsedTime: 0,
             interval: 1000,
+            notes: [],
         })
         
-        this.state.random = true
+        this.state.random = false
     }
     
+    addNote(time, composition){
+        this.notes.unshift(new Note(time, composition))
+    }
     emitRandom(engine){
         let SU = Scene.SU
         let U = Scene.U
@@ -39,6 +43,38 @@ class Conductor extends GameObj{
             this.emitRandom(engine)
             this.elapsedTime = 0
         }
+        
+        while(this.notes.length > 0 && this.elapsedTime >= this.notes[0].time){
+            let note = this.notes.shift()
+            note.create(engine)
+        }
     }
 }
+
+class Note{
+    constructor(composition, time){
+        $.extend(this, {
+            time: time,
+            composition: composition.split(''),
+        })
+    }
+    
+    create(engine){
+        let U = Scene.U
+        
+        $.each(this.composition, (index, letter)=>{
+            let obj
+            let xPos = (index + 1)*U - .5*U
+            let yPos = -U
+            if(letter == 'B'){
+                obj = new Cloud(xPos, yPos)
+            }else if(letter  == '-'){
+                return
+            }
+            
+            engine.addObj(obj)
+        })
+    }
+}
+
 module.exports = Conductor
