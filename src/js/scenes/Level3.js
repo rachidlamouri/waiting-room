@@ -9,6 +9,8 @@ var Level3Coco = require(paths.obj('level3/Level3Coco'))
 var Level3Millie = require(paths.obj('level3/Level3Millie'))
 
 var Cloud = require(paths.obj('triggers/Cloud'))
+var Conductor = require(paths.obj('level3/Conductor'))
+var Collector = require(paths.obj('level3/Collector'))
 
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
@@ -37,6 +39,9 @@ class Level3 extends Scene{
         super.load([
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
+            
+            new Conductor(),
+            new Collector(.5*SU.x, SU.y + 2*U, SU.x, 2*U),
         
             new Cloud(2*U, -4*U),
             new Cloud(4*U, -2*U),

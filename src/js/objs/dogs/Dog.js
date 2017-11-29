@@ -90,6 +90,8 @@ class Dog extends Sprite{
         }else if(trigger.instanceOf('Elevator') && this.state.barking){
             trigger.elevate()
         }else if(trigger.instanceOf('Cloud')){
+            trigger.poof()
+        }else if(trigger.instanceOf('CocoTreat')){
             trigger.onTrigger(engine)
         }
     }

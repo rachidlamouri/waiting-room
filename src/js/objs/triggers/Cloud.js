@@ -4,26 +4,27 @@ var SpriteTrigger = require(paths.obj('triggers/SpriteTrigger'))
 
 class Cloud extends SpriteTrigger{
     constructor(x, y){
-        super(x, y, new SpriteSheet(paths.asset('cloud_bone'), 6, ['cloud', 'explode']), {
+        super(x, y, new SpriteSheet(paths.asset('cloud_bone'), 6, ['cloud', 'poof']), {
             color: '#FF0000',
             fadeSpeed: .1,
             gravity: .001,
         })
         
         this.fps = 3
-        this.state.exploding = false
+        this.state.poofing = false
+        this.sheet.offset.x = Math.floor(Math.random()*this.sheet.columns)
     }
     
     onAnimationFinish(engine){
-        if(this.state.exploding){
+        if(this.state.poofing){
             engine.removeObjById(this.id)
         }
     }
-    onTrigger(engine){
-        if(!this.state.exploding){
-            this.state.exploding = true
+    poof(){
+        if(!this.state.poofing){
+            this.state.poofing = true
             this.fps = 12
-            this.setAnimation('explode')
+            this.setAnimation('poof')
         }
     }
     setAnimation(animation){

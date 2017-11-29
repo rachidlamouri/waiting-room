@@ -25,6 +25,9 @@ window.Util = {
     isUndefined(value, undefinedVal, definedVal){
         return value == undefined? undefinedVal: (arguments.length < 3? value: definedVal)
     },
+    randomNum(range){
+        return Math.floor(Math.random()*range)
+    },
     randomText(length = 20){
         let string = ''
         for(let i=0; i < length; i++){
