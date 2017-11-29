@@ -18,7 +18,7 @@ class Dog extends Sprite{
         $.extend(this, {
             walkingFile: options.walkingFile,
             airSpeedIdle: .01,
-            flySpeed: .15,
+            flySpeed: .28,
             jumpSpeedY: .2,
             lastPlatformSpeed: 0,
             platformSpeed: 0,

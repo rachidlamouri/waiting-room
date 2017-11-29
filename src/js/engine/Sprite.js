@@ -8,14 +8,14 @@ class Sprite extends GameObj{
         $.extend(this, {
             sheet: spriteSheet,
             fps: 6,
-            elapsedTime: 0,
+            elapsedFrameTime: 0,
         })
     }
     
     draw(ctx, timestep, engine){
-        this.elapsedTime += timestep/1000
-        if(this.elapsedTime > 1/this.fps){
-            this.elapsedTime = this.elapsedTime - (1/this.fps)
+        this.elapsedFrameTime += timestep/1000
+        if(this.elapsedFrameTime > 1/this.fps){
+            this.elapsedFrameTime = this.elapsedFrameTime - (1/this.fps)
             this.sheet.offset.x = ++this.sheet.offset.x % this.sheet.columns
         }
         

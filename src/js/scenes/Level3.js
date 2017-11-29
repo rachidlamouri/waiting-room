@@ -37,19 +37,82 @@ class Level3 extends Scene{
         coco.setControllerId(0)
         
         let conductor = new Conductor()
-        conductor.addNote('--B-----', 6000)
-        conductor.addNote('---B----', 5500)
-        conductor.addNote('----B---', 5000)
-        conductor.addNote('-----B--', 4500)
-        conductor.addNote('------B-', 4000)
-        conductor.addNote('----B---', 3500)
-        conductor.addNote('---B----', 3000)
-        conductor.addNote('----B---', 2500)
-        conductor.addNote('---B----', 2000)
-        conductor.addNote('BBBBBBBB', 1500)
-        conductor.addNote('BBBBBBBB', 1000)
-        conductor.addNote('BBBBBBBB', 500)
-        conductor.addNote('BBBBBBBB', 0)
+        conductor.addNote('----B---')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        
+        conductor.addNote('----P---')
+        conductor.addNote('---P----')
+        conductor.addNote('----P---')
+        conductor.addNote('---P----')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----P---')
+        conductor.addNote('--P-----')
+        conductor.addNote('----P---')
+        conductor.addNote('--P-----')
+        
+        conductor.addNote('--B-----')
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        
+        conductor.addNote('----P---')
+        conductor.addNote('---P----')
+        conductor.addNote('----P---')
+        conductor.addNote('---P----')
+        
+        conductor.addNote('BBBBBBBB')
+        conductor.addNote('BBBBBBBB')
+        conductor.addNote('BBBBBBBB')
+        conductor.addNote('BBBBBBBB')
+        
+        console.log((conductor.notes.length - 1)*500)
         
         super.load([
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),

@@ -52,11 +52,13 @@ class Conductor extends GameObj{
 }
 
 class Note{
-    constructor(composition, time){
+    constructor(composition, time=500){
         $.extend(this, {
-            time: time,
+            time: Note.TOTAL_TIME,
             composition: composition.split(''),
         })
+        
+        Note.TOTAL_TIME -= time
     }
     
     create(engine){
@@ -64,17 +66,26 @@ class Note{
         
         $.each(this.composition, (index, letter)=>{
             let obj
+            let treat
             let xPos = (index + 1)*U - .5*U
             let yPos = -U
-            if(letter == 'B'){
-                obj = new Cloud(xPos, yPos)
-            }else if(letter  == '-'){
+            if(letter  == '-'){
                 return
+            }else if(letter == 'B'){
+                obj = new Cloud(xPos, yPos, 'cloud_bone')
+                treat = new FallingTreat(xPos, yPos, 'treat_coco', obj)
+            }else if(letter == 'P'){
+                obj = new Cloud(xPos, yPos, 'cloud_poop')
+                treat = new FallingTreat(xPos, yPos, 'treat_millie', obj)
             }
             
             engine.addObj(obj)
+            engine.addObj(treat)
         })
     }
 }
+$.extend(Note, {
+    TOTAL_TIME: 29500,
+})
 
 module.exports = Conductor

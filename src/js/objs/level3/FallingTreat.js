@@ -1,13 +1,18 @@
 var paths = Util.paths
-var CocoTreat = require(paths.obj('triggers/CocoTreat'))
+var TreatTrigger = require(paths.obj('triggers/TreatTrigger'))
 
-class FallingTreat extends CocoTreat{
-    constructor(x, y){
-        super(x, y)
+class FallingTreat extends TreatTrigger{
+    constructor(x, y, filename, cloud){
+        super(x, y, filename)
         
         $.extend(this, {
-            gravity: .06
+            cloud: cloud,
+            gravity: 0,
         })
+    }
+    
+    update(engine){
+        this.pos.y = this.cloud.pos.y
     }
 }
 module.exports = FallingTreat
