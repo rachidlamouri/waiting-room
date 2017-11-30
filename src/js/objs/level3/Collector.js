@@ -20,7 +20,7 @@ class Collector extends GameObj{
     
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('Cloud')){
-            trigger.poof()
+            trigger.poof(engine)
         }else if(trigger.instanceOf('FallingTreat')){
             engine.removeObjById(trigger.id)
         }

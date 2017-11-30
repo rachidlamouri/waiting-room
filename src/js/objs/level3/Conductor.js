@@ -1,6 +1,8 @@
 var paths = Util.paths
 var GameObj = EngineUtil.GameObj
 var Scene = EngineUtil.Scene
+var U = Scene.U
+var SU = Scene.SU
 
 var Cloud = require(paths.obj('triggers/Cloud'))
 var FallingTreat = require(paths.obj('level3/FallingTreat'))
@@ -62,29 +64,39 @@ class Note{
     }
     
     create(engine){
-        let U = Scene.U
+        let yPos = -U
+        
+        if(Note.MAKE_PARALLAX){
+            let parallaxCloud = new Cloud(0, yPos, 'cloud')
+            parallaxCloud.pos.x = parallaxCloud.dim.width/2 + Util.randomNum(SU.x - parallaxCloud.dim.width)
+            parallaxCloud.terminalVel.y = .06
+            engine.addObj(parallaxCloud)
+        }
+        
+        Note.MAKE_PARALLAX = !Note.MAKE_PARALLAX
         
         $.each(this.composition, (index, letter)=>{
-            let obj
+            let cloud
             let treat
             let xPos = (index + 1)*U - .5*U
-            let yPos = -U
             if(letter  == '-'){
                 return
             }else if(letter == 'B'){
-                obj = new Cloud(xPos, yPos, 'cloud_bone')
-                treat = new FallingTreat(xPos, yPos, 'treat_coco', obj)
+                cloud = new Cloud(xPos, yPos, 'cloud_bone')
+                treat = new FallingTreat(xPos, yPos, 'treat_coco', cloud)
             }else if(letter == 'P'){
-                obj = new Cloud(xPos, yPos, 'cloud_poop')
-                treat = new FallingTreat(xPos, yPos, 'treat_millie', obj)
+                cloud = new Cloud(xPos, yPos, 'cloud_poop')
+                treat = new FallingTreat(xPos, yPos, 'treat_millie', cloud)
             }
             
-            engine.addObj(obj)
+            cloud.setTreat(treat)
+            engine.addObj(cloud)
             engine.addObj(treat)
         })
     }
 }
 $.extend(Note, {
+    MAKE_PARALLAX: false,
     TOTAL_TIME: 29500,
 })
 
