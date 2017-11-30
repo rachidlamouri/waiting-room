@@ -1,15 +1,12 @@
 var paths = Util.paths
-var Vect = EngineUtil
 var SpriteSheet = EngineUtil.SpriteSheet
 var SpriteTrigger = require(paths.obj('triggers/SpriteTrigger'))
 
 class Cloud extends SpriteTrigger{
-    constructor(x, y, filename){
-        super(x, y, new SpriteSheet(paths.asset(filename), 6, ['cloud', 'poof']), {
-            color: '#FF0000',
+    constructor(x, y, filename, options){
+        super(x, y, new SpriteSheet(paths.asset(filename), 6, ['cloud', 'poof']), $.extend({
             gravity: .001,
-            treat: undefined,
-        })
+        }, options))
         
         this.state.poofing = false
     }
@@ -21,10 +18,6 @@ class Cloud extends SpriteTrigger{
     }
     poof(engine){
         if(!this.state.poofing){
-            if(this.treat != undefined){
-                engine.removeObjById(this.treat.id)
-            }
-            
             this.state.poofing = true
             this.fps = 12
             this.setAnimation('poof')
@@ -33,9 +26,6 @@ class Cloud extends SpriteTrigger{
     setAnimation(animation){
         this.sheet.offset.x = 0
         super.setAnimation(animation)
-    }
-    setTreat(treat){
-        this.treat = treat
     }
 }
 module.exports = Cloud

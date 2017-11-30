@@ -26,6 +26,13 @@ class Level3Millie extends Millie{
         })
     }
     
+    handleTrigger(engine, trigger){
+        super.handleTrigger(engine, trigger)
+        
+        if(trigger.instanceOf('PoopCloud')){
+            trigger.poof(engine)
+        }
+    }
     update(engine){
         super.update(engine)
         this.updateAnimation()

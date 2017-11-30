@@ -2,7 +2,7 @@ var InputListener = EngineUtil.InputListener
 var Vect = EngineUtil.Vect
 var GameObj = EngineUtil.GameObj
 
-let Engine = $.extend(class{
+class Engine{
     constructor(scene, playerInputsList){
         $.extend(this, {
             scene: scene,
@@ -83,6 +83,16 @@ let Engine = $.extend(class{
     }
     getPlayerInputs(index){
         return this.inputListener.playerInputsList[index].inputs
+    }
+    insertObj(gameObj, id){
+        for(let i=0; i < this.objs.length; i++){
+            let nextObj = this.objs[i]
+            
+            if(nextObj.id == id){
+                this.objs.splice(i, 0, gameObj)
+                break
+            }
+        }
     }
     isPaused(){
         return this.state == Engine.STATE.paused
@@ -254,8 +264,8 @@ let Engine = $.extend(class{
         
         this.removeIds = []
     }
-},
-/* Global Vars */{
+}
+$.extend(Engine, {
     STATE: {
         stopped: 1,
         running: 2,

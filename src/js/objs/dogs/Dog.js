@@ -89,8 +89,6 @@ class Dog extends Sprite{
             this.platformSpeed = trigger.getSpeed()
         }else if(trigger.instanceOf('Elevator') && this.state.barking){
             trigger.elevate()
-        }else if(trigger.instanceOf('Cloud')){
-            trigger.poof(engine)
         }else if(trigger.instanceOf('CocoTreat')){
             trigger.onTrigger(engine)
         }

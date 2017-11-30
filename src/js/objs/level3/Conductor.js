@@ -5,15 +5,20 @@ var U = Scene.U
 var SU = Scene.SU
 
 var Cloud = require(paths.obj('triggers/Cloud'))
-var FallingTreat = require(paths.obj('level3/FallingTreat'))
+
+var ParallaxCloud = require(paths.obj('level3/ParallaxCloud'))
+var BoneCloud = require(paths.obj('level3/BoneCloud'))
+var PoopCloud = require(paths.obj('level3/PoopCloud'))
+var CocoCloudTreat = require(paths.obj('level3/CocoCloudTreat'))
+var MillieCloudTreat = require(paths.obj('level3/MillieCloudTreat'))
 
 class Conductor extends GameObj{
     constructor(){
         super(0, 0)
         
         $.extend(this, {
+            insertId: undefined,
             elapsedTime: 0,
-            interval: 1000,
             notes: [],
         })
         
@@ -23,32 +28,15 @@ class Conductor extends GameObj{
     addNote(time, composition){
         this.notes.unshift(new Note(time, composition))
     }
-    emitRandom(engine){
-        let SU = Scene.SU
-        let U = Scene.U
-        
-        let cloud = new Cloud(0, 0)
-        let availableWidth = SU.x - cloud.dim.width
-        cloud.pos.x = cloud.dim.width/2 + Util.randomNum(availableWidth)
-        engine.addObj(cloud)
-        
-        let makeTreat = Util.randomNum(2) == 0
-        if(makeTreat){
-            let treat = new FallingTreat(0, -2)
-            treat.pos.x = cloud.pos.x
-            engine.addObj(treat)
-        }
+    setInsertId(id){
+        this.insertId = id
     }
     update(engine){
         this.elapsedTime += engine.timestep
-        if(this.state.random && this.elapsedTime > this.interval){
-            this.emitRandom(engine)
-            this.elapsedTime = 0
-        }
         
         while(this.notes.length > 0 && this.elapsedTime >= this.notes[0].time){
             let note = this.notes.shift()
-            note.create(engine)
+            note.create(engine, this.insertId)
         }
     }
 }
@@ -63,14 +51,14 @@ class Note{
         Note.TOTAL_TIME -= time
     }
     
-    create(engine){
+    create(engine, insertId){
         let yPos = -U
         
         if(Note.MAKE_PARALLAX){
-            let parallaxCloud = new Cloud(0, yPos, 'cloud')
+            let parallaxCloud = new ParallaxCloud(0, yPos)
             parallaxCloud.pos.x = parallaxCloud.dim.width/2 + Util.randomNum(SU.x - parallaxCloud.dim.width)
             parallaxCloud.terminalVel.y = .06
-            engine.addObj(parallaxCloud)
+            engine.insertObj(parallaxCloud, insertId)
         }
         
         Note.MAKE_PARALLAX = !Note.MAKE_PARALLAX
@@ -78,26 +66,37 @@ class Note{
         $.each(this.composition, (index, letter)=>{
             let cloud
             let treat
-            let xPos = (index + 1)*U - .5*U
+            let xPos
             if(letter  == '-'){
                 return
-            }else if(letter == 'B'){
-                cloud = new Cloud(xPos, yPos, 'cloud_bone')
-                treat = new FallingTreat(xPos, yPos, 'treat_coco', cloud)
-            }else if(letter == 'P'){
-                cloud = new Cloud(xPos, yPos, 'cloud_poop')
-                treat = new FallingTreat(xPos, yPos, 'treat_millie', cloud)
+            }else if(letter.toLowerCase() == 'b'){
+                xPos = (index + 1)*U - .5*U
+                cloud = new BoneCloud(xPos, yPos)
+                
+                if(letter == 'B'){
+                    treat = new CocoCloudTreat(xPos, yPos, 'treat_coco')
+                }
+            }else if(letter.toLowerCase() == 'p'){
+                xPos = index == 0? -U: SU.x + U
+                yPos = letter == 'P'? 2*U: 4*U
+                
+                cloud = new PoopCloud(xPos, yPos)
+                treat = new MillieCloudTreat(xPos, yPos, 'treat_millie')
             }
             
-            cloud.setTreat(treat)
-            engine.addObj(cloud)
-            engine.addObj(treat)
+            engine.insertObj(cloud, insertId)
+            if(treat != undefined){
+                cloud.setTreat(treat)
+                treat.setCloud(cloud)
+            
+                engine.insertObj(treat, insertId)
+            }
         })
     }
 }
 $.extend(Note, {
     MAKE_PARALLAX: false,
-    TOTAL_TIME: 29500,
+    TOTAL_TIME: 33500,
 })
 
 module.exports = Conductor

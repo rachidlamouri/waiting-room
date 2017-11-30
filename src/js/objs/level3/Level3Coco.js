@@ -18,6 +18,13 @@ class Level3Coco extends Coco{
         })
     }
     
+    handleTrigger(engine, trigger){
+        super.handleTrigger(engine, trigger)
+        
+        if(trigger.instanceOf('BoneCloud')){
+            trigger.poof(engine)
+        }
+    }
     update(engine){
         super.update(engine)
         
