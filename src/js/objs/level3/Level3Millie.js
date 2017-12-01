@@ -30,7 +30,11 @@ class Level3Millie extends Millie{
         super.handleTrigger(engine, trigger)
         
         if(trigger.instanceOf('PoopCloud')){
-            trigger.poof(engine)
+            let treatId = trigger.poof(engine)
+            if(treatId != undefined){
+                let tutor = engine.getObjsByClass('Tutor')[0]
+                tutor.removeMillieTreat(treatId)
+            }
         }
     }
     update(engine){

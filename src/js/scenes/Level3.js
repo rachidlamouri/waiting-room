@@ -10,6 +10,7 @@ var Level3Millie = require(paths.obj('level3/Level3Millie'))
 
 var Cloud = require(paths.obj('triggers/Cloud'))
 var Conductor = require(paths.obj('level3/Conductor'))
+var Tutor = require(paths.obj('level3/Tutor'))
 var Collector = require(paths.obj('level3/Collector'))
 
 var Wall = require(paths.obj('barriers/Wall'))
@@ -36,8 +37,7 @@ class Level3 extends Scene{
         let coco  = new Level3Coco(4*U, 5*U)
         coco.setControllerId(0)
         
-        let conductor = new Conductor()
-        conductor.setInsertId(coco.id)
+        let conductor = new Conductor(coco.id)//, 32000)
         
         conductor.addNote('-----B--')
         conductor.addNote('-----B--')
@@ -132,11 +132,13 @@ class Level3 extends Scene{
         
         conductor.compose()
         
+        let tutor = new Tutor(coco.id, conductor)
+        
         super.load([
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             
-            conductor,
+            tutor,
             new Collector(.5*SU.x, SU.y + 2*U, SU.x, 2*U),
             
             coco,

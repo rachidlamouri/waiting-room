@@ -2,8 +2,8 @@ var paths = Util.paths
 var CloudTreat = require(paths.obj('level3/CloudTreat'))
 
 class MillieCloudTreat extends CloudTreat{
-    constructor(x, y){
-        super(x, y, 'treat_millie')
+    constructor(x, y, treatId){
+        super(x, y, treatId, 'treat_millie')
     }
     
     update(engine){

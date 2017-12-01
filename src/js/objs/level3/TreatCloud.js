@@ -9,11 +9,18 @@ class TreatCloud extends Cloud{
     }
     
     poof(engine){
+        let treatId
+        if(!this.state.poofing && this.treat != undefined){
+            treatId = this.treat.treatId
+        }
+        
         super.poof(engine)
         
         if(this.state.poofing && this.treat != undefined){
             engine.removeObjById(this.treat.id)
         }
+        
+        return treatId
     }
     setTreat(treat){
         this.treat = treat

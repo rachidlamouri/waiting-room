@@ -22,12 +22,15 @@ class Level3Coco extends Coco{
         super.handleTrigger(engine, trigger)
         
         if(trigger.instanceOf('BoneCloud')){
-            trigger.poof(engine)
+            let treatId = trigger.poof(engine)
+            if(treatId != undefined){
+                let tutor = engine.getObjsByClass('Tutor')[0]
+                tutor.removeCocoTreat(treatId)
+            }
         }
     }
     update(engine){
         super.update(engine)
-        
     }
 }
 module.exports = Level3Coco

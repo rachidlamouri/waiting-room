@@ -13,24 +13,27 @@ var CocoCloudTreat = require(paths.obj('level3/CocoCloudTreat'))
 var MillieCloudTreat = require(paths.obj('level3/MillieCloudTreat'))
 
 class Conductor extends GameObj{
-    constructor(){
+    constructor(insertId, skipTo = 0){
         super(0, 0)
         
         $.extend(this, {
-            insertId: undefined,
+            insertId: insertId,
             elapsedTime: 0,
             nextTime: 0,
             notes: [],
-            skipTo: 32000,
+            skipTo: skipTo,
         })
         
         this.state.random = false
+        this.state.stage = 0
     }
     
-    addNote(time, composition){
-        this.notes.unshift(new Note(time, composition))
+    addNote(composition, treatId){
+        this.notes.unshift(new Note(composition, treatId))
     }
-    compose(){
+    compose(startTime = 0){
+        this.nextTime = startTime
+        
         $.each(this.notes, (index, note)=>{
             if(this.nextTime < this.skipTo){
                 note.skip = true
@@ -58,11 +61,12 @@ class Conductor extends GameObj{
 }
 
 class Note{
-    constructor(composition){
+    constructor(composition, treatId){
         $.extend(this, {
             composition: composition.split(''),
             time: undefined,
             skip: false,
+            treatId,
         })
     }
     
@@ -89,21 +93,23 @@ class Note{
                 cloud = new BoneCloud(xPos, yPos)
                 
                 if(letter == 'B'){
-                    treat = new CocoCloudTreat(xPos, yPos, 'treat_coco')
+                    treat = new CocoCloudTreat(xPos, yPos, this.treatId)
                 }
-            }else if(letter.toLowerCase() == 'p'){
+            }else if(letter.toLowerCase() == 'p' || letter.toLowerCase() == 'i'){
                 xPos = index == 0? -U: SU.x + U
-                yPos = letter == 'P'? 2*U: 4*U
+                yPos = (letter == 'P' || letter == 'I')? 2*U: 4*U
                 
                 cloud = new PoopCloud(xPos, yPos)
-                treat = new MillieCloudTreat(xPos, yPos, 'treat_millie')
+                if(letter.toLowerCase() == 'p'){
+                    treat = new MillieCloudTreat(xPos, yPos, this.treatId)
+                }
             }
             
             engine.insertObj(cloud, insertId)
             if(treat != undefined){
                 cloud.setTreat(treat)
                 treat.setCloud(cloud)
-            
+                
                 engine.insertObj(treat, insertId)
             }
         })
