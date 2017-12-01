@@ -44,6 +44,7 @@ class Level3 extends Scene{
         conductor.addNote('--B-----')
         conductor.addNote('--B-----')
         
+        // 32000 Chorus 1
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         conductor.addNote('-bbbbbb-')
@@ -64,6 +65,7 @@ class Level3 extends Scene{
         conductor.addNote('--------')
         conductor.addNote('P-------')
         
+        // 24000
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
@@ -84,11 +86,13 @@ class Level3 extends Scene{
         conductor.addNote('--------')
         conductor.addNote('-------P')
         
+        // 16000
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
         
+        // 14000 verse 1
         conductor.addNote('---B----')
         conductor.addNote('---B----')
         conductor.addNote('----B---')
@@ -109,6 +113,7 @@ class Level3 extends Scene{
         conductor.addNote('----B---')
         conductor.addNote('--B-----')
         
+        // 6000
         conductor.addNote('--B-----')
         conductor.addNote('---B----')
         conductor.addNote('----B---')
@@ -119,12 +124,13 @@ class Level3 extends Scene{
         conductor.addNote('----B---')
         conductor.addNote('---B----')
         
+        // 2000
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         
-        console.log((conductor.notes.length - 1)*500)
+        conductor.compose()
         
         super.load([
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
@@ -136,6 +142,8 @@ class Level3 extends Scene{
             coco,
             millie,
         ])
+        
+        this.audio.currentTime = conductor.skipTo/1000
     }
 }
 module.exports = Level3

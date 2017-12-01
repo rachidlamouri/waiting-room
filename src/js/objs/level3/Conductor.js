@@ -19,7 +19,9 @@ class Conductor extends GameObj{
         $.extend(this, {
             insertId: undefined,
             elapsedTime: 0,
+            nextTime: 0,
             notes: [],
+            skipTo: 32000,
         })
         
         this.state.random = false
@@ -28,27 +30,40 @@ class Conductor extends GameObj{
     addNote(time, composition){
         this.notes.unshift(new Note(time, composition))
     }
+    compose(){
+        $.each(this.notes, (index, note)=>{
+            if(this.nextTime < this.skipTo){
+                note.skip = true
+            }
+            
+            note.time = this.nextTime
+            this.nextTime += 500
+        })
+        
+        this.elapsedTime = this.skipTo
+    }
     setInsertId(id){
         this.insertId = id
     }
     update(engine){
         this.elapsedTime += engine.timestep
         
-        while(this.notes.length > 0 && this.elapsedTime >= this.notes[0].time){
+        while(this.notes.length > 0 && (this.elapsedTime >= this.notes[0].time || this.notes[0].skip)){
             let note = this.notes.shift()
-            note.create(engine, this.insertId)
+            if(!note.skip){
+                note.create(engine, this.insertId)
+            }
         }
     }
 }
 
 class Note{
-    constructor(composition, time=500){
+    constructor(composition){
         $.extend(this, {
-            time: Note.TOTAL_TIME,
             composition: composition.split(''),
+            time: undefined,
+            skip: false,
         })
-        
-        Note.TOTAL_TIME -= time
     }
     
     create(engine, insertId){
@@ -96,7 +111,6 @@ class Note{
 }
 $.extend(Note, {
     MAKE_PARALLAX: false,
-    TOTAL_TIME: 33500,
 })
 
 module.exports = Conductor
