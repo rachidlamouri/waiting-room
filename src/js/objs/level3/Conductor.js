@@ -13,7 +13,7 @@ var CocoCloudTreat = require(paths.obj('level3/CocoCloudTreat'))
 var MillieCloudTreat = require(paths.obj('level3/MillieCloudTreat'))
 
 class Conductor extends GameObj{
-    constructor(insertId, skipTo = 0){
+    constructor(insertId, skip = 0){
         super(0, 0)
         
         $.extend(this, {
@@ -21,29 +21,49 @@ class Conductor extends GameObj{
             elapsedTime: 0,
             nextTime: 0,
             notes: [],
-            skipTo: skipTo,
+            skip: skip,
         })
         
         this.state.random = false
         this.state.stage = 0
     }
     
-    addNote(composition, treatId){
-        this.notes.unshift(new Note(composition, treatId))
+    addNote(composition, treatId, playSong = false){
+        this.notes.unshift(new Note(composition, treatId, playSong))
     }
     compose(startTime = 0){
         this.nextTime = startTime
         
+        let skipCount = this.skip
+        let firstLine = undefined
+        let playIndex = undefined
+        
+        for(let i=0; i < this.notes.length; i++){
+            let note = this.notes[i]
+            
+            if(note.isFirst){
+                firstLine  = skipCount + i
+                playIndex = firstLine + 4
+                skipCount += i
+            }
+        }
+        
         $.each(this.notes, (index, note)=>{
-            if(this.nextTime < this.skipTo){
-                note.skip = true
+            if(index == playIndex){
+                note.playSong = true
             }
             
-            note.time = this.nextTime
-            this.nextTime += 500
+            if(skipCount > 0){
+                note.skip = true
+                skipCount--
+            }else{
+                note.time = this.nextTime
+                this.nextTime += 500
+            }
         })
         
-        this.elapsedTime = this.skipTo
+        this.elapsedTime = startTime
+        return (playIndex - 8)*500/1000
     }
     setInsertId(id){
         this.insertId = id
@@ -61,16 +81,23 @@ class Conductor extends GameObj{
 }
 
 class Note{
-    constructor(composition, treatId){
+    constructor(composition, treatId, isFirst = false){
         $.extend(this, {
             composition: composition.split(''),
             time: undefined,
+            isFirst: isFirst,
+            playSong: false,
             skip: false,
             treatId,
         })
     }
     
     create(engine, insertId){
+        if(this.playSong){
+            $('audio')[0].src = paths.sound('level3_theme')
+            $('audio')[0].play()
+        }
+        
         let yPos = -U
         
         if(Note.MAKE_PARALLAX){
@@ -85,24 +112,25 @@ class Note{
         $.each(this.composition, (index, letter)=>{
             let cloud
             let treat
-            let xPos
             if(letter  == '-'){
                 return
             }else if(letter.toLowerCase() == 'b'){
-                xPos = (index + 1)*U - .5*U
+                let xPos = (index + 1)*U - .5*U
                 cloud = new BoneCloud(xPos, yPos)
                 
                 if(letter == 'B'){
                     treat = new CocoCloudTreat(xPos, yPos, this.treatId)
                 }
             }else if(letter.toLowerCase() == 'p' || letter.toLowerCase() == 'i'){
-                xPos = index == 0? -U: SU.x + U
-                yPos = (letter == 'P' || letter == 'I')? 2*U: 4*U
+                let xPos = index < 4 ? -U: SU.x + U
+                let yPos = (letter == 'P' || letter == 'I')? 2*U: 4*U
                 
                 cloud = new PoopCloud(xPos, yPos)
                 if(letter.toLowerCase() == 'p'){
                     treat = new MillieCloudTreat(xPos, yPos, this.treatId)
                 }
+            }else{
+                return
             }
             
             engine.insertObj(cloud, insertId)

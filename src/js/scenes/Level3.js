@@ -18,7 +18,7 @@ var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
 
 class Level3 extends Scene{
     constructor(){
-        super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, 'level3_theme', 3, [
+        super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, undefined, 3, [
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
@@ -37,40 +37,182 @@ class Level3 extends Scene{
         let coco  = new Level3Coco(4*U, 5*U)
         coco.setControllerId(0)
         
-        let conductor = new Conductor(coco.id)//, 32000)
+        let conductor = new Conductor(coco.id, 0)
         
-        conductor.addNote('-----B--')
-        conductor.addNote('-----B--')
-        conductor.addNote('--B-----')
-        conductor.addNote('--B-----')
-        
-        // 32000 Chorus 1
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('-bbbbbb-')
-        conductor.addNote('--bbbb-p')
-        
-        conductor.addNote('--------')
-        conductor.addNote('--------')
-        conductor.addNote('--------')
-        conductor.addNote('P-------')
-        
-        conductor.addNote('--------')
-        conductor.addNote('--------')
-        conductor.addNote('--------')
-        conductor.addNote('-------p')
-        
-        conductor.addNote('--------')
-        conductor.addNote('--------')
-        conductor.addNote('--------')
-        conductor.addNote('P-------')
-        
-        // 24000
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('p-------')
         
+        // 192 Chorus 3
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('------pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('p-------')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('------pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        
+        // 176 Chorus 3 (1/2)
+        conductor.addNote('---B----')
+        conductor.addNote('--B-----')
+        conductor.addNote('-B------')
+        conductor.addNote('B-----pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('--B-----')
+        conductor.addNote('-B------')
+        conductor.addNote('B-----pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        
+        // 160 Verse 3
+        conductor.addNote('------B-')
+        conductor.addNote('------B-')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        
+        // 144 Verse 3 (1/2)
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('--B-----')
+        conductor.addNote('----B---')
+        conductor.addNote('--B-----')
+        
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('p--B----')
+        
+        // 128 Chorus 2 (1/2)
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('------pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('p-------')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('------pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        
+        // 112 Verse 2
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('--B-----')
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        
+        // 96 Verse 2 (1/2)
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('--B-----')
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        
+        // 80 Bridge 1
+        conductor.addNote('---B----')
+        conductor.addNote('---B----')
+        conductor.addNote('-B------')
+        conductor.addNote('B-------')
+        
+        conductor.addNote('B-------')
+        conductor.addNote('--B-----')
+        conductor.addNote('B-------')
+        conductor.addNote('--B-----')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('----B---')
+        
+        conductor.addNote('-B------')
+        conductor.addNote('---B----')
+        conductor.addNote('-B------')
+        conductor.addNote('p--B----')
+        
+        // 64 Chorus 1
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
@@ -86,51 +228,81 @@ class Level3 extends Scene{
         conductor.addNote('--------')
         conductor.addNote('-------P')
         
-        // 16000
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('p-------')
+        
+        // 48 Chorus 1 (1/2)
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('-------P')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('p-------')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('-------P')
+        
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
         
-        // 14000 verse 1
-        conductor.addNote('---B----')
-        conductor.addNote('---B----')
-        conductor.addNote('----B---')
+        // 32 Verse 1
+        conductor.addNote('------B-')
+        conductor.addNote('------B-')
         conductor.addNote('-----B--')
+        conductor.addNote('------B-')
         
-        conductor.addNote('----B---')
-        conductor.addNote('---B----')
-        conductor.addNote('----B---')
-        conductor.addNote('---B----')
-        
-        conductor.addNote('----B---')
         conductor.addNote('------B-')
         conductor.addNote('----B---')
         conductor.addNote('------B-')
+        conductor.addNote('----B---')
         
-        conductor.addNote('----B---')
-        conductor.addNote('--B-----')
-        conductor.addNote('----B---')
-        conductor.addNote('--B-----')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
         
-        // 6000
-        conductor.addNote('--B-----')
-        conductor.addNote('---B----')
+        conductor.addNote('-------B')
+        conductor.addNote('-----B--')
+        conductor.addNote('-------B')
+        conductor.addNote('-----B--')
+        
+        // 16 Verse 1 (1/2)
         conductor.addNote('----B---')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('------B-')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
         conductor.addNote('-----B--')
         
         conductor.addNote('----B---')
-        conductor.addNote('---B----')
-        conductor.addNote('----B---')
-        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('------B-')
         
-        // 2000
+        conductor.addNote('--B-----')
+        conductor.addNote('---B----')
+        conductor.addNote('--B-----')
+        conductor.addNote('---B----', undefined, true)
+        
+        // -4
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         
-        conductor.compose()
+        let startTime = conductor.compose()
         
         let tutor = new Tutor(coco.id, conductor)
         
@@ -138,14 +310,16 @@ class Level3 extends Scene{
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             
-            tutor,
+            conductor,
+            //tutor,
             new Collector(.5*SU.x, SU.y + 2*U, SU.x, 2*U),
             
             coco,
             millie,
         ])
         
-        this.audio.currentTime = conductor.skipTo/1000
+        console.log(startTime)
+        this.audio.currentTime = startTime
     }
 }
 module.exports = Level3
