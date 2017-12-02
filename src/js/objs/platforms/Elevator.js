@@ -29,9 +29,9 @@ class Elevator extends GameObj{
         */
         this.state.elevating = -1
     }
-    draw(ctx){
-        this.getTriggerBox().draw(ctx, '#FF0000')
-        this.getMeshBox().draw(ctx, '#0000FF')
+    draw(engine){
+        this.getTriggerBox().draw(engine, '#FF0000')
+        this.getMeshBox().draw(engine, '#0000FF')
     }
     elevate(){
         if(this.state.elevating == 2){

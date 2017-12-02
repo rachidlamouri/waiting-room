@@ -8,9 +8,5 @@ class Vect{
             height: y,
         })
     }
-    
-    draw(ctx){
-        this.box.draw(ctx)
-    }
 }
 module.exports = Vect

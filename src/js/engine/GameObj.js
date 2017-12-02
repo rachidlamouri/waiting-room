@@ -113,8 +113,8 @@ class GameObj{
             this.state.simpleActions[key] = 0
         }
     }
-    draw(ctx, frameCount){
-        this.getMeshBox().draw(ctx, this.color, this.opacity)
+    draw(engine){
+        this.getMeshBox().draw(engine, this.color, this.opacity)
     }
     getColliderBox(){
         return this.getRelativeBox(this.collider)

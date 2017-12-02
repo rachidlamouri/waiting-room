@@ -14,8 +14,8 @@ class Collector extends GameObj{
         })
     }
     
-    draw(ctx, timestep, engine){
-        this.getTriggerBox().draw(ctx, '#00FF00')
+    draw(engine){
+        this.getTriggerBox().draw(engine, '#00FF00')
     }
     
     handleTrigger(engine, trigger){

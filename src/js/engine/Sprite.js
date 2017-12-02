@@ -12,14 +12,14 @@ class Sprite extends GameObj{
         })
     }
     
-    draw(ctx, timestep, engine){
-        this.elapsedFrameTime += timestep/1000
+    draw(engine){
+        this.elapsedFrameTime += engine.timestep/1000
         if(this.elapsedFrameTime > 1/this.fps){
             this.elapsedFrameTime = this.elapsedFrameTime - (1/this.fps)
             this.sheet.offset.x = ++this.sheet.offset.x % this.sheet.columns
         }
         
-        ctx.drawImage(
+        engine.ctx.drawImage(
             this.sheet.img,
             this.sheet.offset.x*this.sheet.frameWidth, this.sheet.offset.y*this.sheet.frameHeight, this.sheet.frameWidth, this.sheet.frameHeight,
             this.pos.x - this.dim.width/2, this.pos.y - this.dim.height/2, this.dim.width, this.dim.height

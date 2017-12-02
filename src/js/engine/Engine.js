@@ -237,7 +237,7 @@ class Engine{
         
         $.each(this.objs, (index, obj)=>{
             if(obj.draw){
-                obj.draw(this.ctx, this.timestep, this)
+                obj.draw(this)
             }
         })
     }
