@@ -138,8 +138,22 @@ class Level1 extends Scene{
             new CocoTreat(4*SU.x + 4.3*U, -2, 'sit-treat'),
             new CocoTreat(4*SU.x + 5.8*U, 3.2*U, 'slide-treat'),
             
+            // Jump treats left to right
+            new CocoTreat(0*SU.x + 3.6*U, 3.5*U),
+            new CocoTreat(1*SU.x + 1.6*U, 3.5*U),
+            new CocoTreat(1*SU.x + 4.6*U, 3.5*U),
+            new CocoTreat(1*SU.x + 6.7*U, 3.5*U),
+            new CocoTreat(2*SU.x + 1.6*U, 3.5*U),
+            new CocoTreat(2*SU.x + 5.7*U, 3.5*U),
+            new CocoTreat(3*SU.x + 4.7*U, 3.5*U),
+            
             // Trigger 1
             new RampTrigger(5*SU.x + U, 3*U, .25*U, 2*U),
+            
+            // Lower hurdles
+            new Wall(3*SU.x + 1*U, 1*SU.y + 4*U - 4, 4, 8),
+            new Wall(2*SU.x + 0*U, 2*SU.y + 4*U - 4, 4, 8),
+            new Wall(1*SU.x + 0*U, 2*SU.y + 4*U - 4, 4, 8),
             
             // Player
             coco,

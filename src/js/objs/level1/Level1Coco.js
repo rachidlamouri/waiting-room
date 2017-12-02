@@ -67,7 +67,9 @@ class Level1Coco extends Coco{
             }
         }
         
-        if(trigger.instanceOf('RampTrigger') || trigger.instanceOf('EndTrigger')){
+        if(trigger.instanceOf('RampTrigger')){
+            trigger.onTrigger(engine)
+        }else if(trigger.instanceOf('EndTrigger')){
             trigger.onTrigger(engine)
         }else if(trigger.instanceOf('DropTrigger')){
             this.state.drop = true
