@@ -313,6 +313,10 @@ class Level3 extends Scene{
             new ParallaxCloudGenerator(0, 0, coco.id),
             conductor,
             //tutor,
+            
+            // left, right, bottom
+            new Collector(-3*U, .5*SU.y, U, SU.y),
+            new Collector(SU.x + 3*U, .5*SU.y, U, SU.y),
             new Collector(.5*SU.x, SU.y + 2*U, SU.x, 2*U),
             
             coco,
