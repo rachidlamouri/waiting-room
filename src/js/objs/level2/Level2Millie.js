@@ -25,10 +25,19 @@ class Level2Millie extends Millie{
         
         if(trigger.instanceOf('EndTrigger')){
             trigger.onTrigger(engine)
+            
+            this.saveBones(1, this.treats.boneCount)
+            this.savePoops(1, this.treats.poopCount)
         }
         
         if(trigger.instanceOf('TreatTrigger')){
             trigger.onTrigger(engine)
+            
+            if(trigger.instanceOf('MillieTreat')){
+                this.treats.poopCount++
+            }else{
+                this.treats.boneCount++
+            }
             
             let treatId = trigger.treatId
             this.removeObjsByStage(engine, treatId)

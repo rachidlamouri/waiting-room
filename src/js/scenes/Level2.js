@@ -16,6 +16,7 @@ var Wall = require(paths.obj('barriers/Wall'))
 var Platform = require(paths.obj('platforms/Platform'))
 var Elevator = require(paths.obj('platforms/Elevator'))
 
+var CocoTreat = require(paths.obj('triggers/CocoTreat'))
 var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
 class Level2 extends Scene{
@@ -58,6 +59,7 @@ class Level2 extends Scene{
             new Wall(3.60*U, 1*SU.y + 4.75*U, 30, 10, stage1Options),
             new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
             new MillieTreat (6.50*U, 1*SU.y + 5.37*U, 'stage-1'),
+            new CocoTreat(10, 1*SU.y + 5.4*U),
             
             // Stage 3
             new Elevator(.5*U, -U, U, 8, 7.25*U - 5, 6000, {tags: ['stage-3']}),

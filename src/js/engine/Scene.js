@@ -177,7 +177,30 @@ class Scene{
             }
             
             let buttonElem = $(Scene.BUTTON_HTML)
-            buttonElem.html(data.name)
+            let titleElem = buttonElem.find('.level-title')
+            let countGroupElems = buttonElem.find('.count-group')
+            let boneCountElem = buttonElem.find('.bone-count')
+            let poopCountElem = buttonElem.find('.poop-count')
+            
+            let boneGroupElem = $(countGroupElems[0])
+            let poopGroupElem = $(countGroupElems[1])
+            
+            boneGroupElem.find('img')[0].src = paths.asset('treat_coco')
+            poopGroupElem.find('img')[0].src = paths.asset('treat_millie')
+            
+            if(data.boneCount != undefined){
+                boneCountElem.html(data.bonesCollected+' / '+data.boneCount)
+            }else{
+                boneGroupElem.hide()
+            }
+            
+            if(data.poopCount != undefined){
+                poopCountElem.html(data.poopsCollected+' / '+data.poopCount)
+            }else{
+                poopGroupElem.hide()
+            }
+            
+            titleElem.html(data.name)
             buttonElem.attr('class-name', data.className)
             this.menuElem.append(buttonElem)
         })
@@ -185,7 +208,7 @@ class Scene{
         this.menuButtonElems = this.menuElem.find('.button')
         $(this.menuButtonElems[0]).addClass('selected')
         this.menuButtonElems.click((clickEvent)=>{
-            let button = $(clickEvent.target)
+            let button = $(clickEvent.currentTarget)
             let action = button.attr('action')
             
             if(action == 'level'){

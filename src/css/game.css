@@ -60,6 +60,53 @@ canvas{
     padding-left: 50px;
 }
 
+.main-menu .button{
+    width: 174px;
+    
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.main-menu .button .level-title{
+    flex-grow: 1;
+}
+
+.main-menu .button .treat-counts{
+    display: flex;
+    
+    flex-direction: column;
+}
+
+.count-group{
+    display: flex;
+}
+
+.count-group:first-child{
+    margin-bottom: 2px;
+}
+
+.count-group img{
+    width: 6px;
+    height: 6px;
+    
+    margin-right: 2px;
+}
+
+.bone-count, .poop-count, .count-group img{
+    display: inline-flex;
+    height: 6px;
+    
+    font-size: 6px;
+}
+
+.bone-count, .poop-count{
+    display: flex;
+    width: 20px;
+    
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
 .button.selected{
     box-shadow: 0px 0px 2px 2px #888;
 }

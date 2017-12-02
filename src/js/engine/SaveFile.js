@@ -33,12 +33,18 @@ $.extend(SaveFile, {
                 enabled: true,
                 className: 'Level1',
                 action: 'level',
+                bonesCollected: 0,
+                boneCount: 12,
             },
             {
                 name: 'Reunion',
                 enabled: false,
                 className: 'Level2',
                 action: 'level',
+                bonesCollected: 0,
+                boneCount: 1,
+                poopsCollected: 0,
+                poopCount: 3,
             },
             {
                 name: 'Restitution',

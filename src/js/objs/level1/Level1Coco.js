@@ -42,9 +42,9 @@ class Level1Coco extends Coco{
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('TreatTrigger')){
             trigger.onTrigger(engine)
-            this.treatCount++
+            this.treats.boneCount++
             
-            if(this.treatCount == 2){
+            if(this.treats.boneCount == 2){
                 this.state.stage = 'wait-2'
                 let wall = engine.getObjsByTag('collapse-1')[0]
                 wall.growTo(wall.pos.x, 4*U - 4, wall.dim.width, 8, 500)
@@ -71,6 +71,7 @@ class Level1Coco extends Coco{
             trigger.onTrigger(engine)
         }else if(trigger.instanceOf('EndTrigger')){
             trigger.onTrigger(engine)
+            this.saveBones(0, this.treats.boneCount)
         }else if(trigger.instanceOf('DropTrigger')){
             this.state.drop = true
         }else if(trigger.instanceOf('SlideTrigger')){

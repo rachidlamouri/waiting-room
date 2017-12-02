@@ -1,6 +1,7 @@
 var remote = require('electron').remote
 var paths = Util.paths
 
+var saveFile = EngineUtil.saveFile
 var Vect = EngineUtil.Vect
 var Sprite = EngineUtil.Sprite
 var Sound = EngineUtil.Sound
@@ -22,7 +23,10 @@ class Dog extends Sprite{
             jumpSpeedY: .2,
             lastPlatformSpeed: 0,
             platformSpeed: 0,
-            treatCount: 0,
+            treats: {
+                boneCount: 0,
+                poopCount: 0,
+            },
             walkSpeed: .09,
         })
         
@@ -102,6 +106,20 @@ class Dog extends Sprite{
         
         this.state.collidingX = this.state.collidedX
         this.state.collidedX = false
+    }
+    saveBones(levelId, boneCount){
+        let levelData = saveFile.data.levels[levelId]
+        if(this.treats.boneCount > levelData.bonesCollected){
+            levelData.bonesCollected = this.treats.boneCount
+            saveFile.save()
+        }
+    }
+    savePoops(levelId, poopCount){
+        let levelData = saveFile.data.levels[levelId]
+        if(this.treats.poopCount > levelData.poopsCollected){
+            levelData.poopsCollected = this.treats.poopCount
+            saveFile.save()
+        }
     }
     update(engine){
         super.update(engine)
