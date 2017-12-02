@@ -22,6 +22,7 @@ class Dog extends Sprite{
             jumpSpeedY: .2,
             lastPlatformSpeed: 0,
             platformSpeed: 0,
+            treatCount: 0,
             walkSpeed: .09,
         })
         

@@ -15,6 +15,8 @@ var DropTrigger = require(paths.obj('level1/DropTrigger'))
 var SlideTrigger = require(paths.obj('level1/SlideTrigger'))
 var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 
+const CocoTreat = require(paths.obj('triggers/CocoTreat'))
+
 var Floor = require(paths.obj('barriers/Floor'))
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
@@ -42,7 +44,7 @@ class Level1 extends Scene{
             {color: '#00FF00'},
         ]
         
-        let coco = new Level1Coco(4*SU.x + 5*U, 3.5*U)
+        let coco = new Level1Coco(4*SU.x + 1*U, 3.5*U + 10)
         coco.setControllerId(0)
         
         super.load([
@@ -121,16 +123,23 @@ class Level1 extends Scene{
             new EndTrigger  (0*SU.x + 2.00*U, 4*SU.y + 0.00*U, 10.0*U, 1.00*U, 'Level2'),
             
             // Barriers
-            new Wall(4*SU.x, 3*U, U/4, 2*U, {tags: ['collapse']}),
-            new Wall(5*SU.x, 3*U, U/4, 2*U),
+            new Wall(4*SU.x - U, 3*U, 2*U, 2*U, {tags: ['collapse']}),
+            new Wall(5*SU.x + U, 3*U, 2*U, 2*U),
             
             // Hurdles
-            new Wall(4*SU.x + 2.0*U, 4*U - 4, 4, 8),
-            new Wall(4*SU.x + 3.5*U, 4*U - 4, 4, 8),
-            new Wall(4*SU.x + 5.0*U, 4*U - 4, 4, 8),
+            new Wall(4*SU.x + 2.0*U, 3.5*U, 4, U, {tags: ['collapse-1']}),
+            new Wall(4*SU.x + 3.5*U, 3.5*U, 4, U, {tags: ['collapse-2']}),
+            new Wall(4*SU.x + 5.2*U, 3.5*U, 20, U, {tags: ['collapse-3']}),
+            
+            // Treats
+            new CocoTreat(4*SU.x + .2*U, 3.5*U + 10),
+            new CocoTreat(4*SU.x + 1.6*U, 3.5*U + 10),
+            new CocoTreat(4*SU.x + 2.8*U, 3.5*U + 10),
+            new CocoTreat(4*SU.x + 4.3*U, -2, 'sit-treat'),
+            new CocoTreat(4*SU.x + 5.8*U, 3.2*U, 'slide-treat'),
             
             // Trigger 1
-            new RampTrigger(4*SU.x + 5.8*U, 3.2*U),
+            new RampTrigger(5*SU.x + U, 3*U, .25*U, 2*U),
             
             // Player
             coco,
