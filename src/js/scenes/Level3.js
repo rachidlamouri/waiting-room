@@ -1,5 +1,6 @@
 var paths = Util.paths
 
+const saveFile = EngineUtil.saveFile
 var Engine = EngineUtil.Engine
 var Input = EngineUtil.Input
 var PlayerInputs = EngineUtil.PlayerInputs
@@ -27,6 +28,8 @@ class Level3 extends Scene{
                 'bark': new Input(['q', 'Q'], [Input.B]),
             }),
         ])
+        
+        this.levelTitle = 'Restitution'
     }
     
     load(){
@@ -323,7 +326,11 @@ class Level3 extends Scene{
             millie,
         ])
         
-        console.log(startTime)
+        let levelTitle = this.loadLevelTitle(.5*SU.x, 40, saveFile.data.levels[2].name)
+        levelTitle.physics = true
+        levelTitle.gravity = 0
+        levelTitle.vel.y = .06
+        
         this.audio.currentTime = startTime
     }
 }

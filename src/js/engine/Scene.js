@@ -159,6 +159,14 @@ class Scene{
         
         this.engine.start()
     }
+    loadLevelTitle(x, y, title){
+        const LevelTitle = require(paths.obj('LevelTitle'))
+        
+        let levelTitle = new LevelTitle(x, y, title)
+        this.engine.addObj(levelTitle)
+        
+        return levelTitle
+    }
     loadMenu(html, levelData = []){
         this.body.append(html)
         this.menuElem = $('.menu')

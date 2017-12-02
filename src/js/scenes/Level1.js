@@ -1,5 +1,6 @@
 var paths = Util.paths
 
+const saveFile = EngineUtil.saveFile
 var Engine = EngineUtil.Engine
 var Input = EngineUtil.Input
 var PlayerInputs = EngineUtil.PlayerInputs
@@ -134,6 +135,8 @@ class Level1 extends Scene{
             // Player
             coco,
         ])
+        
+        this.loadLevelTitle(4.5*SU.x, 40, saveFile.data.levels[0].name)
     }
 }
 module.exports = Level1
