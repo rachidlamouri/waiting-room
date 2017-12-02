@@ -6,7 +6,6 @@ var SU = Scene.SU
 
 var Cloud = require(paths.obj('triggers/Cloud'))
 
-var ParallaxCloud = require(paths.obj('level3/ParallaxCloud'))
 var BoneCloud = require(paths.obj('level3/BoneCloud'))
 var PoopCloud = require(paths.obj('level3/PoopCloud'))
 var CocoCloudTreat = require(paths.obj('level3/CocoCloudTreat'))
@@ -98,17 +97,6 @@ class Note{
             $('audio')[0].play()
         }
         
-        let yPos = -U
-        
-        if(Note.MAKE_PARALLAX){
-            let parallaxCloud = new ParallaxCloud(0, yPos)
-            parallaxCloud.pos.x = parallaxCloud.dim.width/2 + Util.randomNum(SU.x - parallaxCloud.dim.width)
-            parallaxCloud.terminalVel.y = .06
-            engine.insertObj(parallaxCloud, insertId)
-        }
-        
-        Note.MAKE_PARALLAX = !Note.MAKE_PARALLAX
-        
         $.each(this.composition, (index, letter)=>{
             let cloud
             let treat
@@ -116,6 +104,7 @@ class Note{
                 return
             }else if(letter.toLowerCase() == 'b'){
                 let xPos = (index + 1)*U - .5*U
+                let yPos = -U
                 cloud = new BoneCloud(xPos, yPos)
                 
                 if(letter == 'B'){
@@ -143,8 +132,5 @@ class Note{
         })
     }
 }
-$.extend(Note, {
-    MAKE_PARALLAX: false,
-})
 
 module.exports = Conductor

@@ -24,7 +24,6 @@ class Tutor extends Conductor{
     
     removeCocoTreat(treatId){
         if(treatId != undefined){
-            console.log(treatId)
             this.boneTreats[treatId] = 'b'
             
             let treatCount = 0
@@ -41,7 +40,6 @@ class Tutor extends Conductor{
     }
     removeMillieTreat(treatId){
         if(treatId != undefined){
-            console.log(treatId)
             let newChar = this.poopTreats[treatId] == 'P'? 'I': 'i'
             this.poopTreats[treatId] = newChar
             
@@ -58,7 +56,6 @@ class Tutor extends Conductor{
         }
     }
     resetCocoNotes(startTime){
-        console.log('reset C')
         this.addNote('bbbbbbbb')
         this.addNote('bbbbbbbb')
         this.addNote('bbbbbbbb')
@@ -87,7 +84,6 @@ class Tutor extends Conductor{
         this.compose(startTime)
     }
     resetMillieNotes(startTime){
-        console.log('reset M')
         this.addNote('bbbbbbbb')
         this.addNote('bbbbbbbb')
         this.addNote('bbbbbbbb')
@@ -116,7 +112,6 @@ class Tutor extends Conductor{
         this.compose(startTime)
     }
     resetRestNotes(startTime){
-        console.log('reset R')
         this.nextTime = nextTime
         
         this.addNote('--------')

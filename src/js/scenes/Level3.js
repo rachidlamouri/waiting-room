@@ -8,10 +8,10 @@ var Scene = EngineUtil.Scene
 var Level3Coco = require(paths.obj('level3/Level3Coco'))
 var Level3Millie = require(paths.obj('level3/Level3Millie'))
 
-var Cloud = require(paths.obj('triggers/Cloud'))
 var Conductor = require(paths.obj('level3/Conductor'))
 var Tutor = require(paths.obj('level3/Tutor'))
 var Collector = require(paths.obj('level3/Collector'))
+const ParallaxCloudGenerator = require(paths.obj('level3/ParallaxCloudGenerator'))
 
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
@@ -310,6 +310,7 @@ class Level3 extends Scene{
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             
+            new ParallaxCloudGenerator(0, 0, coco.id),
             conductor,
             //tutor,
             new Collector(.5*SU.x, SU.y + 2*U, SU.x, 2*U),
