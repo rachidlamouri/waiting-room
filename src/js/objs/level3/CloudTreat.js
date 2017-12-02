@@ -13,9 +13,5 @@ class CloudTreat extends Sprite{
     setCloud(cloud){
         this.cloud = cloud
     }
-    update(engine){
-        this.pos.x = this.cloud.pos.x
-        this.pos.y = this.cloud.pos.y + 4
-    }
 }
 module.exports = CloudTreat

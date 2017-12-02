@@ -7,7 +7,8 @@ class MillieCloudTreat extends CloudTreat{
     }
     
     update(engine){
-        super.update(engine)
+        this.pos.x =  this.cloud.pos.x + (this.cloud.vel.x > 0? 2: -2)
+        this.pos.y = this.cloud.pos.y + 3
     }
 }
 module.exports = MillieCloudTreat
