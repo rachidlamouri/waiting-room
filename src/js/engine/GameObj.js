@@ -209,6 +209,7 @@ class GameObj{
     }
     slideTo(x, y, expectedTime){
         let slideTo = this.state.slideTo
+        slideTo.elapsedTime = 0
         slideTo.startPos = new Vect(this.pos.x, this.pos.y)
         slideTo.sliding = true
         slideTo.expectedTime = expectedTime

@@ -19,6 +19,14 @@ var Elevator = require(paths.obj('platforms/Elevator'))
 class Level2Millie extends Millie{
     constructor(x, y){
         super(x, y)
+        
+        this.state.introBark = {
+            elapsedTime: 0,
+            numBarks: 2,
+            time: 950,
+        }
+        
+        this.setAnimation('sitRight')
     }
     
     activateSitTreat(engine){
@@ -28,7 +36,7 @@ class Level2Millie extends Millie{
         let treats = engine.getObjsByClass('CocoTreat')
         $.each(treats, (index, treat)=>{
             if(treat.treatId == 'sit-treat'){
-                treat.slideTo(treat.pos.x, 1.5*SU.y, 2000)
+                treat.slideTo(treat.pos.x, 1.5*SU.y, 3000)
             }
         })
     }
@@ -92,7 +100,7 @@ class Level2Millie extends Millie{
                 let stage3Platform2 = new Platform(6*U, 5.5*U, 4.75*U, 1*SU.y + 1.25*U - 5, undefined, 1000, 30, 10, stage3Options)
                 stage3Platform2.slideTo(6*U, 1*SU.y + 1.25*U - 5, stage3SetupTime)
                 
-                let stage3Bone = new CocoTreat(4*U, -U)
+                let stage3Bone = new CocoTreat(4*U, 1*SU.y - U)
                 stage3Bone.slideTo(4*U, 1*SU.y + 20, stage3SetupTime)
                 
                 engine.addObj(stage3Platform1)
@@ -115,7 +123,7 @@ class Level2Millie extends Millie{
                     this.gravity = 0
                     this.slideTo(3.5*U, -U, 10000)
                     
-                    coco.setAnimation('flyRight')
+                    coco.setAnimation('flyLeft')
                     this.setAnimation('flyRight')
                 })
                 frameCamera.start()
@@ -132,6 +140,20 @@ class Level2Millie extends Millie{
     }
     update(engine){
         super.update(engine)
+        
+        if(this.controllerId == undefined){
+            let coco = engine.getObjsByClass('Coco')[0]
+            let introBark = this.state.introBark
+            if(coco.state.level == 2 && introBark.numBarks > 0){
+                introBark.elapsedTime += engine.timestep
+                
+                if(introBark.elapsedTime >= introBark.time){
+                    this.bark(engine)
+                    introBark.elapsedTime = 0
+                    introBark.numBarks--
+                }
+            }
+        }
     }
 }
 module.exports = Level2Millie

@@ -70,6 +70,11 @@ class Dog extends Sprite{
         }
     }
     
+    bark(engine){
+        this.sounds.bark.play()
+        let headPos = this.getHeadPos()
+        engine.addObj(new Bark(headPos.x, headPos.y))
+    }
     disable(){
         this.state.disabled = true
         this.vel.x = 0
@@ -143,9 +148,7 @@ class Dog extends Sprite{
         this.state.sitting = this.state.grounded && inputs.sit
         this.state.barking = inputs.bark
         this.checkSimpleAction(inputs.bark, 'bark', ()=>{
-            this.sounds.bark.play()
-            let headPos = this.getHeadPos()
-            engine.addObj(new Bark(headPos.x, headPos.y))
+            this.bark(engine)
         })
         
         if(inputs.right && this.state.canWalk){
