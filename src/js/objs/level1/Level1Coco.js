@@ -35,6 +35,9 @@ class Level1Coco extends Coco{
     }
     
     activateSitTreat(engine){
+        let wall = engine.getObjsByTag('collapse-3')[0]
+        wall.growTo(wall.pos.x, 4*U - 4, wall.dim.width, 8, 500)
+        
         let treats = engine.getObjsByClass('CocoTreat')
         $.each(treats, (index, treat)=>{
             if(treat.treatId == 'sit-treat'){
@@ -50,12 +53,6 @@ class Level1Coco extends Coco{
             if(this.treats.boneCount == 2){
                 this.state.stage = 'wait-2'
                 let wall = engine.getObjsByTag('collapse-1')[0]
-                wall.growTo(wall.pos.x, 4*U - 4, wall.dim.width, 8, 500)
-            }
-            
-            if(trigger.treatId == 'sit-treat'){
-                this.state.stage = 'wait-slide'
-                let wall = engine.getObjsByTag('collapse-3')[0]
                 wall.growTo(wall.pos.x, 4*U - 4, wall.dim.width, 8, 500)
             }
             

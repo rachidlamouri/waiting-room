@@ -15,6 +15,7 @@ var DropTrigger = require(paths.obj('level1/DropTrigger'))
 var SlideTrigger = require(paths.obj('level1/SlideTrigger'))
 var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 
+const SitSensor = require(paths.obj('dogs/SitSensor'))
 const BarkSensor = require(paths.obj('dogs/BarkSensor'))
 const CocoTreat = require(paths.obj('triggers/CocoTreat'))
 
@@ -137,6 +138,7 @@ class Level1 extends Scene{
             new Wall(4*SU.x + 2.0*U, 3.5*U, 4, U, {tags: ['collapse-1']}),
             barkWall,
             wallSensor,
+            new SitSensor(4*SU.x + 5.2*U, 3.5*U),
             new Wall(4*SU.x + 5.2*U, 3.5*U, 20, U, {tags: ['collapse-3']}),
             
             // Treats

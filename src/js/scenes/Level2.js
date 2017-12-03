@@ -19,6 +19,7 @@ var Elevator = require(paths.obj('platforms/Elevator'))
 var CocoTreat = require(paths.obj('triggers/CocoTreat'))
 var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
+const SitSensor = require(paths.obj('dogs/SitSensor'))
 const BarkSensor = require(paths.obj('dogs/BarkSensor'))
 const HelpSensor = require(paths.obj('level2/HelpSensor'))
 const ElevatorSensor = require(paths.obj('platforms/ElevatorSensor'))
@@ -74,6 +75,7 @@ class Level2 extends Scene{
             
             // Stage 1
             sitWall,
+            new SitSensor(2.36*U, 1*SU.y + 5.00*U,),
             new Wall(3.60*U, 1*SU.y + 4.75*U, 30, 10, stage1Options),
             new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
             stage1Treat,

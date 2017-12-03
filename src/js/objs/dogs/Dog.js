@@ -65,7 +65,7 @@ class Dog extends Sprite{
         
         this.state.sitTreat = {
             elapsedTime: 0,
-            targetTime: 1800,
+            targetTime: 2400,
             triggered: false,
         }
     }
@@ -215,15 +215,31 @@ class Dog extends Sprite{
         
         // Sit treat only activates on some levels
         let sitTreat = this.state.sitTreat
-        if(this.activateSitTreat && this.state.sitting && !sitTreat.triggered){
-            sitTreat.elapsedTime += engine.timestep
+        let sitSensors = engine.getObjsByClass('SitSensor')
+        let sitSensor = sitSensors.length > 0? sitSensors[0]: undefined
+        if(sitSensor && sitSensor.state.active && !sitTreat.triggered){
+            if(this.state.sitting){
+                sitTreat.elapsedTime += engine.timestep
+            }else{
+                if(sitTreat.elapsedTime > 0){
+                    sitTreat.elapsedTime -= engine.timestep
+                }else{
+                    sitTreat.elapsedTime = 0
+                }
+            }
             
             if(sitTreat.elapsedTime >= sitTreat.targetTime){
                 sitTreat.triggered = true
                 this.activateSitTreat(engine)
+                sitSensor.setAnimation('done')
+                sitSensor.removeBy(false)
+            }else if(sitTreat.elapsedTime >= sitTreat.targetTime*2/3){
+                sitSensor.setAnimation('level3')
+            }else if(sitTreat.elapsedTime >= sitTreat.targetTime/3){
+                sitSensor.setAnimation('level2')
+            }else{
+                sitSensor.setAnimation('level1')
             }
-        }else if(!sitTreat.triggered){
-            sitTreat.elapsedTime  = 0
         }
     }
     updateAnimation(){

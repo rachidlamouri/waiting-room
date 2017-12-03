@@ -19,11 +19,13 @@ class Sprite extends GameObj{
             this.sheet.offset.x = ++this.sheet.offset.x % this.sheet.columns
         }
         
+        engine.ctx.globalAlpha = this.opacity
         engine.ctx.drawImage(
             this.sheet.img,
             this.sheet.offset.x*this.sheet.frameWidth, this.sheet.offset.y*this.sheet.frameHeight, this.sheet.frameWidth, this.sheet.frameHeight,
             this.pos.x - this.dim.width/2, this.pos.y - this.dim.height/2, this.dim.width, this.dim.height
         )
+        engine.ctx.globalAlpha = 1
         
         if(this.sheet.offset.x == this.sheet.columns - 1 && this.onAnimationFinish){
             this.onAnimationFinish(engine)
