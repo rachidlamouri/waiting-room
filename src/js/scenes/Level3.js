@@ -17,6 +17,9 @@ const ParallaxCloudGenerator = require(paths.obj('level3/ParallaxCloudGenerator'
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
 
+const ControllerMap = require(paths.obj('controls/ControllerMap'))
+const Player1Map = require(paths.obj('controls/Player1Map'))
+
 class Level3 extends Scene{
     constructor(){
         super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, undefined, 3, [
@@ -309,7 +312,17 @@ class Level3 extends Scene{
         
         let tutor = new Tutor(coco.id, conductor)
         
+        let player1Map = new Player1Map(U + 4, U)
+        player1Map.setAnimation('walk')
+        
+        let controllerMap = new ControllerMap(U + 4, U)
+        controllerMap.setControllerId(0)
+        controllerMap.setAnimation('walk')
+        
         super.load([
+            player1Map,
+            controllerMap,
+            
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             

@@ -21,7 +21,6 @@ var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
 const SitSensor = require(paths.obj('dogs/SitSensor'))
 const BarkSensor = require(paths.obj('dogs/BarkSensor'))
-const HelpSensor = require(paths.obj('level2/HelpSensor'))
 const ElevatorSensor = require(paths.obj('platforms/ElevatorSensor'))
 
 class Level2 extends Scene{
@@ -45,7 +44,6 @@ class Level2 extends Scene{
         let coco = new Level2Coco(300, -U)
         coco.setControllerId(0)
         
-        let helpSensor = new HelpSensor(7.7*U, 6.8*U)
         let elevator = new Elevator(.5*U, -U, U, 8, 7.25*U - 5, 6000, {tags: ['stage-3']})
         let elevatorSensor = new ElevatorSensor(elevator.pos.x, elevator)
         elevator.setSensor(elevatorSensor)
@@ -91,7 +89,6 @@ class Level2 extends Scene{
             elevatorSensor,
             elevator,
             
-            helpSensor,
             coco,
             millie,
         ])

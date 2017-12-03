@@ -7,6 +7,9 @@ const MillieTreat = require(paths.obj('triggers/MillieTreat'))
 const U = EngineUtil.Scene.U
 const SU = EngineUtil.Scene.SU
 
+const ControllerMap = require(paths.obj('controls/ControllerMap'))
+const Player1Map = require(paths.obj('controls/Player1Map'))
+
 class Level2Coco extends Coco{
     constructor(x, y){
         super(x, y)
@@ -22,6 +25,12 @@ class Level2Coco extends Coco{
             level: 0,
             treatDispensed: false,
         })
+        
+        this.state.hint = {
+            elapsedTime: 0,
+            time: 10000,
+            triggered: false,
+        }
     }
     
     onCollisionY(collider){
@@ -45,6 +54,24 @@ class Level2Coco extends Coco{
             engine.follow(this)
             this.setAnimation('walkRight')
         }else if(this.state.level == 1){
+            let hint = this.state.hint
+            if(!hint.triggered){
+                hint.elapsedTime += engine.timestep
+                if(hint.elapsedTime >= hint.time){
+                    hint.triggered = true
+                    
+                    let cocoPlayer1Map = new Player1Map(U + 4, 4*U - 4)
+                    cocoPlayer1Map.setAnimation('bark')
+                    
+                    let cocoControllerMap = new ControllerMap(U + 4, 4*U - 4)
+                    cocoControllerMap.setControllerId(0)
+                    cocoControllerMap.setAnimation('bark')
+                    
+                    engine.addObj(cocoPlayer1Map)
+                    engine.addObj(cocoControllerMap)
+                }
+            }
+            
             if(!this.state.treatDispensed){
                 this.state.treatDispensed = true
                 
@@ -57,6 +84,12 @@ class Level2Coco extends Coco{
             
                 let camera = engine.getObjsByClass('Camera')[0]
                 camera.start()
+                
+                this.state.hint.triggered = true
+                let controlsMaps = engine.getObjsByClass('ControlsMap')
+                $.each(controlsMaps, (index, map)=>{
+                    map.removeBy(false)
+                })
             }
         }
     }

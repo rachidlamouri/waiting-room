@@ -16,6 +16,9 @@ var Wall = require(paths.obj('barriers/Wall'))
 var Platform = require(paths.obj('platforms/Platform'))
 var Elevator = require(paths.obj('platforms/Elevator'))
 
+const ControllerMap = require(paths.obj('controls/ControllerMap'))
+const Player1Map = require(paths.obj('controls/Player1Map'))
+
 class Level2Millie extends Millie{
     constructor(x, y){
         super(x, y)
@@ -24,6 +27,12 @@ class Level2Millie extends Millie{
             elapsedTime: 0,
             numBarks: 2,
             time: 950,
+        }
+        
+        this.state.hint = {
+            elapsedTime: 0,
+            time: 10000,
+            triggered: false,
         }
         
         this.setAnimation('sitRight')
@@ -38,6 +47,12 @@ class Level2Millie extends Millie{
             if(treat.treatId == 'sit-treat'){
                 treat.slideTo(treat.pos.x, 1.5*SU.y, 3000)
             }
+        })
+        
+        this.state.hint.triggered = true
+        let controlsMaps = engine.getObjsByClass('ControlsMap')
+        $.each(controlsMaps, (index, map)=>{
+            map.removeBy(false)
         })
     }
     handleTrigger(engine, trigger){
@@ -151,6 +166,24 @@ class Level2Millie extends Millie{
                     this.bark(engine)
                     introBark.elapsedTime = 0
                     introBark.numBarks--
+                }
+            }
+        }else{
+            let hint = this.state.hint
+            if(!hint.triggered){
+                hint.elapsedTime += engine.timestep
+                if(hint.elapsedTime >= hint.time){
+                    hint.triggered = true
+                    
+                    let milliePlayer1Map = new Player1Map(U + 4, SU.y + U)
+                    milliePlayer1Map.setAnimation('all')
+                    
+                    let millieControllerMap = new ControllerMap(U + 4, SU.y + U)
+                    millieControllerMap.setControllerId(0)
+                    millieControllerMap.setAnimation('all')
+                    
+                    engine.addObj(milliePlayer1Map)
+                    engine.addObj(millieControllerMap)
                 }
             }
         }

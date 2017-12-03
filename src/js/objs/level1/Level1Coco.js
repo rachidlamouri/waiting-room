@@ -52,8 +52,28 @@ class Level1Coco extends Coco{
             
             if(this.treats.boneCount == 2){
                 this.state.stage = 'wait-2'
+                
                 let wall = engine.getObjsByTag('collapse-1')[0]
                 wall.growTo(wall.pos.x, 4*U - 4, wall.dim.width, 8, 500)
+                
+                let controlsMaps = engine.getObjsByClass('ControlsMap')
+                $.each(controlsMaps, (index, map)=>{
+                    map.setAnimation('jump')
+                })
+            }
+            
+            if(trigger.treatId == 'jump-treat'){
+                let controlsMaps = engine.getObjsByClass('ControlsMap')
+                $.each(controlsMaps, (index, map)=>{
+                    map.setAnimation('bark')
+                })
+            }
+            
+            if(trigger.treatId == 'sit-treat'){
+                let controlsMaps = engine.getObjsByClass('ControlsMap')
+                $.each(controlsMaps, (index, map)=>{
+                    map.setAnimation('all')
+                })
             }
             
             if(trigger.treatId == 'slide-treat'){
@@ -64,6 +84,11 @@ class Level1Coco extends Coco{
                 
                 let rampTrigger = engine.getObjsByClass('RampTrigger')[0]
                 rampTrigger.activate()
+                
+                let controlsMaps = engine.getObjsByClass('ControlsMap')
+                $.each(controlsMaps, (index, map)=>{
+                    map.removeBy(false)
+                })
             }
         }
         

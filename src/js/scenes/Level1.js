@@ -7,7 +7,6 @@ var PlayerInputs = EngineUtil.PlayerInputs
 var Scene = EngineUtil.Scene
 var Vect = EngineUtil.Vect
 var GameObj = EngineUtil.GameObj
-var SpriteSheet = EngineUtil.SpriteSheet
 
 var Level1Coco = require(paths.obj('level1/Level1Coco'))
 var RampTrigger = require(paths.obj('level1/RampTrigger'))
@@ -15,6 +14,8 @@ var DropTrigger = require(paths.obj('level1/DropTrigger'))
 var SlideTrigger = require(paths.obj('level1/SlideTrigger'))
 var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 
+const ControllerMap = require(paths.obj('controls/ControllerMap'))
+const Player1Map = require(paths.obj('controls/Player1Map'))
 const SitSensor = require(paths.obj('dogs/SitSensor'))
 const BarkSensor = require(paths.obj('dogs/BarkSensor'))
 const CocoTreat = require(paths.obj('triggers/CocoTreat'))
@@ -53,7 +54,19 @@ class Level1 extends Scene{
         let wallSensor = new BarkSensor(4*SU.x + 3.5*U, 3.8*U, true, function(engine){
             coco.state.stage = 'wait-3'
             barkWall.growTo(barkWall.pos.x, 4*U - 8, barkWall.dim.width, 16, 500)
+            
+            let controlsMaps = engine.getObjsByClass('ControlsMap')
+            $.each(controlsMaps, (index, map)=>{
+                map.setAnimation('sit')
+            })
         }, undefined)
+        
+        let player1Map = new Player1Map(4*SU.x + U + 4, U)
+        player1Map.setAnimation('walk')
+        
+        let controllerMap = new ControllerMap(4*SU.x + U + 4, U)
+        controllerMap.setControllerId(0)
+        controllerMap.setAnimation('walk')
         
         super.load([
         /*
@@ -77,6 +90,8 @@ class Level1 extends Scene{
         */
             // Terrain
                 // 0,-1
+            player1Map,
+            controllerMap,
             new InvisibleWall(0.0*SU.x - 1.00*U, 2*SU.y, 2*U, 4*SU.y),
                 // 0,0
             new Floor(0.0*SU.x + 6.50*U, SU.y, 5.00*U, 4*U),
@@ -144,7 +159,7 @@ class Level1 extends Scene{
             // Treats
             new CocoTreat(4*SU.x + .2*U, 3.5*U + 10),
             new CocoTreat(4*SU.x + 1.6*U, 3.5*U + 10),
-            new CocoTreat(4*SU.x + 2.8*U, 3.5*U + 10),
+            new CocoTreat(4*SU.x + 2.8*U, 3.5*U + 10, 'jump-treat'),
             new CocoTreat(4*SU.x + 4.3*U, -2, 'sit-treat'),
             new CocoTreat(4*SU.x + 5.8*U, 3.2*U, 'slide-treat'),
             
