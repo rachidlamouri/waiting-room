@@ -93,7 +93,7 @@ class Note{
     
     create(engine, insertId){
         if(this.playSong){
-            $('audio')[0].src = paths.sound('level3_theme')
+            $('audio')[0].src = paths.sound('level3_theme_full')
             $('audio')[0].play()
         }
         
