@@ -15,6 +15,7 @@ class Elevator extends GameObj{
         }))
         
         $.extend(this, {
+            barkSensor: undefined,
             elapsedTime: 0,
             elevateTop: elevateTop,
             topTime: topTime,
@@ -41,7 +42,11 @@ class Elevator extends GameObj{
     onCollisionY(collider){
         if(collider.instanceOf('Floor')){
             this.state.elevating = 2
+            this.barkSensor.deactivate()
         }
+    }
+    setSensor(barkSensor){
+        this.barkSensor = barkSensor
     }
     start(){
         this.state.elevating = 1

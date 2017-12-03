@@ -30,15 +30,18 @@ class Level1Coco extends Coco{
             },
         })
         
-        this.state.sitTreat = {
-            elapsedTime: 0,
-            targetTime: 1800,
-            triggered: false,
-        }
         this.state.stage = 'wait-1'
         this.setAnimation('idleRight')
     }
     
+    activateSitTreat(engine){
+        let treats = engine.getObjsByClass('CocoTreat')
+        $.each(treats, (index, treat)=>{
+            if(treat.treatId == 'sit-treat'){
+                treat.slideTo(treat.pos.x, 3.5*U + 10, 1000)
+            }
+        })
+    }
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('TreatTrigger')){
             trigger.onTrigger(engine)
@@ -87,30 +90,6 @@ class Level1Coco extends Coco{
         let inputs = engine.getPlayerInputStates(this.controllerId)
         let slideState = this.state.slide
         let rotateState = this.state.rotate
-        let sitTreat = this.state.sitTreat
-        
-        if(inputs.bark && this.state.stage == 'wait-2'){
-            this.state.stage = 'wait-3'
-            let wall = engine.getObjsByTag('collapse-2')[0]
-            wall.growTo(wall.pos.x, 4*U - 4, wall.dim.width, 8, 500)
-        }
-        
-        if(this.state.sitting && !sitTreat.triggered){
-            sitTreat.elapsedTime += engine.timestep
-            
-            if(sitTreat.elapsedTime >= sitTreat.targetTime){
-                sitTreat.triggered = true
-                
-                let treats = engine.getObjsByClass('CocoTreat')
-                $.each(treats, (index, treat)=>{
-                    if(treat.treatId == 'sit-treat'){
-                        treat.slideTo(treat.pos.x, 3.5*U + 10, 1000)
-                    }
-                })
-            }
-        }else if(!sitTreat.triggered){
-            sitTreat.elapsedTime  = 0
-        }
         
         if(slideState.sliding){
             if(this.state.grounded){

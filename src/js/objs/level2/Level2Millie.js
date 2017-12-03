@@ -20,6 +20,14 @@ class Level2Millie extends Millie{
         super(x, y)
     }
     
+    activateSitTreat(engine){
+        let treats = engine.getObjsByClass('CocoTreat')
+        $.each(treats, (index, treat)=>{
+            if(treat.treatId == 'sit-treat'){
+                treat.slideTo(treat.pos.x, 1.5*SU.y, 2000)
+            }
+        })
+    }
     handleTrigger(engine, trigger){
         super.handleTrigger(engine, trigger)
         

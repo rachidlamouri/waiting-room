@@ -7,6 +7,8 @@ var Sprite = EngineUtil.Sprite
 var Sound = EngineUtil.Sound
 var SoundBank = EngineUtil.SoundBank
 
+const Bark = require(paths.obj('dogs/Bark'))
+
 class Dog extends Sprite{
     constructor(x, y, spriteSheet, options = {}){
         super(x, y, spriteSheet, $.extend({
@@ -60,6 +62,12 @@ class Dog extends Sprite{
                 this.sounds.walking.audio.play()
             }
         })
+        
+        this.state.sitTreat = {
+            elapsedTime: 0,
+            targetTime: 1800,
+            triggered: false,
+        }
     }
     
     disable(){
@@ -88,12 +96,13 @@ class Dog extends Sprite{
             this.state.grounded = true
         }
     }
+    getHeadPos(){
+        return new Vect(this.pos.x + (this.state.facingRight? 5: -5), this.pos.y - .5)
+    }
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('Platform')){
             this.platformId = trigger.id
             this.platformSpeed = trigger.getSpeed()
-        }else if(trigger.instanceOf('Elevator') && this.state.barking){
-            trigger.elevate()
         }else if(trigger.instanceOf('CocoTreat')){
             trigger.onTrigger(engine)
         }
@@ -135,6 +144,8 @@ class Dog extends Sprite{
         this.state.barking = inputs.bark
         this.checkSimpleAction(inputs.bark, 'bark', ()=>{
             this.sounds.bark.play()
+            let headPos = this.getHeadPos()
+            engine.addObj(new Bark(headPos.x, headPos.y))
         })
         
         if(inputs.right && this.state.canWalk){
@@ -200,6 +211,19 @@ class Dog extends Sprite{
             this.state.airFrames = 0
         }else{
             this.state.airFrames++
+        }
+        
+        // Sit treat only activates on some levels
+        let sitTreat = this.state.sitTreat
+        if(this.activateSitTreat && this.state.sitting && !sitTreat.triggered){
+            sitTreat.elapsedTime += engine.timestep
+            
+            if(sitTreat.elapsedTime >= sitTreat.targetTime){
+                sitTreat.triggered = true
+                this.activateSitTreat(engine)
+            }
+        }else if(!sitTreat.triggered){
+            sitTreat.elapsedTime  = 0
         }
     }
     updateAnimation(){

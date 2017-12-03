@@ -19,6 +19,10 @@ var Elevator = require(paths.obj('platforms/Elevator'))
 var CocoTreat = require(paths.obj('triggers/CocoTreat'))
 var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
+const BarkSensor = require(paths.obj('dogs/BarkSensor'))
+const HelpSensor = require(paths.obj('level2/HelpSensor'))
+const ElevatorSensor = require(paths.obj('platforms/ElevatorSensor'))
+
 class Level2 extends Scene{
     constructor(){
         super(Scene.CANVAS_WIDTH, 2*Scene.CANVAS_HEIGHT, 0, 0, 'level2_theme', 2, [
@@ -40,6 +44,11 @@ class Level2 extends Scene{
         let coco = new Level2Coco(300, 0)
         coco.setControllerId(0)
         
+        let helpSensor = new HelpSensor(7.7*U, 6.8*U)
+        let elevator = new Elevator(.5*U, -U, U, 8, 7.25*U - 5, 6000, {tags: ['stage-3']})
+        let elevatorSensor = new ElevatorSensor(elevator.pos.x, elevator)
+        elevator.setSensor(elevatorSensor)
+        
         let stage1Options = {tags: ['stage-1']}
         
         super.load([
@@ -60,10 +69,13 @@ class Level2 extends Scene{
             new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
             new MillieTreat (6.50*U, 1*SU.y + 5.37*U, 'stage-1'),
             new CocoTreat(10, 1*SU.y + 5.4*U),
+            new CocoTreat(.2*SU.x, -U, 'sit-treat'),
             
             // Stage 3
-            new Elevator(.5*U, -U, U, 8, 7.25*U - 5, 6000, {tags: ['stage-3']}),
+            elevatorSensor,
+            elevator,
             
+            helpSensor,
             coco,
             millie,
         ])

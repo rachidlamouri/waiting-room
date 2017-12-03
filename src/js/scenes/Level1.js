@@ -15,6 +15,7 @@ var DropTrigger = require(paths.obj('level1/DropTrigger'))
 var SlideTrigger = require(paths.obj('level1/SlideTrigger'))
 var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 
+const BarkSensor = require(paths.obj('dogs/BarkSensor'))
 const CocoTreat = require(paths.obj('triggers/CocoTreat'))
 
 var Floor = require(paths.obj('barriers/Floor'))
@@ -46,6 +47,12 @@ class Level1 extends Scene{
         
         let coco = new Level1Coco(4*SU.x + 1*U, 3.5*U + 10)
         coco.setControllerId(0)
+        
+        let barkWall = new Wall(4*SU.x + 3.5*U, 3.5*U, 8, U)
+        let wallSensor = new BarkSensor(4*SU.x + 3.5*U, 3.8*U, true, function(engine){
+            coco.state.stage = 'wait-3'
+            barkWall.growTo(barkWall.pos.x, 4*U - 8, barkWall.dim.width, 16, 500)
+        }, undefined)
         
         super.load([
         /*
@@ -128,7 +135,8 @@ class Level1 extends Scene{
             
             // Hurdles
             new Wall(4*SU.x + 2.0*U, 3.5*U, 4, U, {tags: ['collapse-1']}),
-            new Wall(4*SU.x + 3.5*U, 3.5*U, 4, U, {tags: ['collapse-2']}),
+            barkWall,
+            wallSensor,
             new Wall(4*SU.x + 5.2*U, 3.5*U, 20, U, {tags: ['collapse-3']}),
             
             // Treats
