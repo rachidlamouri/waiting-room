@@ -9,6 +9,7 @@ var Camera = require(paths.obj('Camera'))
 
 var Millie = require(paths.obj('dogs/Millie'))
 var MillieTreat = require(paths.obj('triggers/MillieTreat'))
+var CocoTreat = require(paths.obj('triggers/CocoTreat'))
 var EndTrigger = require(paths.obj('triggers/EndTrigger'))
 
 var Wall = require(paths.obj('barriers/Wall'))
@@ -21,6 +22,9 @@ class Level2Millie extends Millie{
     }
     
     activateSitTreat(engine){
+        let sitWall = engine.getObjsByTag('sit-wall')[0]
+        sitWall.growTo(2.36*U, 1*SU.y + 5.25*U, 20, 0.50*U, 1000)
+        
         let treats = engine.getObjsByClass('CocoTreat')
         $.each(treats, (index, treat)=>{
             if(treat.treatId == 'sit-treat'){
@@ -68,9 +72,13 @@ class Level2Millie extends Millie{
                 let stage2Treat = engine.getObjsByTag('stage-2-treat')[0]
                 stage2Treat.slideTo(1.5*U, 1*SU.y + 4.4*U, stage2SetupTime)
                 
+                let stage2Bone = new CocoTreat(3.6*U, 1*SU.y - U)
+                stage2Bone.slideTo(3.6*U, 1*SU.y + 4*U, stage2SetupTime)
+                
                 engine.addObj(stage2Start)
                 engine.addObj(stage2Platform)
                 engine.addObj(stage2Wall)
+                engine.addObj(stage2Bone)
             }else if(treatId == 'stage-2'){
                 let stage3SetupTime = 2000
                 let stage3Options = {tags: ['stage-3']}
@@ -84,8 +92,12 @@ class Level2Millie extends Millie{
                 let stage3Platform2 = new Platform(6*U, 5.5*U, 4.75*U, 1*SU.y + 1.25*U - 5, undefined, 1000, 30, 10, stage3Options)
                 stage3Platform2.slideTo(6*U, 1*SU.y + 1.25*U - 5, stage3SetupTime)
                 
+                let stage3Bone = new CocoTreat(4*U, -U)
+                stage3Bone.slideTo(4*U, 1*SU.y + 20, stage3SetupTime)
+                
                 engine.addObj(stage3Platform1)
                 engine.addObj(stage3Platform2)
+                engine.addObj(stage3Bone)
             }else if(treatId == 'stage-3'){
                 let endTrigger = new EndTrigger(4*U, -1*U, SU.x, 20, 'Level3')
                 engine.addObj(endTrigger)
@@ -98,10 +110,10 @@ class Level2Millie extends Millie{
                     let coco = engine.getObjsByClass('Coco')[0]
                     coco.disable()
                     coco.gravity = 0
-                    coco.slideTo(4.5*U, -U, 3000)
+                    coco.slideTo(4.5*U, -U, 10000)
                     
                     this.gravity = 0
-                    this.slideTo(3.5*U, -U, 3000)
+                    this.slideTo(3.5*U, -U, 10000)
                     
                     coco.setAnimation('flyRight')
                     this.setAnimation('flyRight')

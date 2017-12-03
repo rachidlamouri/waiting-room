@@ -49,6 +49,9 @@ class Level2 extends Scene{
         let elevatorSensor = new ElevatorSensor(elevator.pos.x, elevator)
         elevator.setSensor(elevatorSensor)
         
+        let stage1Options = {tags: ['stage-1']}
+        let sitWall = new Wall(2.36*U, 1*SU.y + 5.00*U, 20, U, {tags: ['stage-1', 'sit-wall']})
+        
         let stage1Treat = new MillieTreat(6.50*U, -U, 'stage-1')
         stage1Treat.slideTo(6.50*U, 1*SU.y + 5.37*U, 5000)
         
@@ -56,8 +59,6 @@ class Level2 extends Scene{
         let stage2Treat = new MillieTreat(1.5*U, -U, 'stage-2')
         stage2Treat.slideTo(1.5*U, 5.2*U, 2500)
         stage2Treat.tags = ['stage-2-treat']
-        
-        let stage1Options = {tags: ['stage-1']}
         
         super.load([
             new Camera(300, 255, 10, 455, 2000, ()=>{
@@ -72,12 +73,13 @@ class Level2 extends Scene{
             new Wall(9*U, 1*SU.y , 2*U, 2*SU.y),
             
             // Stage 1
-            new Wall(2.50*U, 1*SU.y + 5.25*U, 10, 0.50*U, stage1Options),
+            sitWall,
             new Wall(3.60*U, 1*SU.y + 4.75*U, 30, 10, stage1Options),
             new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
             stage1Treat,
-            new CocoTreat(10, 1*SU.y + 5.4*U),
             new CocoTreat(.2*SU.x, -U, 'sit-treat'),
+            new CocoTreat(10, 1*SU.y + 5.4*U),
+            new CocoTreat(4.7*U, 1*SU.y + 5.4*U),
             
             // Stage 2
             stage2End,

@@ -42,7 +42,7 @@ $.extend(SaveFile, {
                 className: 'Level2',
                 action: 'level',
                 bonesCollected: 0,
-                boneCount: 1,
+                boneCount: 5,
                 poopsCollected: 0,
                 poopCount: 3,
             },
