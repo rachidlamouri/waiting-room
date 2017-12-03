@@ -22,10 +22,6 @@ class Platform extends GameObj{
             waitTime: waitTime,
         })
     }
-    draw(engine){
-        this.getTriggerBox().draw(engine, '#FF0000', this.opacity)
-        this.getMeshBox().draw(engine, '#0000FF', this.opacity)
-    }
     getSpeed(){
         let direction = this.vel.x > 0? 1: (this.vel.x < 0? -1: 0)
         return this.speed*direction

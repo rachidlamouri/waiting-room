@@ -41,13 +41,21 @@ class Level2 extends Scene{
         let SU = Scene.SU
         
         let millie = new Level2Millie(30, 1*SU.y + 5.4*U)
-        let coco = new Level2Coco(300, 0)
+        let coco = new Level2Coco(300, -U)
         coco.setControllerId(0)
         
         let helpSensor = new HelpSensor(7.7*U, 6.8*U)
         let elevator = new Elevator(.5*U, -U, U, 8, 7.25*U - 5, 6000, {tags: ['stage-3']})
         let elevatorSensor = new ElevatorSensor(elevator.pos.x, elevator)
         elevator.setSensor(elevatorSensor)
+        
+        let stage1Treat = new MillieTreat(6.50*U, -U, 'stage-1')
+        stage1Treat.slideTo(6.50*U, 1*SU.y + 5.37*U, 5000)
+        
+        let stage2End = new Wall(1.5*U, 5.5*U, 30, 10, {tags: ['stage-2', 'stage-2-end']})
+        let stage2Treat = new MillieTreat(1.5*U, -U, 'stage-2')
+        stage2Treat.slideTo(1.5*U, 5.2*U, 2500)
+        stage2Treat.tags = ['stage-2-treat']
         
         let stage1Options = {tags: ['stage-1']}
         
@@ -67,9 +75,13 @@ class Level2 extends Scene{
             new Wall(2.50*U, 1*SU.y + 5.25*U, 10, 0.50*U, stage1Options),
             new Wall(3.60*U, 1*SU.y + 4.75*U, 30, 10, stage1Options),
             new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
-            new MillieTreat (6.50*U, 1*SU.y + 5.37*U, 'stage-1'),
+            stage1Treat,
             new CocoTreat(10, 1*SU.y + 5.4*U),
             new CocoTreat(.2*SU.x, -U, 'sit-treat'),
+            
+            // Stage 2
+            stage2End,
+            stage2Treat,
             
             // Stage 3
             elevatorSensor,

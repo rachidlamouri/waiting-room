@@ -62,17 +62,15 @@ class Level2Millie extends Millie{
                 let stage2Wall = new Wall(3.6*U, 5.5*U, 6, 10, stage2Options)
                 stage2Wall.slideTo(3.6*U, 1*SU.y + 4.7*U, stage2SetupTime)
                 
-                let stage2End = new Wall(1.5*U, 5.5*U, 30, 10, stage2Options)
+                let stage2End = engine.getObjsByTag('stage-2-end')[0]
                 stage2End.slideTo(1.5*U, 1*SU.y + 4.7*U, stage2SetupTime)
                 
-                let stage2Treat = new MillieTreat(1.5*U, 5.2*U, 'stage-2')
+                let stage2Treat = engine.getObjsByTag('stage-2-treat')[0]
                 stage2Treat.slideTo(1.5*U, 1*SU.y + 4.4*U, stage2SetupTime)
                 
                 engine.addObj(stage2Start)
                 engine.addObj(stage2Platform)
                 engine.addObj(stage2Wall)
-                engine.addObj(stage2End)
-                engine.addObj(stage2Treat)
             }else if(treatId == 'stage-2'){
                 let stage3SetupTime = 2000
                 let stage3Options = {tags: ['stage-3']}
@@ -86,12 +84,8 @@ class Level2Millie extends Millie{
                 let stage3Platform2 = new Platform(6*U, 5.5*U, 4.75*U, 1*SU.y + 1.25*U - 5, undefined, 1000, 30, 10, stage3Options)
                 stage3Platform2.slideTo(6*U, 1*SU.y + 1.25*U - 5, stage3SetupTime)
                 
-                let stage3Treat = new MillieTreat(7.25*U, 5.5*U, 'stage-3')
-                stage3Treat.slideTo(7.25*U, 1*SU.y + .88*U, stage3SetupTime)
-                
                 engine.addObj(stage3Platform1)
                 engine.addObj(stage3Platform2)
-                engine.addObj(stage3Treat)
             }else if(treatId == 'stage-3'){
                 let endTrigger = new EndTrigger(4*U, -1*U, SU.x, 20, 'Level3')
                 engine.addObj(endTrigger)

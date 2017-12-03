@@ -3,6 +3,10 @@ var SpriteSheet = EngineUtil.SpriteSheet
 var Coco = require(paths.obj('dogs/Coco'))
 var Vect = EngineUtil.Vect
 
+const MillieTreat = require(paths.obj('triggers/MillieTreat'))
+const U = EngineUtil.Scene.U
+const SU = EngineUtil.Scene.SU
+
 class Level2Coco extends Coco{
     constructor(x, y){
         super(x, y)
@@ -16,6 +20,7 @@ class Level2Coco extends Coco{
             canJump: false,
             canWalk: false,
             level: 0,
+            treatDispensed: false,
         })
     }
     
@@ -39,11 +44,20 @@ class Level2Coco extends Coco{
         if(this.state.level == 0){
             engine.follow(this)
             this.setAnimation('walkRight')
-        }else if(this.state.level == 1 && inputs.bark){
-            this.state.level = 2
+        }else if(this.state.level == 1){
+            if(!this.state.treatDispensed){
+                this.state.treatDispensed = true
+                
+                let stage3Treat = new MillieTreat(7.25*U, 1*SU.y + .88*U, 'stage-3')
+                engine.addObj(stage3Treat)
+            }
             
-            let camera = engine.getObjsByClass('Camera')[0]
-            camera.start()
+            if(inputs.bark){
+                this.state.level = 2
+            
+                let camera = engine.getObjsByClass('Camera')[0]
+                camera.start()
+            }
         }
     }
 }
