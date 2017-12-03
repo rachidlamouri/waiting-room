@@ -36,6 +36,7 @@ class Dog extends Sprite{
             airFrames: 0,
             canFly: false,
             canJump: true,
+            canSit: true,
             canWalk: true,
             facingRight: true,
             flying: false,
@@ -67,6 +68,7 @@ class Dog extends Sprite{
             elapsedTime: 0,
             targetTime: 2400,
             triggered: false,
+            played: 0,
         }
     }
     
@@ -145,7 +147,7 @@ class Dog extends Sprite{
         let inputs = engine.getPlayerInputStates(this.controllerId)
         
         // State
-        this.state.sitting = this.state.grounded && inputs.sit
+        this.state.sitting = this.state.grounded && inputs.sit && this.state.canSit
         this.state.barking = inputs.bark
         this.checkSimpleAction(inputs.bark, 'bark', ()=>{
             this.bark(engine)
@@ -228,6 +230,7 @@ class Dog extends Sprite{
                     sitTreat.elapsedTime -= engine.timestep
                 }else{
                     sitTreat.elapsedTime = 0
+                    sitTreat.played = 0
                 }
             }
             
@@ -236,10 +239,25 @@ class Dog extends Sprite{
                 this.activateSitTreat(engine)
                 sitSensor.setAnimation('done')
                 sitSensor.removeBy(false)
+                
+                if(this.state.sitting && sitTreat.played == 2){
+                    new Sound('sit_treat_3')
+                    sitTreat.played = 3
+                }
             }else if(sitTreat.elapsedTime >= sitTreat.targetTime*2/3){
                 sitSensor.setAnimation('level3')
+                
+                if(this.state.sitting && sitTreat.played == 1){
+                    new Sound('sit_treat_2')
+                    sitTreat.played = 2
+                }
             }else if(sitTreat.elapsedTime >= sitTreat.targetTime/3){
                 sitSensor.setAnimation('level2')
+                
+                if(this.state.sitting && sitTreat.played == 0){
+                    new Sound('sit_treat_1')
+                    sitTreat.played = 1
+                }
             }else{
                 sitSensor.setAnimation('level1')
             }

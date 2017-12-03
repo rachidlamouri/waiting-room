@@ -22,6 +22,7 @@ class Level2Coco extends Coco{
         $.extend(this.state, {
             canJump: false,
             canWalk: false,
+            canSit: false,
             level: 0,
             treatDispensed: false,
         })
