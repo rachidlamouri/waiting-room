@@ -17,6 +17,7 @@ class Level3Millie extends Millie{
         })
         
         $.extend(this.state, {
+            canFling: true,
             canFly: true,
             canJump: false,
             canWalk: false,
@@ -44,7 +45,7 @@ class Level3Millie extends Millie{
         let inputs = engine.getPlayerInputStates(0)
         let coco = engine.getObjsByClass('Level3Coco')[0]
         
-        this.checkSimpleAction(inputs.jump && this.state.flinging == 0, 'fling', ()=>{
+        this.checkSimpleAction(inputs.jump && this.state.canFling && this.state.flinging == 0, 'fling', ()=>{
             this.elapsedTime = 0
             this.state.flinging = 1
             this.gravity = .001

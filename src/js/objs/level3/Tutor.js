@@ -2,24 +2,30 @@ var paths = Util.paths
 var Conductor = require(paths.obj('level3/Conductor'))
 
 class Tutor extends Conductor{
-    constructor(insertId, conductor, skipTo){
-        super(insertId, skipTo)
+    constructor(insertId, song, scene){
+        super(insertId, song, scene)
         
         $.extend(this, {
-            conductor: conductor,
             boneTreats: [],
             poopTreats: [],
         })
         
+        this.startTime = 2500
+        this.songStarted = false
+        
+        this.state.cocoDone = false
+        this.state.millieDone = false
         this.state.stage = 0
         
-        for(let i=0; i < 8; i++){
+        for(let i=0; i < 4; i++){
             this.boneTreats.push('B')
         }
         this.poopTreats.push('P')
         this.poopTreats.push('p')
+        this.poopTreats.push('P')
+        this.poopTreats.push('p')
         
-        this.resetCocoNotes(0)
+        this.resetNotes(250)
     }
     
     removeCocoTreat(treatId){
@@ -34,7 +40,7 @@ class Tutor extends Conductor{
             })
             
             if(treatCount == 0){
-                this.state.stage = 1
+                this.state.cocoDone = true
             }
         }
     }
@@ -51,43 +57,27 @@ class Tutor extends Conductor{
             })
             
             if(treatCount == 0){
-                this.state.stage = 2
+                this.state.millieDone = true
             }
         }
     }
-    resetCocoNotes(startTime){
+    resetNotes(startTime){
+        this.addNote('--------')
+        
+        this.addNote('--------')
+        this.addNote('--------')
+        this.addNote('--------')
+        this.addNote('--------')
+
         this.addNote('bbbbbbbb')
         this.addNote('bbbbbbbb')
-        this.addNote('bbbbbbbb')
-        this.addNote('bbbbbbbb')
+        this.addNote('--------')
+        this.addNote(`${this.poopTreats[3]}-------`, 3)
         
         this.addNote('--------')
         this.addNote('--------')
         this.addNote('--------')
-        this.addNote('--------')
-        
-        this.addNote(`----b-${this.boneTreats[7]}-`, 7)
-        this.addNote(`--b-${this.boneTreats[6]}---`, 6)
-        this.addNote(`----${this.boneTreats[5]}-b-`, 5)
-        this.addNote(`--${this.boneTreats[4]}-b---`, 4)
-        
-        this.addNote('--------')
-        this.addNote('--------')
-        this.addNote('--------')
-        this.addNote('--------')
-        
-        this.addNote(`---${this.boneTreats[3]}----`, 3)
-        this.addNote(`-${this.boneTreats[2]}------`, 2)
-        this.addNote(`---${this.boneTreats[1]}----`, 1)
-        this.addNote(`-${this.boneTreats[0]}------`, 0)
-        
-        this.compose(startTime)
-    }
-    resetMillieNotes(startTime){
-        this.addNote('bbbbbbbb')
-        this.addNote('bbbbbbbb')
-        this.addNote('bbbbbbbb')
-        this.addNote('bbbbbbbb')
+        this.addNote(`-------${this.poopTreats[2]}`, 2)
         
         this.addNote('--------')
         this.addNote('--------')
@@ -97,43 +87,63 @@ class Tutor extends Conductor{
         this.addNote('--------')
         this.addNote('--------')
         this.addNote('--------')
-        this.addNote('--------')
-        
-        this.addNote('--------')
-        this.addNote('--------')
-        this.addNote('--------')
         this.addNote(`-------${this.poopTreats[0]}`, 0)
+
+        this.addNote('--------')
+        this.addNote('--------')
+        this.addNote('--------')
+        this.addNote('--------')
+
+        this.addNote('bbbbbbbb')
+        this.addNote('bbbbbbbb')
+        this.addNote('bbbbbbbb')
+        this.addNote('bbbbbbbb')
         
         this.addNote('--------')
         this.addNote('--------')
         this.addNote('--------')
         this.addNote('--------')
         
-        this.compose(startTime)
-    }
-    resetRestNotes(startTime){
-        this.nextTime = nextTime
+        this.addNote(`------${this.boneTreats[3]}-`, 3)
+        this.addNote(`-----${this.boneTreats[2]}--`, 2)
+        this.addNote(`----${this.boneTreats[1]}---`, 1)
+        this.addNote(`---${this.boneTreats[0]}----`, 0)
         
-        this.addNote('--------')
-        this.addNote('--------')
-        this.addNote('--------')
-        this.addNote('--------')
+        this.addNote('bbbbbbbb')
+        this.addNote('bbbbbbbb')
+        this.addNote('bbbbbbbb')
+        this.addNote('bbbbbbbb')
         
         this.compose(startTime)
     }
     update(engine){
-        super.update(engine)
+        if(!(this.state.cocoDone && this.state.millieDone)){
+            super.update(engine)
+        }else{
+            this.state.stage = 1
+        }
         
-        if(this.state.stage < 3 && this.notes.length == 0){
-            if(this.state.stage == 0){
-                this.resetCocoNotes(500)
-            }else if(this.state.stage == 1){
-                this.resetMillieNotes(500)   
-            }else if(this.state.stage == 2){
-                $('audio')[0].currentTime = 0
-                engine.addObj(this.conductor)
-                this.state.stage = 3
-            }
+        if(this.state.stage == 0 && this.notes.length == 0){
+            this.resetNotes(500)
+        }
+        
+        if(this.state.stage == 1){
+            this.state.stage = 2
+            
+            let coco = engine.getObjsByClass('Coco')[0]
+            let millie = engine.getObjsByClass('Millie')[0]
+            coco.setControllerId(undefined)
+            millie.state.canFling = false
+            
+            coco.slideTo(40*4, -40, 5000)
+        }
+        
+        if(!this.songStarted &&  this.elapsedTime >= this.startTime){
+            this.songStarted = true
+            
+            this.scene.audio.src = paths.sound('tutor_asc')
+            this.scene.audio.currentTime = 0
+            this.scene.audio.play()
         }
     }
 }

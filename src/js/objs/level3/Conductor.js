@@ -12,7 +12,7 @@ var CocoCloudTreat = require(paths.obj('level3/CocoCloudTreat'))
 var MillieCloudTreat = require(paths.obj('level3/MillieCloudTreat'))
 
 class Conductor extends GameObj{
-    constructor(insertId, skip = 0){
+    constructor(insertId, song, scene, skip = 0){
         super(0, 0)
         
         $.extend(this, {
@@ -20,7 +20,9 @@ class Conductor extends GameObj{
             elapsedTime: 0,
             nextTime: 0,
             notes: [],
+            scene: scene,
             skip: skip,
+            song: song,
         })
         
         this.state.random = false
@@ -73,7 +75,7 @@ class Conductor extends GameObj{
         while(this.notes.length > 0 && (this.elapsedTime >= this.notes[0].time || this.notes[0].skip)){
             let note = this.notes.shift()
             if(!note.skip){
-                note.create(engine, this.insertId)
+                note.create(engine, this.insertId, this.scene, this.song)
             }
         }
     }
@@ -91,12 +93,14 @@ class Note{
         })
     }
     
-    create(engine, insertId){
+    create(engine, insertId, scene, song){
         if(this.playSong){
-            $('audio')[0].src = paths.sound('level3_theme_full')
-            $('audio')[0].play()
+            scene.audio.currentTime = 0
+            scene.audio.src = paths.sound(song)
+            scene.audio.play()
+            scene.audio.volume = 1
         }
-        
+
         $.each(this.composition, (index, letter)=>{
             let cloud
             let treat

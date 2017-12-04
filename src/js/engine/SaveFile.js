@@ -47,9 +47,15 @@ $.extend(SaveFile, {
                 poopCount: 3,
             },
             {
-                name: 'Restitution',
+                name: 'Rehearsal',
                 enabled: false,
                 className: 'Level3',
+                action: 'level',
+            },
+            {
+                name: 'Restitution',
+                enabled: false,
+                className: 'Level4',
                 action: 'level',
             },
             {

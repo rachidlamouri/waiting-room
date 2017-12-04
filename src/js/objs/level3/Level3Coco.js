@@ -27,6 +27,8 @@ class Level3Coco extends Coco{
                 let tutor = engine.getObjsByClass('Tutor')[0]
                 tutor.removeCocoTreat(treatId)
             }
+        }else if(trigger.instanceOf('EndTrigger')){
+            trigger.onTrigger(engine)
         }
     }
     update(engine){
