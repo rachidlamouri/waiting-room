@@ -37,19 +37,24 @@ class BonusLevel extends Scene{
         let SU = Scene.SU
         let U = Scene.U
         
-        let coco = new BonusCoco(10, 5.3*U)
+        let coco = new BonusCoco(1*U, 5.3*U)
         coco.setControllerId(0)
         
-        let millie = new BonusMillie(10, 5.3*U)
+        let millie = new BonusMillie(2.5*U, 5.3*U)
         millie.setControllerId(1)
         
-        let gameMaster = new GameMaster()
-        
-        let treatRaceSensorTag = ['treat-race-sensor']
         let treatRaceSensor1 = new BarkSensor(1*U, 5.3*U, true)
-        let treatRaceSensor2 = new BarkSensor(2*U, 5.3*U, true)
-        treatRaceSensor1.tags = treatRaceSensorTag
-        treatRaceSensor2.tags = treatRaceSensorTag
+        let treatRaceSensor2 = new BarkSensor(2.5*U, 5.3*U, true)
+        let sitLightGreenLightSensor1 = new BarkSensor(5.5*U, 5.3*U, true)
+        let sitLightGreenLightSensor2 = new BarkSensor(7*U, 5.3*U, true)
+        
+        let barkSensors = [
+            treatRaceSensor1,
+            treatRaceSensor2,
+            sitLightGreenLightSensor1,
+            sitLightGreenLightSensor2,
+        ]
+        let gameMaster = new GameMaster(barkSensors)
         
         super.load([
             gameMaster,
@@ -60,6 +65,8 @@ class BonusLevel extends Scene{
             
             treatRaceSensor1,
             treatRaceSensor2,
+            sitLightGreenLightSensor1,
+            sitLightGreenLightSensor2,
             
             coco,
             millie,

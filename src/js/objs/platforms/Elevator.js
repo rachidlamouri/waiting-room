@@ -48,7 +48,7 @@ class Elevator extends GameObj{
         this.state.elevating = 1
     }
     update(engine){
-        let before = this.state.elevating
+        super.update(engine)
         
         if(this.state.elevating == 0){
             this.vel.y = 0

@@ -13,17 +13,46 @@ const CocoTreat = require(paths.obj('triggers/CocoTreat'))
 const BonusPoop = require(paths.obj('bonus_level/BonusPoop'))
 const BonusBone = require(paths.obj('bonus_level/BonusBone'))
 
+const CocoSweeper = require(paths.obj('bonus_level/CocoSweeper'))
+const MillieSweeper = require(paths.obj('bonus_level/MillieSweeper'))
+
 class GameMaster extends GameObj{
-    constructor(){
+    constructor(barkSensors){
         super(0, 0, 0, 0, {
             draw: false,
         })
         
+        $.extend(this, {
+            barkSensors: barkSensors,
+            countdownTime: 1000,
+            elapsedTime: 0,
+            resetTime: 30,
+        })
+        
         this.state.game = GameMaster.GAME_NONE
+        this.state.stage = 'wait-for-game'
     }
     
-    resetGames(){
+    addSensors(engine){
+        $.each(this.barkSensors, (index, sensor)=>{
+            sensor.deactivate()
+            sensor.state.removeBy.removing = false
+            sensor.opacity = 1
+            engine.insertObj(sensor, this.id)
+        })
+    }
+    removeSweepers(engine){
+        let sweepers = engine.getObjsByClass('Sweeper')
+        $.each(sweepers, (index, sweeper)=>{
+            sweeper.removeBy(false)
+        })
+    }
+    sweep(engine){
+        let cocoSweeper = new CocoSweeper(SU.x + 1.5*U, false)
+        let millieSweeper = new MillieSweeper(SU.x + .5*U, false)
         
+        engine.addObj(cocoSweeper)
+        engine.addObj(millieSweeper)
     }
     setupSitLightGreenLight(){
         
@@ -71,26 +100,59 @@ class GameMaster extends GameObj{
         elevator.tags = treatRaceTags
         elevatorSensor.tags = treatRaceTags
         
-        engine.addObj(elevator)
-        engine.addObj(elevatorSensor)
+        engine.insertObj(elevator, this.id)
+        engine.insertObj(elevatorSensor, this.id)
     }
     update(engine){
-        if(this.state.game == GameMaster.GAME_NONE){
-            let treatRaceSensors = engine.getObjsByTag('treat-race-sensor')
+        if(this.state.stage == 'wait-for-game'){
+            let active = false
+            $.each(this.barkSensors, (index, sensor)=>{
+                if(sensor.state.active){
+                    active = true
+                    return false
+                }
+            })
             
-            if(treatRaceSensors[0].state.active && treatRaceSensors[1].state.active){
-                this.state.game = GameMaster.GAME_TREAT_RACE
-                this.setupTreatRace(engine)
+            if(active){
+                this.elapsedTime += engine.timestep
                 
-                treatRaceSensors[0].deactivate()
-                treatRaceSensors[1].deactivate()
+                if(this.elapsedTime >= this.resetTime){
+                    this.elapsedTime = 0
+                    
+                    $.each(this.barkSensors, (index, sensor)=>{
+                        sensor.deactivate()
+                    })
+                }
             }
-        }else if(this.state.game == GameMaster.GAME_TREAT_RACE){
+            
+            if(this.barkSensors[0].state.active && this.barkSensors[1].state.active){
+                this.state.game = GameMaster.GAME_TREAT_RACE
+            }else if(this.barkSensors[2].state.active && this.barkSensors[3].state.active){
+                this.state.game = GameMaster.GAME_SL_GL
+            }
+            
+            if(this.state.game != GameMaster.GAME_NONE){
+                this.state.stage = 'wait-for-sweep'
+                
+                $.each(this.barkSensors, (index, sensor)=>{
+                    sensor.removeBy(false)
+                })
+                
+                this.sweep(engine)
+            }
+        }else if(this.state.stage == 'setup'){
+            this.removeSweepers(engine)
+            if(this.state.game == GameMaster.GAME_TREAT_RACE){
+                this.setupTreatRace(engine)
+            }
+            this.state.stage = 'game'
+        }else if(this.state.stage == 'game' && this.state.game == GameMaster.GAME_TREAT_RACE){
             let bones = engine.getObjsByClass('BonusBone')
             let poops = engine.getObjsByClass('BonusPoop')
             
             if(bones.length == 0 || poops.length == 0){
                 this.state.game = GameMaster.GAME_NONE
+                this.state.stage = 'cleanup'
                 
                 if(bones.length == 0){
                     console.log('Coco Won!')
@@ -112,6 +174,31 @@ class GameMaster extends GameObj{
                 $.each(objs, (index, obj)=>{
                     obj.removeBy(false)
                 })
+            }
+        }else if(this.state.stage == 'wait-for-sweep'){
+            let sweepers = engine.getObjsByClass('Sweeper')
+            let stopped = true
+            $.each(sweepers, (index, sweeper)=>{
+                if(sweeper.vel.x != 0){
+                    stopped = false
+                }
+            })
+            
+            if(stopped){
+                this.elapsedTime = 0
+                this.state.stage = 'countdown'
+            }
+        }else if(this.state.stage == 'countdown'){
+            this.elapsedTime += engine.timestep
+            if(this.elapsedTime >= this.countdownTime){
+                this.elapsedTime = 0
+                this.state.stage = 'setup'
+            }
+        }else if(this.state.stage == 'cleanup'){
+            let objs = engine.getObjsByTag('treat-race')
+            if(objs.length == 0){
+                this.addSensors(engine)
+                this.state.stage = 'wait-for-game'
             }
         }
     }

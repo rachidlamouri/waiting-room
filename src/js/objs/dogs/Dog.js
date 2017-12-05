@@ -14,7 +14,7 @@ class Dog extends Sprite{
         super(x, y, spriteSheet, $.extend({
             physics: true,
             collisionList: ['Floor', 'Wall', 'Platform', 'Elevator'],
-            triggerList: ['Platform', 'Elevator', 'InvisibleTrigger', 'SpriteTrigger'],
+            triggerList: ['Platform', 'Elevator', 'InvisibleTrigger', 'SpriteTrigger', 'Sweeper'],
             collider: true,
         }, options))
         
@@ -112,6 +112,8 @@ class Dog extends Sprite{
             this.platformSpeed = trigger.getSpeed()
         }else if(trigger.instanceOf('CocoTreat')){
             trigger.onTrigger(engine)
+        }else if(trigger.instanceOf('Sweeper')){
+            trigger.onTrigger(engine, this)
         }
     }
     reset(){

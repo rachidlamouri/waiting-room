@@ -12,6 +12,8 @@ class ElevatorSensor extends BarkSensor{
         this.elevator.elevate()
     }
     update(engine){
+        super.update(engine)
+        
         this.pos.y = this.elevator.pos.y + (this.elevator.vel.y > 0? 1.5: this.elevator.vel.y < 0? -1.5 : 0)
     }
 }
