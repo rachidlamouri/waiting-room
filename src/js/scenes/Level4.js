@@ -17,7 +17,7 @@ const ParallaxCloudGenerator = require(paths.obj('level3/ParallaxCloudGenerator'
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
 
-class Level3 extends Scene{
+class Level4 extends Scene{
     constructor(){
         super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, undefined, 4, [
             new PlayerInputs({
@@ -327,4 +327,4 @@ class Level3 extends Scene{
         levelTitle.vel.y = .06
     }
 }
-module.exports = Level3
+module.exports = Level4
