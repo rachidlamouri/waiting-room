@@ -12,9 +12,12 @@ class BonusMillie extends Millie{
         if(trigger.instanceOf('BonusPoop')){
             trigger.onTrigger(engine)
             
-            let elevator = engine.getObjsByClass('Elevator')[0]
-            if(elevator.state.elevating == -1){
-                elevator.start()
+            let elevators = engine.getObjsByClass('Elevator')
+            if(elevators.length > 0){
+                let elevator = elevators[0]
+                if(elevator.state.elevating == -1){
+                    elevator.start()
+                }
             }
         }
     }

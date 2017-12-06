@@ -26,6 +26,7 @@ class Box{
         engine.ctx.globalAlpha = 1
     }
     drawFill(engine, color = '#000000', opacity = 1){
+        let oldFillStyle = engine.ctx.fillStyle
         engine.ctx.beginPath()
         engine.ctx.strokeStyle = '#000000'
         engine.ctx.fillStyle = color
@@ -33,6 +34,7 @@ class Box{
         engine.ctx.fillRect(this.x, this.y, this.width, this.height)
         engine.ctx.stroke()
         engine.ctx.globalAlpha = 1
+        engine.ctx.fillStyle = oldFillStyle
     }
     isAbove(box){
         return this.bottom < box.top

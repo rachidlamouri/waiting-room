@@ -44,10 +44,10 @@ class BonusLevel extends Scene{
         let SU = Scene.SU
         let U = Scene.U
         
-        let coco = new BonusCoco(1*U, 5.3*U)
+        let coco = new BonusCoco(5.5*U, 5.3*U)
         coco.setControllerId(0)
         
-        let millie = new BonusMillie(2.5*U, 5.3*U)
+        let millie = new BonusMillie(7*U, 5.3*U)
         millie.setControllerId(1)
         
         let treatRaceSensor1 = new BarkSensor(1*U, 5.3*U, true)
@@ -99,7 +99,6 @@ class BonusLevel extends Scene{
             controllerMap1,
             player2Map,
             controllerMap2,
-            
             
             new Wall(-U, .5*SU.y, 2*U, SU.y),
             new Wall(9*U, .5*SU.y, 2*U, SU.y),

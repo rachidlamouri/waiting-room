@@ -1,7 +1,7 @@
 const GameObj = EngineUtil.GameObj
 
 class LevelTitle extends GameObj{
-    constructor(x, y, title){
+    constructor(x, y, title, waitTime = 1000){
         super(x, y)
         
         $.extend(this, {
@@ -9,7 +9,7 @@ class LevelTitle extends GameObj{
             opacity: 0,
             fadeSpeed: .02,
             title: title,
-            waitTime: 1000,
+            waitTime: waitTime,
         })
         
         this.state.fading = 'fade-in'
@@ -28,6 +28,7 @@ class LevelTitle extends GameObj{
             this.opacity += this.fadeSpeed
             
             if(this.opacity >= 1){
+                this.opacity = 1
                 this.state.fading = 'wait'
             }
         }else if(this.state.fading == 'wait'){
