@@ -36,6 +36,7 @@ class GameObj{
             collapse: false,
             removing: false,
         }
+        this.state.fadeIn = false
         this.state.growTo = {
             dimDiff: undefined,
             distance: undefined,
@@ -115,6 +116,9 @@ class GameObj{
     }
     draw(engine){
         this.getMeshBox().draw(engine, this.color, this.opacity)
+    }
+    fadeIn(){
+        this.state.fadeIn = true
     }
     getColliderBox(){
         return this.getRelativeBox(this.collider)
@@ -272,6 +276,15 @@ class GameObj{
                         this.opacity = 0
                     }
                 }
+            }
+        }
+        
+        if(this.state.fadeIn){
+            this.opacity += .01
+            
+            if(this.opacity >= 1){
+                this.opacity = 1
+                this.state.fadeIn = false
             }
         }
     }

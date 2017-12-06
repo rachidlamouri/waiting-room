@@ -59,9 +59,9 @@ $.extend(SaveFile, {
                 action: 'level',
             },
             {
-                name: 'Sprite Viewer',
-                enabled: true,
-                className: 'SpriteViewer',
+                name: 'Revival',
+                enabled: false,
+                className: 'BonusLevel',
                 action: 'level',
             },
         ]

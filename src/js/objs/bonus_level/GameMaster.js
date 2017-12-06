@@ -4,6 +4,7 @@ const GameObj = EngineUtil.GameObj
 const SU = EngineUtil.Scene.SU
 const U = EngineUtil.Scene.U
 
+const LevelTitle = require(paths.obj('LevelTitle'))
 const Wall = require(paths.obj('barriers/Wall'))
 const Platform = require(paths.obj('platforms/Platform'))
 const Elevator = require(paths.obj('platforms/Elevator'))
@@ -53,6 +54,10 @@ class GameMaster extends GameObj{
         
         engine.addObj(cocoSweeper)
         engine.addObj(millieSweeper)
+        
+        let title = this.state.game == GameMaster.GAME_TREAT_RACE? 'Treat Race': 'Sit Light/Green Light'
+        let gameTitle = new LevelTitle(.5*SU.x, 40, title)
+        engine.addObj(gameTitle)
     }
     setupSitLightGreenLight(){
         
@@ -72,7 +77,7 @@ class GameMaster extends GameObj{
             new Wall(7.5*U, 3*U, U, .5*U),
             new Wall(5*U, 2.62*U, 10, 10),
             new Platform(3*U, 3*U, 6*U, 3*U, undefined, 250, U, .5*U),
-            new BonusBone(7.6*U, 2.42*U),
+            new BonusBone(7.6*U, 2.5*U),
             new BonusPoop(7.6*U, 2.6*U),
             new Wall(2*U, 1.25*U, U, .25*U),
             new Wall(3.70*U, 1.25*U, 20, .25*U),
@@ -91,7 +96,10 @@ class GameMaster extends GameObj{
                 obj.tags = treatRaceTags
             }
             
+            obj.opacity = 0
+            
             engine.addObj(obj)
+            obj.fadeIn()
         })
         
         let elevator = new Elevator(.5*U, -U, U, 8, U, 500)
@@ -145,7 +153,16 @@ class GameMaster extends GameObj{
             if(this.state.game == GameMaster.GAME_TREAT_RACE){
                 this.setupTreatRace(engine)
             }
-            this.state.stage = 'game'
+            this.state.stage = 'wait-for-go'
+        }else if(this.state.stage == 'wait-for-go'){
+            let sweepers = engine.getObjsByClass('Sweeper')
+            if(sweepers[0].opacity < .3){
+                this.state.stage = 'game'
+                
+                let go = new LevelTitle(.5*SU.x, .5*SU.y, 'Go!')
+                go.opacity = 1
+                engine.addObj(go)
+            }
         }else if(this.state.stage == 'game' && this.state.game == GameMaster.GAME_TREAT_RACE){
             let bones = engine.getObjsByClass('BonusBone')
             let poops = engine.getObjsByClass('BonusPoop')
@@ -155,11 +172,15 @@ class GameMaster extends GameObj{
                 this.state.stage = 'cleanup'
                 
                 if(bones.length == 0){
-                    console.log('Coco Won!')
+                    let cocoWins = new LevelTitle(.5*SU.x, .5*SU.y - 15, 'Coco Wins!')
+                    cocoWins.opacity = 1
+                    engine.addObj(cocoWins)
                 }
                 
                 if(poops.length == 0){
-                    console.log('Millie Won!')
+                    let millieWins = new LevelTitle(.5*SU.x, .5*SU.y + 15, 'Millie Wins!')
+                    millieWins.opacity = 1
+                    engine.addObj(millieWins)
                 }
                 
                 $.each(bones, (index, bone)=>{

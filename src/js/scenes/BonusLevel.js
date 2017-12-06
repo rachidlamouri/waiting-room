@@ -1,5 +1,6 @@
 const paths = Util.paths
 
+const saveFile = EngineUtil.saveFile
 const Input = EngineUtil.Input
 const PlayerInputs = EngineUtil.PlayerInputs
 const Scene = EngineUtil.Scene
@@ -71,6 +72,8 @@ class BonusLevel extends Scene{
             coco,
             millie,
         ])
+        
+        this.loadLevelTitle(.5*SU.x, 40, saveFile.data.levels[4].name)
     }
 }
 

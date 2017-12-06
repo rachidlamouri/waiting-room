@@ -60,6 +60,10 @@ canvas{
     padding-left: 50px;
 }
 
+.button:nth-of-type(4){
+    margin-bottom: 16px;
+}
+
 .main-menu .button{
     width: 174px;
     
