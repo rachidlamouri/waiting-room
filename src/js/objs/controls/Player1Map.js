@@ -3,7 +3,8 @@ const ControlsMap = require(paths.obj('controls/ControlsMap'))
 
 class Player1Map extends ControlsMap{
     constructor(x, y, filename){
-        super(x, y, 'key_map_1', false)
+        filename = Util.isUndefined(filename, 'key_map_1')
+        super(x, y, filename, false)
         
         this.setControllerId(0)
     }

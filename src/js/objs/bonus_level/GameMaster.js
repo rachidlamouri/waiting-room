@@ -146,6 +146,11 @@ class GameMaster extends GameObj{
                     sensor.removeBy(false)
                 })
                 
+                let controlsMaps = engine.getObjsByClass('ControlsMap')
+                $.each(controlsMaps, (index, controlsMap)=>{
+                    controlsMap.removeBy(false)
+                })
+                
                 this.sweep(engine)
             }
         }else if(this.state.stage == 'setup'){

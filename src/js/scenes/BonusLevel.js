@@ -13,6 +13,9 @@ const BonusMillie = require(paths.obj('bonus_level/BonusMillie'))
 const BarkSensor = require(paths.obj('dogs/BarkSensor'))
 
 const GameMaster = require(paths.obj('bonus_level/GameMaster'))
+const Player1Map = require(paths.obj('controls/Player1Map'))
+const Player2Map = require(paths.obj('controls/Player2Map'))
+const ControllerMap = require(paths.obj('controls/ControllerMap'))
 
 class BonusLevel extends Scene{
     constructor(){
@@ -20,7 +23,7 @@ class BonusLevel extends Scene{
             new PlayerInputs({
                 'left': new Input(['a', 'A'], [Input.PAD_LEFT]),
                 'right': new Input(['d', 'D'], [Input.PAD_RIGHT]),
-                'jump': new Input(['w', 'W'], [Input.PAD_UP, Input.A]),
+                'jump': new Input(['w', 'W', ' '], [Input.PAD_UP, Input.A]),
                 'sit': new Input(['s', 'S'], [Input.PAD_DOWN]),
                 'bark': new Input(['q', 'Q'], [Input.B]),
             }),
@@ -57,8 +60,26 @@ class BonusLevel extends Scene{
         ]
         let gameMaster = new GameMaster(barkSensors)
         
+        let player1Map = new Player1Map(U + 4, U)
+        player1Map.setAnimation('all')
+        
+        let controllerMap1 = new ControllerMap(U + 4, U)
+        controllerMap1.setControllerId(0)
+        controllerMap1.setAnimation('all')
+        
+        let player2Map = new Player2Map(7*U + 4, U)
+        player2Map.setAnimation('all')
+        
+        let controllerMap2 = new ControllerMap(7*U - 6, U)
+        controllerMap2.setControllerId(1)
+        controllerMap2.setAnimation('all')
+        
         super.load([
             gameMaster,
+            player1Map,
+            controllerMap1,
+            player2Map,
+            controllerMap2,
             
             new Floor(.5*SU.x, SU.y, SU.x, U),
             new Wall(-U, .5*SU.y, 2*U, SU.y),
