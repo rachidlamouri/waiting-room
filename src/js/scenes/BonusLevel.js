@@ -3,6 +3,7 @@ const paths = Util.paths
 const saveFile = EngineUtil.saveFile
 const Input = EngineUtil.Input
 const PlayerInputs = EngineUtil.PlayerInputs
+const GameObj = EngineUtil.GameObj
 const Scene = EngineUtil.Scene
 
 const Floor = require(paths.obj('barriers/Floor'))
@@ -16,6 +17,8 @@ const GameMaster = require(paths.obj('bonus_level/GameMaster'))
 const Player1Map = require(paths.obj('controls/Player1Map'))
 const Player2Map = require(paths.obj('controls/Player2Map'))
 const ControllerMap = require(paths.obj('controls/ControllerMap'))
+
+const PoopCloud = require(paths.obj('level3/PoopCloud'))
 
 class BonusLevel extends Scene{
     constructor(){
@@ -74,14 +77,30 @@ class BonusLevel extends Scene{
         controllerMap2.setControllerId(1)
         controllerMap2.setAnimation('all')
         
-        super.load([
+        let clouds = []
+        let xPos = 10
+        for(let i=0; i < 16; i++){
+            let cloud = new PoopCloud(xPos, 5.76*U)
+            cloud.physics = false
+            clouds.push(cloud)
+            xPos += 20
+        }
+        
+        let floor = new Floor(.5*SU.x, SU.y, SU.x, U)
+        floor.draw = function(engine){
+            this.getMeshBox().drawFill(engine, '#DDDDDD')
+        }
+        clouds.unshift(floor)
+        
+        super.load(clouds.concat([
+            new GameObj(floor.pos.x, floor.pos.y, floor.dim.width, floor.dim.height, {color: '#BBBBBB'}),
             gameMaster,
             player1Map,
             controllerMap1,
             player2Map,
             controllerMap2,
             
-            new Floor(.5*SU.x, SU.y, SU.x, U),
+            
             new Wall(-U, .5*SU.y, 2*U, SU.y),
             new Wall(9*U, .5*SU.y, 2*U, SU.y),
             
@@ -92,7 +111,7 @@ class BonusLevel extends Scene{
             
             coco,
             millie,
-        ])
+        ]))
         
         this.loadLevelTitle(.5*SU.x, 40, saveFile.data.levels[4].name)
     }

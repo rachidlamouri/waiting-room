@@ -25,6 +25,15 @@ class Box{
         engine.ctx.stroke()
         engine.ctx.globalAlpha = 1
     }
+    drawFill(engine, color = '#000000', opacity = 1){
+        engine.ctx.beginPath()
+        engine.ctx.strokeStyle = '#000000'
+        engine.ctx.fillStyle = color
+        engine.ctx.globalAlpha = opacity
+        engine.ctx.fillRect(this.x, this.y, this.width, this.height)
+        engine.ctx.stroke()
+        engine.ctx.globalAlpha = 1
+    }
     isAbove(box){
         return this.bottom < box.top
     }
