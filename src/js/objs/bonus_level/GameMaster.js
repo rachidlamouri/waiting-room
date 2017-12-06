@@ -49,12 +49,12 @@ class GameMaster extends GameObj{
             sweeper.removeBy(false)
         })
     }
-    sweep(engine){
-        let cocoSweeper = new CocoSweeper(SU.x + 1.5*U, false)
-        let millieSweeper = new MillieSweeper(SU.x + .5*U, false)
+    sweep(engine, targetX){
+        let cocoSweeper = new CocoSweeper(SU.x + 1.5*U, targetX, false)
+        let millieSweeper = new MillieSweeper(SU.x + .5*U, targetX, false)
         
-        engine.addObj(cocoSweeper)
-        engine.addObj(millieSweeper)
+        engine.insertObj(cocoSweeper, this.id)
+        engine.insertObj(millieSweeper, this.id)
         
         let title = this.state.game == GameMaster.GAME_TREAT_RACE? 'Treat Race': 'Sit Light/Green Light'
         let gameTitle = new LevelTitle(.5*SU.x, 40, title, 3000)
@@ -114,7 +114,7 @@ class GameMaster extends GameObj{
             
             obj.opacity = 0
             
-            engine.addObj(obj)
+            engine.insertObj(obj, this.id)
             obj.fadeIn()
         })
         
@@ -167,7 +167,7 @@ class GameMaster extends GameObj{
                     controlsMap.removeBy(false)
                 })
                 
-                this.sweep(engine)
+                this.sweep(engine, (this.state.game == GameMaster.GAME_TREAT_RACE? undefined: .7*U))
             }
         }else if(this.state.stage == 'setup'){
             this.removeSweepers(engine)

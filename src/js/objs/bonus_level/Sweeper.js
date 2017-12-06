@@ -3,7 +3,7 @@ const SU = EngineUtil.Scene.SU
 const U = EngineUtil.Scene.U
 
 class Sweeper extends GameObj{
-    constructor(x, color, autoRemove = true){
+    constructor(x, targetX, color, autoRemove = true){
         super(x, .5*SU.y - .25*U, .5*U, SU.y - .5*U, {
             color: color,
             gravity: 0,
@@ -13,7 +13,7 @@ class Sweeper extends GameObj{
         
         $.extend(this, {
             autoRemove: autoRemove,
-            targetX: 1.5*U,
+            targetX: Util.isUndefined(targetX, 1.5*U),
         })
         
         this.vel.x = -.1

@@ -2,8 +2,8 @@ const paths = Util.paths
 const Sweeper = require(paths.obj('bonus_level/Sweeper'))
 
 class CocoSweeper extends Sweeper{
-    constructor(x, autoRemove){
-        super(x, '#984621', autoRemove)
+    constructor(x, targetX, autoRemove){
+        super(x, targetX, '#984621', autoRemove)
     }
     
     onTrigger(engine, dog){

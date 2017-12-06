@@ -91,10 +91,10 @@ class BonusLevel extends Scene{
             this.getMeshBox().drawFill(engine, '#DDDDDD')
         }
         clouds.unshift(floor)
+        clouds.unshift(gameMaster)
         
         super.load(clouds.concat([
             new GameObj(floor.pos.x, floor.pos.y, floor.dim.width, floor.dim.height, {color: '#BBBBBB'}),
-            gameMaster,
             player1Map,
             controllerMap1,
             player2Map,
