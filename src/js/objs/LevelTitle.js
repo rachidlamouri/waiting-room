@@ -16,11 +16,17 @@ class LevelTitle extends GameObj{
     }
     
     draw(engine){
+        let oldFill = engine.ctx.fillStyle
+        if(this.fillColor != undefined){
+            engine.ctx.fillStyle = this.fillColor
+        }
+        
         engine.ctx.globalAlpha = this.opacity
         engine.ctx.font = '24px Sans-Serif'
         engine.ctx.textAlign = 'center'
         engine.ctx.fillText(this.title, this.pos.x, this.pos.y)
         engine.ctx.globalAlpha = 1
+        engine.ctx.fillStyle = oldFill
     }
     
     update(engine){

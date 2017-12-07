@@ -3,6 +3,7 @@ const paths = Util.paths
 const GameObj = EngineUtil.GameObj
 const SU = EngineUtil.Scene.SU
 const U = EngineUtil.Scene.U
+const SoundBank = EngineUtil.SoundBank
 
 const LevelTitle = require(paths.obj('LevelTitle'))
 const Wall = require(paths.obj('barriers/Wall'))
@@ -25,6 +26,7 @@ class GameMaster extends GameObj{
         })
         
         $.extend(this, {
+            bark: new SoundBank(['bark1', 'bark2', 'bark3', 'bark4', 'bark5']),
             barkSensors: barkSensors,
             countdownTime: 1000,
             elapsedTime: 0,
@@ -63,8 +65,8 @@ class GameMaster extends GameObj{
     setupSitLightGreenLight(engine){
         let objs = [
             new TrafficLight(.5*SU.x, .5*SU.y),
-            new BonusBone(7.75*U, 5.20*U),
-            new BonusPoop(7.75*U, 5.37*U),
+            new BonusBone(7.83*U, 5.20*U),
+            new BonusPoop(7.83*U, 5.37*U),
         ]
         
         $.each(objs, (index, obj)=>{
@@ -170,8 +172,8 @@ class GameMaster extends GameObj{
                 this.sweep(engine, (this.state.game == GameMaster.GAME_TREAT_RACE? undefined: .7*U))
             }
         }else if(this.state.stage == 'setup'){
-            this.removeSweepers(engine)
             if(this.state.game == GameMaster.GAME_TREAT_RACE){
+                this.removeSweepers(engine)
                 this.setupTreatRace(engine)
             }else if(this.state.game == GameMaster.GAME_SL_GL){
                 this.setupSitLightGreenLight(engine)
@@ -179,17 +181,21 @@ class GameMaster extends GameObj{
             this.state.stage = 'wait-for-go'
         }else if(this.state.stage == 'wait-for-go'){
             let sweepers = engine.getObjsByClass('Sweeper')
-            if(sweepers[0].opacity < .3){
+            if(this.state.game == GameMaster.GAME_TREAT_RACE && sweepers[0].opacity == 0){
                 this.state.stage = 'game'
                 
                 if(this.state.game == GameMaster.GAME_TREAT_RACE){
                     let go = new LevelTitle(.5*SU.x, .5*SU.y, 'Go!', 2000)
                     go.opacity = 1
+                    go.fillColor = '#46b346'
                     engine.addObj(go)
-                }else{
-                    let trafficLight = engine.getObjsByClass('TrafficLight')[0]
-                    trafficLight.setAnimation('green')
+                    this.bark.play()
                 }
+            }else if(this.state.game == GameMaster.GAME_SL_GL){
+                this.state.stage = 'game'
+                
+                let trafficLight = engine.getObjsByClass('TrafficLight')[0]
+                trafficLight.start(engine)
             }
         }else if(this.state.stage == 'game'){
             let bones = engine.getObjsByClass('BonusBone')
