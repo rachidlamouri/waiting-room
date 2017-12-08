@@ -185,7 +185,8 @@ class Scene{
             let boneGroupElem = $(countGroupElems[0])
             let poopGroupElem = $(countGroupElems[1])
             
-            boneGroupElem.find('img')[0].src = paths.asset('treat_coco')
+            let boneFilename = index == 1? 'millie_bone': 'treat_coco'
+            boneGroupElem.find('img')[0].src = paths.asset(boneFilename)
             poopGroupElem.find('img')[0].src = paths.asset('treat_millie')
             
             if(data.boneCount != undefined){

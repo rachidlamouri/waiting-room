@@ -16,7 +16,7 @@ var Wall = require(paths.obj('barriers/Wall'))
 var Platform = require(paths.obj('platforms/Platform'))
 var Elevator = require(paths.obj('platforms/Elevator'))
 
-var CocoTreat = require(paths.obj('triggers/CocoTreat'))
+var MillieBone = require(paths.obj('triggers/MillieBone'))
 var MillieTreat = require(paths.obj('triggers/MillieTreat'))
 
 const SitSensor = require(paths.obj('dogs/SitSensor'))
@@ -77,9 +77,9 @@ class Level2 extends Scene{
             new Wall(3.60*U, 1*SU.y + 4.75*U, 30, 10, stage1Options),
             new Wall(5.10*U, 1*SU.y + 5.12*U, 10, 0.75*U, stage1Options),
             stage1Treat,
-            new CocoTreat(.2*SU.x, -U, 'sit-treat'),
-            new CocoTreat(10, 1*SU.y + 5.4*U),
-            new CocoTreat(4.7*U, 1*SU.y + 5.4*U),
+            new MillieBone(.2*SU.x, -U, 'sit-treat'),
+            new MillieBone(10, 1*SU.y + 5.4*U),
+            new MillieBone(4.7*U, 1*SU.y + 5.4*U),
             
             // Stage 2
             stage2End,

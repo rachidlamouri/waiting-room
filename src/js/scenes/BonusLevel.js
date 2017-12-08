@@ -44,11 +44,12 @@ class BonusLevel extends Scene{
         let SU = Scene.SU
         let U = Scene.U
         
-        let coco = new BonusCoco(5.5*U, 5.3*U)
+        let coco = new BonusCoco(3.5*U, 5.3*U)
         coco.setControllerId(0)
         
-        let millie = new BonusMillie(7*U, 5.3*U)
+        let millie = new BonusMillie(4.5*U, 5.3*U)
         millie.setControllerId(1)
+        millie.state.facingRight = false
         
         let treatRaceSensor1 = new BarkSensor(1*U, 5.3*U, true)
         let treatRaceSensor2 = new BarkSensor(2.5*U, 5.3*U, true)
