@@ -47,6 +47,7 @@ class Level1Coco extends Coco{
     }
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('TreatTrigger')){
+            this.sounds.omnom.play()
             trigger.onTrigger(engine)
             this.treats.boneCount++
             

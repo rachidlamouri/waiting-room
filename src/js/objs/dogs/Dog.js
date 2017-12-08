@@ -54,6 +54,7 @@ class Dog extends Sprite{
         
         this.sounds = {
             bark: new SoundBank(['bark1', 'bark2', 'bark3', 'bark4', 'bark5']),
+            omnom: new SoundBank(['omnom1', 'omnom2', 'omnom3']),
             thump: new SoundBank(['thump1', 'thump2', 'thump3', 'thump4', 'thump5']),
             walking: new Sound(this.walkingFile, false, false)
         }
@@ -107,6 +108,10 @@ class Dog extends Sprite{
         return new Vect(this.pos.x + (this.state.facingRight? 5: -5), this.pos.y - .5)
     }
     handleTrigger(engine, trigger){
+        if(trigger.instanceOf('TreatTrigger')){
+            this.sounds.omnom.play()
+        }
+        
         if(trigger.instanceOf('Platform')){
             this.platformId = trigger.id
             this.platformSpeed = trigger.getSpeed()
