@@ -37,13 +37,114 @@ class Level4 extends Scene{
         let millie  = new Level3Millie(4*U, 5.3*U)
         let coco  = new Level3Coco(4*U, 5*U)
         coco.setControllerId(0)
+        coco.state.level4 = true
         
         let conductor = new Conductor(coco.id, 'level3_theme_full', this, 0)
         
+        // 262 End
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        conductor.addNote('bbbbbbbb')
+        
+        // 246 Outro
+        conductor.addNote('--------')
+        conductor.addNote('-------B')
+        conductor.addNote('---B----')
+        conductor.addNote('------PB')
+        
         conductor.addNote('--------')
         conductor.addNote('--------')
         conductor.addNote('--------')
-        conductor.addNote('p-------')
+        conductor.addNote('--------')
+        
+        conductor.addNote('-------B')
+        conductor.addNote('---B----')
+        conductor.addNote('-------B')
+        conductor.addNote('---B----')
+        
+        conductor.addNote('------B-')
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        conductor.addNote('----B---')
+        
+        // 230 Outro (3/4)
+        conductor.addNote('-----B--')
+        conductor.addNote('-----B--')
+        conductor.addNote('----B---')
+        conductor.addNote('---B----')
+        
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        conductor.addNote('-------B')
+        
+        conductor.addNote('---B----')
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        conductor.addNote('------B-')
+        
+        conductor.addNote('-----B--')
+        conductor.addNote('------B-')
+        conductor.addNote('-------B')
+        conductor.addNote('-------B')
+        
+        // 224 Outro (1/2)
+        conductor.addNote('---B----')
+        conductor.addNote('--B-----')
+        conductor.addNote('-B------')
+        conductor.addNote('B-----pP')
+        
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        conductor.addNote('--------')
+        
+        conductor.addNote('-------B')
+        conductor.addNote('---B----')
+        conductor.addNote('-------B')
+        conductor.addNote('---B----')
+        
+        conductor.addNote('------B-')
+        conductor.addNote('----B---')
+        conductor.addNote('------B-')
+        conductor.addNote('----B---')
+        
+        // 208 Outro (1/4)
+        conductor.addNote('------B-')
+        conductor.addNote('-----B--')
+        conductor.addNote('--B-----')
+        conductor.addNote('B-------')
+        
+        conductor.addNote('--B-----')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('-----B--')
+        
+        conductor.addNote('-B------')
+        conductor.addNote('--B-----')
+        conductor.addNote('----B---')
+        conductor.addNote('----B---')
+        
+        conductor.addNote('--B-----')
+        conductor.addNote('---B----')
+        conductor.addNote('-----B--')
+        conductor.addNote('p----B--')
         
         // 192 Chorus 3
         conductor.addNote('--------')
@@ -302,7 +403,7 @@ class Level4 extends Scene{
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         
-        conductor.compose()
+        let startTime = conductor.compose()
         
         super.load([
             
@@ -325,6 +426,13 @@ class Level4 extends Scene{
         levelTitle.physics = true
         levelTitle.gravity = 0
         levelTitle.vel.y = .06
+        
+        /*
+        this.audio.src = paths.sound('level3_theme_full')
+        this.audio.currentTime = startTime +.25
+        this.audio.play()
+        this.audio.volume = 1
+        */
     }
 }
 module.exports = Level4

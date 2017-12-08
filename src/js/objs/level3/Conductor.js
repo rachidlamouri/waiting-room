@@ -45,10 +45,10 @@ class Conductor extends GameObj{
             if(note.isFirst){
                 firstLine  = skipCount + i
                 playIndex = firstLine + 4
-                skipCount += i
             }
         }
         
+        let startIndex = undefined
         $.each(this.notes, (index, note)=>{
             if(index == playIndex){
                 note.playSong = true
@@ -58,13 +58,17 @@ class Conductor extends GameObj{
                 note.skip = true
                 skipCount--
             }else{
+                if(skipCount == 0){
+                    skipCount--
+                    startIndex = index
+                }
                 note.time = this.nextTime
                 this.nextTime += 500
             }
         })
         
         this.elapsedTime = startTime
-        return (playIndex - 8)*500/1000
+        return (startIndex - 8)*500/1000
     }
     setInsertId(id){
         this.insertId = id

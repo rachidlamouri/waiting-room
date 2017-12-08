@@ -16,6 +16,8 @@ class Level3Coco extends Coco{
             canWalk: false,
             follow: false,
         })
+        
+        this.state.level4 = false
     }
     
     handleTrigger(engine, trigger){
@@ -33,6 +35,11 @@ class Level3Coco extends Coco{
     }
     update(engine){
         super.update(engine)
+        
+        let conductor = engine.getObjsByClass('Conductor')[0]
+        if(this.state.level4 && conductor.notes.length == 0){
+            console.log('its on')
+        }
     }
 }
 module.exports = Level3Coco
