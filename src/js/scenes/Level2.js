@@ -47,6 +47,7 @@ class Level2 extends Scene{
         let elevator = new Elevator(.5*U, -U, U, 8, 7.25*U - 5, 6000, {tags: ['stage-3']})
         let elevatorSensor = new ElevatorSensor(elevator.pos.x, elevator)
         elevator.setSensor(elevatorSensor)
+        elevatorSensor.tags = ['stage-3']
         
         let stage1Options = {tags: ['stage-1']}
         let sitWall = new Wall(2.36*U, 1*SU.y + 5.00*U, 20, U, {tags: ['stage-1', 'sit-wall']})

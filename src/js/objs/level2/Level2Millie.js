@@ -19,6 +19,8 @@ var Elevator = require(paths.obj('platforms/Elevator'))
 const ControllerMap = require(paths.obj('controls/ControllerMap'))
 const Player1Map = require(paths.obj('controls/Player1Map'))
 
+const Light = require(paths.obj('level2/Light'))
+
 class Level2Millie extends Millie{
     constructor(x, y){
         super(x, y)
@@ -33,6 +35,12 @@ class Level2Millie extends Millie{
             elapsedTime: 0,
             time: 10000,
             triggered: false,
+        }
+        
+        this.state.end = {
+            elapsedTime: 0,
+            triggered: false,
+            hovering: false,
         }
         
         this.setAnimation('sitRight')
@@ -125,22 +133,28 @@ class Level2Millie extends Millie{
                 let endTrigger = new EndTrigger(4*U, -1*U, SU.x, 20, 'Level3')
                 engine.addObj(endTrigger)
                 
+                let coco = engine.getObjsByClass('Coco')[0]
+                coco.disable()
+                coco.gravity = 0
+                
+                this.pos.y = coco.pos.y
                 this.setControllerId(undefined)
                 this.disable()
                 this.setAnimation('idleRight')
+                this.gravity = 0
                 
-                let frameCamera = new Camera(7.25*U, 1*SU.y, 4*U, 4.5*U, 5000, ()=>{
-                    let coco = engine.getObjsByClass('Coco')[0]
-                    coco.disable()
-                    coco.gravity = 0
-                    coco.slideTo(4.5*U, -U, 10000)
-                    
-                    this.gravity = 0
-                    this.slideTo(3.5*U, -U, 10000)
-                    
-                    coco.setAnimation('flyLeft')
-                    this.setAnimation('flyRight')
-                })
+                let lightTime = 12000
+                let light1 = new Light(.3*SU.x, -10)
+                let light2 = new Light(.7*SU.x, -10)
+                light1.slideTo(this.pos.x, this.pos.y, lightTime)
+                light2.slideTo(coco.pos.x, coco.pos.y, lightTime)
+                engine.addObj(light1)
+                engine.addObj(light2)
+                
+                this.state.end.triggered = true
+                this.state.end.waiting = true
+                
+                let frameCamera = new Camera(7.25*U, 1*SU.y, 4*U, 4.5*U, 5000, ()=>{})
                 frameCamera.start()
                 
                 engine.addObj(frameCamera)
@@ -155,6 +169,31 @@ class Level2Millie extends Millie{
     }
     update(engine){
         super.update(engine)
+        
+        let endState = this.state.end
+        if(endState.triggered){
+            let coco = engine.getObjsByClass('Coco')[0]
+            let lights = engine.getObjsByClass('Light')
+            if(!endState.hovering && !endState.flying){
+                let light2 = lights[1]
+                if(coco.pos.y == light2.pos.y){
+                    endState.hovering = true
+                    
+                    let light1 = lights[0]
+                    light1.removeBy(false)
+                    light2.removeBy(false)
+                    
+                    coco.setAnimation('flyLeft')
+                    this.setAnimation('flyRight')
+                }
+            }else if(endState.hovering && !endState.flying){
+                if(lights.length == 0){
+                    endState.flying = true
+                    coco.slideTo(4.5*U, -U, 10000)
+                    this.slideTo(3.5*U, -U, 10000)
+                }
+            }
+        }
         
         if(this.controllerId == undefined){
             let coco = engine.getObjsByClass('Coco')[0]
