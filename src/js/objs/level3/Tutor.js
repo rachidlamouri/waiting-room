@@ -133,9 +133,10 @@ class Tutor extends Conductor{
             let coco = engine.getObjsByClass('Coco')[0]
             let millie = engine.getObjsByClass('Millie')[0]
             coco.setControllerId(undefined)
+            coco.vel.x = 0
             millie.state.canFling = false
             
-            coco.slideTo(40*4, -40, 5000)
+            coco.slideTo(40*4, -80, 5000)
             millie.state.endLevel3 = true
         }
         

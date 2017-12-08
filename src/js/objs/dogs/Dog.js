@@ -132,15 +132,15 @@ class Dog extends Sprite{
     }
     saveBones(levelId, boneCount){
         let levelData = saveFile.data.levels[levelId]
-        if(this.treats.boneCount > levelData.bonesCollected){
-            levelData.bonesCollected = this.treats.boneCount
+        if(boneCount > levelData.bonesCollected){
+            levelData.bonesCollected = boneCount
             saveFile.save()
         }
     }
     savePoops(levelId, poopCount){
         let levelData = saveFile.data.levels[levelId]
-        if(this.treats.poopCount > levelData.poopsCollected){
-            levelData.poopsCollected = this.treats.poopCount
+        if(poopCount > levelData.poopsCollected){
+            levelData.poopsCollected = poopCount
             saveFile.save()
         }
     }

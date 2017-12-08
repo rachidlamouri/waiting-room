@@ -51,6 +51,10 @@ $.extend(SaveFile, {
                 enabled: false,
                 className: 'Level3',
                 action: 'level',
+                bonesCollected: 0,
+                boneCount: 4,
+                poopsCollected: 0,
+                poopCount: 4,
             },
             {
                 name: 'Restitution',

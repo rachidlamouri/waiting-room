@@ -52,7 +52,7 @@ class Level3 extends Scene{
         controllerMap.setAnimation('fly')
         
         super.load([
-            new EndTrigger(.5*SU.x, -1.5*U, SU.x, 2*U, 'Level4'),
+            new EndTrigger(.5*SU.x, -2*U, SU.x, 2*U, 'Level4'),
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             

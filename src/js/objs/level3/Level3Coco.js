@@ -24,6 +24,10 @@ class Level3Coco extends Coco{
         super.handleTrigger(engine, trigger)
         
         if(trigger.instanceOf('BoneCloud')){
+            if(trigger.treat != undefined){
+                this.treats.boneCount++
+            }
+            
             let treatId = trigger.poof(engine)
             if(treatId != undefined){
                 let tutor = engine.getObjsByClass('Tutor')[0]
@@ -31,6 +35,12 @@ class Level3Coco extends Coco{
             }
         }else if(trigger.instanceOf('EndTrigger')){
             trigger.onTrigger(engine)
+            
+            let levelId = this.state.level4? 3: 2
+            let millie = engine.getObjsByClass('Millie')[0]
+            
+            this.saveBones(levelId, this.treats.boneCount)
+            this.savePoops(levelId, millie.treats.poopCount)
         }
     }
     update(engine){

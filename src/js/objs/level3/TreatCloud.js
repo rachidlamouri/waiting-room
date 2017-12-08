@@ -18,6 +18,7 @@ class TreatCloud extends Cloud{
         
         if(this.state.poofing && this.treat != undefined){
             engine.removeObjById(this.treat.id)
+            this.treat = undefined
         }
         
         return treatId
