@@ -136,6 +136,7 @@ class Tutor extends Conductor{
             millie.state.canFling = false
             
             coco.slideTo(40*4, -40, 5000)
+            millie.state.endLevel3 = true
         }
         
         if(!this.songStarted &&  this.elapsedTime >= this.startTime){

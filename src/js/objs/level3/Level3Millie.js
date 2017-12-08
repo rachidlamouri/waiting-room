@@ -25,6 +25,8 @@ class Level3Millie extends Millie{
             follow: true,
             hovering: true,
         })
+        
+        this.state.endLevel3 = false
     }
     
     handleTrigger(engine, trigger){
@@ -56,7 +58,7 @@ class Level3Millie extends Millie{
             this.elapsedTime += engine.timestep
             
             // flap down
-            this.sheet.offset.x = 0
+            this.sheet.offset.x = 3
             
             if(this.elapsedTime >= this.flingTime){
                 // speed up animation
@@ -67,7 +69,8 @@ class Level3Millie extends Millie{
             }
         }else if(this.state.flinging == 2 && this.pos.y >= coco.pos.y + .3*U){
             // reset animation speed
-            this.fps = 12
+            this.sheet.offset.x = coco.sheet.offset.x
+            this.fps = 6
             
             this.pos.y = coco.pos.y  + .3*U
             this.state.flinging = 0
@@ -78,6 +81,10 @@ class Level3Millie extends Millie{
         if(this.state.follow){
             this.pos.x = coco.pos.x
             this.state.facingRight = coco.state.facingRight
+        }
+        
+        if(this.state.endLevel3 && this.state.flinging == 0){
+            this.pos.y = coco.pos.y  + .3*U
         }
     }
 }
