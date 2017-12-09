@@ -29,11 +29,19 @@ class Scene{
         playerInputsList[0].addInput('menuUp', new Input(['w', 'W', 'ArrowUp'], [Input.PAD_UP]))
         playerInputsList[0].addInput('menuDown', new Input(['s', 'S', 'ArrowDown'], [Input.PAD_DOWN]))
         playerInputsList[0].addInput('menuSelect', new Input(['Enter'], [Input.A]))
+        playerInputsList[0].addInput('backToMain', new Input(['1'], [Input.LB]))
+        playerInputsList[0].addInput('toggleVolume', new Input(['2'], [Input.RB]))
+        playerInputsList[0].addInput('musicMenu', new Input(['3'], [Input.LT]))
+        playerInputsList[0].addInput('creditsMenu', new Input(['4'], [Input.RT]))
         
         playerInputsList[1].addInput('reloadScene', new Input([], [Input.SELECT]))
         playerInputsList[1].addInput('menuUp', new Input([], [Input.PAD_UP]))
         playerInputsList[1].addInput('menuDown', new Input([], [Input.PAD_DOWN]))
         playerInputsList[1].addInput('menuSelect', new Input([], [Input.A]))
+        playerInputsList[1].addInput('backToMain', new Input([], [Input.LB]))
+        playerInputsList[1].addInput('toggleVolume', new Input([], [Input.RB]))
+        playerInputsList[1].addInput('musicMenu', new Input([], [Input.LT]))
+        playerInputsList[1].addInput('creditsMenu', new Input([], [Input.RT]))
         
         if(!staticMenu){
             playerInputsList[0].addInput('pause', new Input(['Escape'], [Input.START]))
@@ -144,6 +152,38 @@ class Scene{
                 this.checkSimpleAction((inputs1.menuEscape || inputs2.menuEscape) && this.menuElem.is(':visible'), 'menuEscape', ()=>{
                     if(engine.isPaused()){
                         engine.resume()
+                    }
+                })
+                
+                this.checkSimpleAction((inputs1.backToMain || inputs2.backToMain) && this.menuElem.is(':visible'), 'backToMain', ()=>{
+                    let button = $('.back-icon')
+                    if(button.length > 0){
+                        button.trigger('click')
+                    }
+                })
+                
+                this.checkSimpleAction((inputs1.toggleVolume || inputs2.toggleVolume) && this.menuElem.is(':visible'), 'toggleVolume', ()=>{
+                    let button = $('.volume-icon')
+                    if(button.length == 0){
+                        button = $('.stop-icon')
+                    }
+                    
+                    if(button.length > 0){
+                        button.trigger('click')
+                    }
+                })
+                
+                this.checkSimpleAction((inputs1.musicMenu || inputs2.musicMenu) && this.menuElem.is(':visible'), 'musicMenu', ()=>{
+                    let button = $('.music-icon')
+                    if(button.length > 0){
+                        button.trigger('click')
+                    }
+                })
+                
+                this.checkSimpleAction((inputs1.creditsMenu || inputs2.creditsMenu) && this.menuElem.is(':visible'), 'creditsMenu', ()=>{
+                    let button = $('.credits')
+                    if(button.length > 0){
+                        button.trigger('click')
                     }
                 })
             },
