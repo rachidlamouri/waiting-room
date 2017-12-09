@@ -64,11 +64,21 @@ canvas{
     margin-bottom: 16px;
 }
 
-.main-menu .button{
+.main-menu .button, .music-button{
     width: 174px;
     
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.music-button{
+    font-size: 12px;
+    padding-left: 16px;
+    margin-bottom: 8px !important;
+}
+
+.music-button:last-child{
+    margin-bottom: 0px !important;
 }
 
 .main-menu .button .level-title{
@@ -160,7 +170,58 @@ canvas{
     justify-self: flex-start;
 }
 
-.volume-icon:hover{
+.music-icon{
+    position: fixed;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    
+    align-self: flex-start;
+    margin-top: 200px;
+    font-size: 20px;
+}
+
+.credits{
+    position: relative;
+    display: block;
+    top: 176px;
+    left: 138px;
+    
+    font-size: 10px;
+}
+
+.credits{
+    position: relative;
+    display: block;
+    top: 176px;
+    left: 138px;
+    
+    font-size: 10px;
+}
+
+.back-icon{
+    position: absolute;
+    display: block;
+    top: 8px;
+    left: 8px;
+    
+    font-size: 14px;
+}
+
+.stop-icon{
+    position: absolute;
+    display: block;
+    top: 8px;
+    left: 300px;
+    
+    font-size: 14px;
+}
+
+.volume-icon:hover, .music-icon:hover, .credits:hover, .back-icon:hover, .stop-icon:hover{
     color: #666;
     cursor: pointer;
+}
+
+.hidden{
+    display: none;
 }

@@ -138,7 +138,7 @@ class Scene{
                 
                 this.checkSimpleAction((inputs1.menuSelect || inputs2.menuSelect) && this.menuElem.is(':visible'), 'menuSelect', ()=>{
                     $(this.menuButtonElems[this.selectedButton]).trigger('click')
-                    new Sound('thump1')
+                    new Sound('walking_millie')
                 })
                 
                 this.checkSimpleAction((inputs1.menuEscape || inputs2.menuEscape) && this.menuElem.is(':visible'), 'menuEscape', ()=>{
@@ -209,6 +209,8 @@ class Scene{
         this.menuButtonElems = this.menuElem.find('.button')
         $(this.menuButtonElems[0]).addClass('selected')
         this.menuButtonElems.click((clickEvent)=>{
+            new Sound('walking_millie')
+            
             let button = $(clickEvent.currentTarget)
             let action = button.attr('action')
             
@@ -244,6 +246,8 @@ class Scene{
         })
         
         this.volumeElem.click((clickEvent)=>{
+            new Sound('walking_millie')
+            
             this.volumeOn = !this.volumeOn
             
             let oldClass = this.volumeOn? Scene.CLASS_OFF: Scene.CLASS_ON

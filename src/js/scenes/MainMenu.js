@@ -21,6 +21,19 @@ class MainMenu extends Scene{
     load(){
         super.loadCanvas()
         super.loadMenu(MainMenu.MAIN_HTML, saveFile.data.levels)
+        
+        if(saveFile.data.levels[4].enabled){
+            let musicIconElem = $('.music-icon')
+            let creditsElem = $('.credits')
+            musicIconElem.showFlex()
+            creditsElem.show()
+            
+            musicIconElem.click(()=>{
+                this.unloadSpeed = 0
+                this.unload('MusicMenu')
+            })
+        }
+        
         super.loadEngine([])
         super.fadeIn()
     }
