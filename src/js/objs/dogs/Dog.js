@@ -109,7 +109,13 @@ class Dog extends Sprite{
     }
     handleTrigger(engine, trigger){
         if(trigger.instanceOf('TreatTrigger')){
-            this.sounds.omnom.play()
+            let ignoreTreat =
+                this.instanceOf('BonusCoco') && trigger.instanceOf('BonusPoop')
+                || this.instanceOf('BonusMillie') && trigger.instanceOf('BonusBone')
+            
+            if(!ignoreTreat){
+                this.sounds.omnom.play()
+            }
         }
         
         if(trigger.instanceOf('Platform')){

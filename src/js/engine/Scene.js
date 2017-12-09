@@ -118,8 +118,7 @@ class Scene{
                 })
                 
                 this.checkSimpleAction(inputs1.reloadScene || inputs2.reloadScene, 'reloadScene', ()=>{
-                    remote.getCurrentWindow().reload()
-                    //engine.scene.reload()
+                    //remote.getCurrentWindow().reload()
                 })
                 
                 this.checkSimpleAction((inputs1.menuUp || inputs2.menuUp) && this.menuElem.is(':visible'), 'menuUp', ()=>{
@@ -159,6 +158,7 @@ class Scene{
                     let button = $('.back-icon')
                     if(button.length > 0){
                         button.trigger('click')
+                        new Sound('walking_millie')
                     }
                 })
                 
@@ -166,6 +166,10 @@ class Scene{
                     let button = $('.volume-icon')
                     if(button.length == 0){
                         button = $('.stop-icon')
+                        if(button.length > 0){
+                            new Sound('walking_millie')
+                        }
+                        
                     }
                     
                     if(button.length > 0){
@@ -177,6 +181,7 @@ class Scene{
                     let button = $('.music-icon')
                     if(button.length > 0){
                         button.trigger('click')
+                        new Sound('walking_millie')
                     }
                 })
                 
@@ -184,6 +189,7 @@ class Scene{
                     let button = $('.credits')
                     if(button.length > 0){
                         button.trigger('click')
+                        new Sound('walking_millie')
                     }
                 })
             },

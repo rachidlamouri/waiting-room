@@ -6,6 +6,7 @@ class Camera extends GameObj{
         super(x, y, 10, 10, {
             physics: false,
             color: '#FF00A5',
+            draw: false,
         })
         
         $.extend(this, {

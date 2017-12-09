@@ -17,6 +17,7 @@ body{
 canvas{
     display: flex;
     background-color: white;
+    cursor: none;
 }
 
 .menu{

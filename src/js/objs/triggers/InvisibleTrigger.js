@@ -7,7 +7,7 @@ class InvisibleTrigger extends GameObj{
             gravity: 0,
             collider: false,
             trigger: true,
-            //draw: false,
+            draw: false,
         }, options))
     }
 }

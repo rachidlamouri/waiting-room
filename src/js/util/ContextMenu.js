@@ -16,7 +16,7 @@ class ContextMenu{
             
             this.position.x = mouseEvent.clientX
             this.position.y = mouseEvent.clientY
-            this.menu.popup(remote.getCurrentWindow())
+            //this.menu.popup(remote.getCurrentWindow())
         })
         
         this.menu.append(new remote.MenuItem({
