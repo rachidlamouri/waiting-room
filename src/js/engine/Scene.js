@@ -225,19 +225,21 @@ class Scene{
             let boneGroupElem = $(countGroupElems[0])
             let poopGroupElem = $(countGroupElems[1])
             
-            let boneFilename = index == 1? 'millie_bone': 'treat_coco'
+            let boneFilename = index == 4? 'coco_icon': index == 1? 'millie_bone': 'treat_coco'
+            let poopFilename = index == 4? 'millie_icon': 'treat_millie'
+            
             boneGroupElem.find('img')[0].src = paths.asset(boneFilename)
-            poopGroupElem.find('img')[0].src = paths.asset('treat_millie')
+            poopGroupElem.find('img')[0].src = paths.asset(poopFilename)
             
             if(data.boneCount != undefined){
                 boneCountElem.html(data.bonesCollected+' / '+data.boneCount)
-            }else{
+            }else if(index != 4){
                 boneGroupElem.hide()
             }
             
             if(data.poopCount != undefined){
                 poopCountElem.html(data.poopsCollected+' / '+data.poopCount)
-            }else{
+            }else if(index != 4){
                 poopGroupElem.hide()
             }
             

@@ -113,6 +113,12 @@ canvas{
     font-size: 6px;
 }
 
+.button:nth-of-type(5) .count-group img{
+    width: 8px;
+    height: 8px;
+    margin-right: 0px;
+}
+
 .bone-count, .poop-count{
     display: flex;
     width: 24px;
