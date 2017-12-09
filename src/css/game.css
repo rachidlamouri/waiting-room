@@ -115,7 +115,7 @@ canvas{
 
 .bone-count, .poop-count{
     display: flex;
-    width: 20px;
+    width: 24px;
     
     flex-direction: row;
     justify-content: flex-end;

@@ -16,6 +16,7 @@ const ParallaxCloudGenerator = require(paths.obj('level3/ParallaxCloudGenerator'
 
 var Wall = require(paths.obj('barriers/Wall'))
 var InvisibleWall = require(paths.obj('barriers/InvisibleWall'))
+const EndTrigger = require(paths.obj('triggers/EndTrigger'))
 
 class Level4 extends Scene{
     constructor(){
@@ -41,17 +42,7 @@ class Level4 extends Scene{
         
         let conductor = new Conductor(coco.id, 'level3_theme_full', this, 0)
         
-        // 262 End
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        conductor.addNote('bbbbbbbb')
-        
+        // 254 End
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
         conductor.addNote('bbbbbbbb')
@@ -405,8 +396,10 @@ class Level4 extends Scene{
         
         let startTime = conductor.compose()
         
+        let nextLevel = saveFile.data.levels[4].enabled? 'MainMenu': 'Credits'
+        
         super.load([
-            
+            new EndTrigger(.5*SU.x, -2*U, SU.x, 2*U, nextLevel),
             new InvisibleWall(-1*U, .5*SU.y , 2*U, SU.y),
             new InvisibleWall(9*U, .5*SU.y , 2*U, SU.y),
             

@@ -47,8 +47,14 @@ class Level3Coco extends Coco{
         super.update(engine)
         
         let conductor = engine.getObjsByClass('Conductor')[0]
-        if(this.state.level4 && conductor.notes.length == 0){
-            console.log('its on')
+        if(this.state.level4 && conductor.notes.length < 4 && this.controllerId != undefined){
+            let millie = engine.getObjsByClass('Millie')[0]
+            this.setControllerId(undefined)
+            this.vel.x = 0
+            millie.state.canFling = false
+            
+            this.slideTo(40*4, -80, 10000)
+            millie.state.endLevel3 = true
         }
     }
 }

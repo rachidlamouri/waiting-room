@@ -10,7 +10,7 @@ var PlayerInputs = EngineUtil.PlayerInputs
 
 class MainMenu extends Scene{
     constructor(){
-        let song = saveFile.data.levels[1].enabled? 'main_menu2': 'main_menu1'
+        let song = saveFile.data.levels[2].enabled? 'main_menu2': 'main_menu1'
         super(undefined, undefined, undefined, undefined, song, 0, [], true)
     }
     

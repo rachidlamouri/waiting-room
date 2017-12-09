@@ -102,7 +102,6 @@ class Note{
             scene.audio.currentTime = 0
             scene.audio.src = paths.sound(song)
             scene.audio.play()
-            scene.audio.volume = 1
         }
 
         $.each(this.composition, (index, letter)=>{
