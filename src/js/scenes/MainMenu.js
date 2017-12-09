@@ -32,6 +32,10 @@ class MainMenu extends Scene{
                 this.unloadSpeed = 0
                 this.unload('MusicMenu')
             })
+            
+            creditsElem.click(()=>{
+                this.unload('Credits')
+            })
         }
         
         super.loadEngine([])
