@@ -74,7 +74,7 @@ $.extend(MusicMenu, {
         new Song('Rehearsal', 'tutor_asc'),
         new Song('Restitution - Loop', 'level3_theme'),
         new Song('Restitution - Full', 'level3_theme_full'),
-        new Song('Credits', 'walking_millie'),
+        new Song('Credits', 'credits'),
     ],
 })
 

@@ -9,7 +9,7 @@ const CreditManager = require(paths.obj('credits/CreditManager'))
 class Credits extends Scene{
     constructor(){
         let SU = Scene.SU
-        super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, undefined, 0, [])
+        super(Scene.CANVAS_WIDTH, Scene.CANVAS_HEIGHT, 0, 0, 'credits', 0, [])
     }
     
     load(){
