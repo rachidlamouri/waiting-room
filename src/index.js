@@ -10,8 +10,8 @@ app.on('ready', function(){
         width: 1200,
         height: 600,
         backgroundColor: '#FFF',
-        //frame: false,
-        //fullscreen: true,
+        frame: false,
+        fullscreen: true,
     })
     
     win.setMenu(null)

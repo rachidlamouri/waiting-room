@@ -33,6 +33,7 @@ class Scene{
         playerInputsList[0].addInput('toggleVolume', new Input(['2'], [Input.RB]))
         playerInputsList[0].addInput('musicMenu', new Input(['3'], [Input.LT]))
         playerInputsList[0].addInput('creditsMenu', new Input(['4'], [Input.RT]))
+        playerInputsList[0].addInput('escapeQuit', new Input(['Escape'], []))
         
         playerInputsList[1].addInput('reloadScene', new Input([], [Input.SELECT]))
         playerInputsList[1].addInput('menuUp', new Input([], [Input.PAD_UP]))
@@ -73,6 +74,8 @@ class Scene{
         }
         this.body.append(this.audio)
         this.audio.loop = true
+        
+        this.escapeQuit = false
     }
     
     fadeIn(){
@@ -115,6 +118,10 @@ class Scene{
                     }else if(engine.isPaused()){
                         engine.resume()
                     }
+                })
+                
+                this.checkSimpleAction(engine.scene.escapeQuit && inputs1.escapeQuit, 'escapeQuit', ()=>{
+                    remote.app.quit()
                 })
                 
                 this.checkSimpleAction(inputs1.reloadScene || inputs2.reloadScene, 'reloadScene', ()=>{
