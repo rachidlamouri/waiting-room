@@ -1,12 +1,12 @@
 {
-  "name": "Unnamed",
-  "version": "0.0.0",
+  "name": "WaitingRoom",
+  "productName": "Waiting Room",
+  "version": "1.0.0",
   "main": "src/index.js",
   "author": "Rachid Lamouri",
-  "dataFolderName": "Unnamed-Data",
   "build": {
-    "appId": "unnamed",
-    "artifactName": "Unnamed v${version}.${ext}",
+    "appId": "com.RachiSite.WaitingRoom",
+    "artifactName": "Waiting Room ${version}.${ext}",
     "files": [
       "src"
     ],
@@ -18,6 +18,9 @@
           "ia32"
         ]
       }
+    },
+    "mac": {
+      "target": "dmg"
     },
     "nsis": {
       "perMachine": false
