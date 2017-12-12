@@ -31,6 +31,7 @@ class Credits extends Scene{
                 new Credit('Mic Operator'),
                 new Credit('Application Packaging'),
                 new Credit('', 'Abbas Lamouri'),
+                new Credit('', 'Jonathan Sutherland'),
                 new Credit('Good Boy', 'Stetson'),
             ]),
         ])
