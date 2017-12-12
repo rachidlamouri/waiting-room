@@ -8,7 +8,7 @@ const SoundBank = EngineUtil.SoundBank
 const CocoSweeper = require(paths.obj('bonus_level/CocoSweeper'))
 const MillieSweeper = require(paths.obj('bonus_level/MillieSweeper'))
 
-const Wall = require(paths.obj('barriers/wall'))
+const Wall = require(paths.obj('barriers/Wall'))
 
 class TrafficLight extends Sprite{
     constructor(x, y){
